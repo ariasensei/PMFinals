@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Monitoring & Control 2 - KPIs & Metrics</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100%;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin: 0 0 10px 0;
+            color: #667eea;
+            font-size: 2.5em;
+        }
+
+        .header p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .tab-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+        }
+
+        .ilo-box {
+            background: #f0f4ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .ilo-box h3 {
+            margin-top: 0;
+            color: #667eea;
+        }
+
+        .ilo-box ul {
+            margin: 10px 0;
+        }
+
+        .key-concept {
+            background: #fff9e6;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .case-study {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 10px;
+        }
+
+        .case-study h3 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+
+        .kpi-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .kpi-card h4 {
+            margin: 0 0 10px 0;
+            font-size: 1.3em;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .metric-box {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        .metric-box:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        .formula {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        .example-box {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .quiz-section {
+            background: #e3f2fd;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 25px 0;
+        }
+
+        .quiz-question {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .quiz-options {
+            margin: 15px 0;
+        }
+
+        .quiz-option {
+            display: block;
+            padding: 12px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        .check-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #dee2e6;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .highlight {
+            background: #fff59d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .tip-box {
+            background: #e1f5fe;
+            border-left: 5px solid #03a9f4;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .tip-box strong {
+            color: #0277bd;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                width: 100%;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Project Monitoring & Control 2</h1>
+        <p><strong>Week 4: Key Performance Indicators (KPIs) & Metrics</strong></p>
+        <p>Lecturer: MK Basa | Finals Period</p>
+    </div>
+
+    <div class="container">
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('ilo')">🎯 Learning Outcomes</button>
+            <button class="tab-btn" onclick="showTab('intro')">📚 Introduction</button>
+            <button class="tab-btn" onclick="showTab('kpis')">📈 KPIs Explained</button>
+            <button class="tab-btn" onclick="showTab('metrics')">📊 Metrics</button>
+            <button class="tab-btn" onclick="showTab('case')">💼 Case Study</button>
+            <button class="tab-btn" onclick="showTab('quiz')">✅ Knowledge Check</button>
+        </div>
+
+        <!-- ILO Section -->
+        <div id="ilo" class="content-section active">
+            <h2>Intended Learning Outcomes (ILO)</h2>
+            
+            <div class="ilo-box">
+                <h3>By the end of this lesson, you will be able to:</h3>
+                <ul>
+                    <li>✓ <strong>Understand</strong> the fundamental concepts of KPIs and performance measurement in project management</li>
+                    <li>✓ <strong>Differentiate</strong> between various types of metrics and their applications</li>
+                    <li>✓ <strong>Evaluate</strong> project performance using appropriate KPIs through real-world case analysis</li>
+                    <li>✓ <strong>Apply</strong> KPI frameworks to monitor and control project success</li>
+                    <li>✓ <strong>Create</strong> meaningful progress reports using relevant metrics</li>
+                </ul>
+            </div>
+
+            <div class="key-concept">
+                <h3>💡 Why This Matters</h3>
+                <p>In today's data-driven project environment, knowing <em>what</em> to measure is just as important as knowing <em>how</em> to measure it. KPIs and metrics are your compass and map in the journey of project success. Without them, you're navigating blind!</p>
+            </div>
+        </div>
+
+        <!-- Introduction Section -->
+        <div id="intro" class="content-section">
+            <h2>Introduction to KPIs and Metrics</h2>
+            
+            <h3>What's the Difference? 🤔</h3>
+            
+            <div class="metrics-grid">
+                <div class="metric-box">
+                    <h4>📊 Metrics</h4>
+                    <p><strong>Definition:</strong> Quantifiable measures used to track and assess performance</p>
+                    <p><strong>Think of it as:</strong> The raw data you collect</p>
+                    <p><strong>Example:</strong> Number of tasks completed, hours worked, bugs found</p>
+                </div>
+                
+                <div class="metric-box">
+                    <h4>🎯 KPIs (Key Performance Indicators)</h4>
+                    <p><strong>Definition:</strong> Strategic metrics that directly measure progress toward critical objectives</p>
+                    <p><strong>Think of it as:</strong> The most important metrics that matter to success</p>
+                    <p><strong>Example:</strong> Customer satisfaction score, project ROI, on-time delivery rate</p>
+                </div>
+            </div>
+
+            <div class="key-concept">
+                <h3>The Simple Truth</h3>
+                <p><strong>All KPIs are metrics, but not all metrics are KPIs.</strong></p>
+                <p>KPIs are the "VIP metrics" – the ones that truly indicate whether your project is succeeding or failing. You might track 50 metrics, but only 5-7 might be KPIs.</p>
+            </div>
+
+            <div class="example-box">
+                <h3>🍕 Real-Life Analogy: Pizza Delivery Business</h3>
+                <p><strong>Metrics you might track:</strong></p>
+                <ul>
+                    <li>Number of pizzas made per hour</li>
+                    <li>Oven temperature</li>
+                    <li>Number of delivery drivers on shift</li>
+                    <li>Ingredient costs</li>
+                    <li>Phone calls received</li>
+                </ul>
+                <p><strong>KPIs (what really matters for success):</strong></p>
+                <ul>
+                    <li>🎯 Average delivery time (target: under 30 minutes)</li>
+                    <li>🎯 Customer satisfaction rating (target: 4.5/5 stars)</li>
+                    <li>🎯 Order accuracy rate (target: 98%)</li>
+                    <li>🎯 Revenue per day (target: $5,000)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- KPIs Section -->
+        <div id="kpis" class="content-section">
+            <h2>Key Performance Indicators (KPIs) Deep Dive</h2>
+
+            <h3>Characteristics of Good KPIs: The SMART Framework</h3>
+            
+            <div class="kpi-card">
+                <h4>S - Specific</h4>
+                <p>Clearly defined and unambiguous. Everyone should understand what it means.</p>
+                <p>❌ Bad: "Improve quality"</p>
+                <p>✅ Good: "Reduce software defects to less than 5 per release"</p>
+            </div>
+
+            <div class="kpi-card">
+                <h4>M - Measurable</h4>
+                <p>Can be quantified with numbers or clear criteria.</p>
+                <p>❌ Bad: "Make customers happy"</p>
+                <p>✅ Good: "Achieve 90% customer satisfaction score"</p>
+            </div>
+
+            <div class="kpi-card">
+                <h4>A - Achievable</h4>
+                <p>Realistic and attainable given resources and constraints.</p>
+                <p>❌ Bad: "Complete 6-month project in 1 week"</p>
+                <p>✅ Good: "Complete project within 10% of planned timeline"</p>
+            </div>
+
+            <div class="kpi-card">
+                <h4>R - Relevant</h4>
+                <p>Directly aligned with project objectives and business goals.</p>
+                <p>❌ Bad: Tracking office coffee consumption for a software project</p>
+                <p>✅ Good: Tracking code review completion rate</p>
+            </div>
+
+            <div class="kpi-card">
+                <h4>T - Time-bound</h4>
+                <p>Has a specific timeframe or deadline.</p>
+                <p>❌ Bad: "Eventually increase sales"</p>
+                <p>✅ Good: "Increase sales by 15% by Q4 2024"</p>
+            </div>
+
+            <h3>Common Project Management KPIs</h3>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>KPI Category</th>
+                        <th>KPI Name</th>
+                        <th>What It Measures</th>
+                        <th>Formula/Method</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Schedule</strong></td>
+                        <td>Schedule Variance (SV)</td>
+                        <td>Are we ahead or behind schedule?</td>
+                        <td>SV = EV - PV</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Schedule</strong></td>
+                        <td>Schedule Performance Index (SPI)</td>
+                        <td>How efficiently are we using time?</td>
+                        <td>SPI = EV / PV</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cost</strong></td>
+                        <td>Cost Variance (CV)</td>
+                        <td>Are we over or under budget?</td>
+                        <td>CV = EV - AC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cost</strong></td>
+                        <td>Cost Performance Index (CPI)</td>
+                        <td>How efficiently are we using money?</td>
+                        <td>CPI = EV / AC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quality</strong></td>
+                        <td>Defect Density</td>
+                        <td>How many defects per unit?</td>
+                        <td>Defects / Size of Deliverable</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quality</strong></td>
+                        <td>Customer Satisfaction</td>
+                        <td>How happy are stakeholders?</td>
+                        <td>Survey scores (1-5 or 1-10 scale)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Scope</strong></td>
+                        <td>Scope Creep Rate</td>
+                        <td>How much is scope changing?</td>
+                        <td>(New Requirements / Original) × 100</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Resources</strong></td>
+                        <td>Resource Utilization</td>
+                        <td>How effectively are we using resources?</td>
+                        <td>(Actual Hours / Available Hours) × 100</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip-box">
+                <strong>💡 Pro Tip:</strong> Don't track too many KPIs! Focus on 5-7 critical ones. Too many KPIs = information overload = poor decision making.
+            </div>
+
+            <h3>Understanding Earned Value Management (EVM) Terms</h3>
+
+            <div class="key-concept">
+                <p><strong>PV (Planned Value):</strong> The budgeted cost for work scheduled to be completed by a specific date. <em>"What we planned to spend by now."</em></p>
+                
+                <p><strong>EV (Earned Value):</strong> The budgeted cost for work actually completed by a specific date. <em>"The value of work we've actually completed."</em></p>
+                
+                <p><strong>AC (Actual Cost):</strong> The actual cost incurred for work completed by a specific date. <em>"What we actually spent."</em></p>
+            </div>
+
+            <div class="example-box">
+                <h3>🏗️ Real-World Example: Website Development Project</h3>
+                <p><strong>Scenario:</strong> You're building a website for a client. Budget: $10,000. Timeline: 10 weeks.</p>
+                
+                <p><strong>After 5 weeks:</strong></p>
+                <ul>
+                    <li><strong>PV:</strong> $5,000 (we planned to be 50% done and spend $5,000)</li>
+                    <li><strong>EV:</strong> $4,000 (we're actually 40% done, worth $4,000 of work)</li>
+                    <li><strong>AC:</strong> $5,500 (we've actually spent $5,500)</li>
+                </ul>
+
+                <p><strong>Analysis:</strong></p>
+                <div class="formula">SV = EV - PV = $4,000 - $5,000 = -$1,000</div>
+                <p>❌ <strong>Negative SV:</strong> We're behind schedule (only 40% done when we should be 50% done)</p>
+
+                <div class="formula">CV = EV - AC = $4,000 - $5,500 = -$1,500</div>
+                <p>❌ <strong>Negative CV:</strong> We're over budget (spent $5,500 but only completed $4,000 worth of work)</p>
+
+                <div class="formula">SPI = EV / PV = $4,000 / $5,000 = 0.8</div>
+                <p>❌ <strong>SPI < 1:</strong> We're working at 80% of planned efficiency</p>
+
+                <div class="formula">CPI = EV / AC = $4,000 / $5,500 = 0.73</div>
+                <p>❌ <strong>CPI < 1:</strong> For every dollar spent, we're only getting 73 cents of value</p>
+
+                <p><strong>🚨 Red Flags:</strong> This project is both behind schedule and over budget. Immediate corrective action needed!</p>
+            </div>
+        </div>
+
+        <!-- Metrics Section -->
+        <div id="metrics" class="content-section">
+            <h2>Project Metrics in Detail</h2>
+
+            <h3>Types of Metrics</h3>
+
+            <div class="metrics-grid">
+                <div class="metric-box">
+                    <h4>📅 Schedule Metrics</h4>
+                    <ul>
+                        <li>Milestone completion rate</li>
+                        <li>Task completion rate</li>
+                        <li>Average task duration</li>
+                        <li>Critical path variance</li>
+                    </ul>
+                </div>
+
+                <div class="metric-box">
+                    <h4>💰 Cost Metrics</h4>
+                    <ul>
+                        <li>Budget variance</li>
+                        <li>Cost per deliverable</li>
+                        <li>Return on Investment (ROI)</li>
+                        <li>Estimate at Completion (EAC)</li>
+                    </ul>
+                </div>
+
+                <div class="metric-box">
+                    <h4>✨ Quality Metrics</h4>
+                    <ul>
+                        <li>Defect rate</li>
+                        <li>Rework percentage</li>
+                        <li>Test pass rate</li>
+                        <li>Customer complaints</li>
+                    </ul>
+                </div>
+
+                <div class="metric-box">
+                    <h4>👥 Resource Metrics</h4>
+                    <ul>
+                        <li>Team velocity</li>
+                        <li>Resource allocation rate</li>
+                        <li>Team productivity</li>
+                        <li>Overtime hours</li>
+                    </ul>
+                </div>
+
+                <div class="metric-box">
+                    <h4>📋 Scope Metrics</h4>
+                    <ul>
+                        <li>Requirements stability</li>
+                        <li>Change request rate</li>
+                        <li>Scope completion %</li>
+                        <li>Feature adoption rate</li>
+                    </ul>
+                </div>
+
+                <div class="metric-box">
+                    <h4>⚠️ Risk Metrics</h4>
+                    <ul>
+                        <li>Number of open risks</li>
+                        <li>Risk severity score</li>
+                        <li>Issues resolved rate</li>
+                        <li>Risk response effectiveness</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>How to Choose the Right Metrics</h3>
+
+            <div class="key-concept">
+                <h4>Ask These Questions:</h4>
+                <ol>
+                    <li><strong>What are the project objectives?</strong> Your metrics should directly support these.</li>
+                    <li><strong>What does success look like?</strong> Metrics should measure progress toward success.</li>
+                    <li><strong>Who needs this information?</strong> Different stakeholders need different metrics.</li>
+                    <li><strong>Can we actually measure this?</strong> Don't choose metrics you can't reliably track.</li>
+                    <li><strong>Will this drive the right behavior?</strong> Metrics influence how teams work.</li>
+                </ol>
+            </div>
+
+            <div class="example-box">
+                <h3>📱 Real-World Example: Mobile App Development</h3>
+                <p><strong>Project:</strong> Developing a food delivery app for a startup</p>
+                <p><strong>Timeline:</strong> 6 months | <strong>Budget:</strong> $150,000 | <strong>Team:</strong> 8 people</p>
+
+                <h4>Selected KPIs & Metrics:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Stakeholder</th>
+                            <th>Key Concern</th>
+                            <th>KPI/Metric</th>
+                            <th>Target</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CEO</td>
+                            <td>Business value</td>
+                            <td>ROI</td>
+                            <td>150% within 1 year</td>
+                        </tr>
+                        <tr>
+                            <td>CFO</td>
+                            <td>Budget</td>
+                            <td>CPI</td>
+                            <td>≥ 0.95</td>
+                        </tr>
+                        <tr>
+                            <td>Project Sponsor</td>
+                            <td>Timeline</td>
+                            <td>SPI</td>
+                            <td>≥ 0.95</td>
+                        </tr>
+                        <tr>
+                            <td>End Users</td>
+                            <td>Quality</td>
+                            <td>App Store Rating</td>
+                            <td>≥ 4.5 stars</td>
+                        </tr>
+                        <tr>
+                            <td>Development Team</td>
+                            <td>Workload</td>
+                            <td>Sprint Velocity</td>
+                            <td>30 story points/sprint</td>
+                        </tr>
+                        <tr>
+                            <td>QA Team</td>
+                            <td>Quality</td>
+                            <td>Bug Density</td>
+                            <td>< 2 bugs per feature</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p><strong>Why these work:</strong> Each stakeholder gets metrics relevant to their concerns, and all metrics align with overall project success.</p>
+            </div>
+
+            <div class="tip-box">
+                <strong>⚠️ Warning:</strong> Beware of "vanity metrics" – numbers that look good but don't actually indicate success. Example: "We wrote 10,000 lines of code!" (But is the code good? Does it work? Does it meet requirements?)
+            </div>
+        </div>
+
+        <!-- Case Study Section -->
+        <div id="case" class="content-section">
+            <h2>Case Study: TechStart University Portal Redesign</h2>
+
+            <div class="case-study">
+                <h3>📋 Project Background</h3>
+                <p><strong>Client:</strong> TechStart University</p>
+                <p><strong>Project:</strong> Complete redesign of student portal system</p>
+                <p><strong>Project Manager:</strong> Sarah Chen</p>
+                <p><strong>Timeline:</strong> 8 months (January - August 2024)</p>
+                <p><strong>Budget:</strong> $400,000</p>
+                <p><strong>Team Size:</strong> 15 people (developers, designers, QA, business analysts)</p>
+
+                <h4>Project Objectives:</h4>
+                <ul>
+                    <li>Improve student satisfaction with portal from 3.2/5 to 4.5/5</li>
+                    <li>Reduce average task completion time by 40%</li>
+                    <li>Increase mobile usage from 30% to 60%</li>
+                    <li>Launch before Fall semester (September 1st)</li>
+                </ul>
+            </div>
+
+            <h3>📊 Progress Report - Month 4 (April 2024)</h3>
+
+            <div class="example-box">
+                <h4>Schedule Performance</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Planned</th>
+                            <th>Actual</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Milestones Completed</td>
+                            <td>4 of 8</td>
+                            <td>3 of 8</td>
+                            <td>🔴 Behind</td>
+                        </tr>
+                        <tr>
+                            <td>PV (Planned Value)</td>
+                            <td>$200,000</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>EV (Earned Value)</td>
+                            <td>-</td>
+                            <td>$160,000</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>AC (Actual Cost)</td>
+                            <td>-</td>
+                            <td>$185,000</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>SPI</td>
+                            <td>1.0</td>
+                            <td>0.80</td>
+                            <td>🔴 Behind Schedule</td>
+                        </tr>
+                        <tr>
+                            <td>CPI</td>
+                            <td>1.0</td>
+                            <td>0.86</td>
+                            <td>🟡 Over Budget</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Quality Metrics</h4>
+                <ul>
+                    <li><strong>User Testing Sessions:</strong> 12 completed (target: 15) - 🟡 Slightly behind</li>
+                    <li><strong>Bugs Found:</strong> 47 (23 critical, 24 minor)</li>
+                    <li><strong>Bugs Resolved:</strong> 31 (66% resolution rate) - 🟢 Good</li>
+                    <li><strong>Code Review Pass Rate:</strong> 78% (target: 85%) - 🟡 Needs improvement</li>
+                </ul>
+
+                <h4>Resource Metrics</h4>
+                <ul>
+                    <li><strong>Team Velocity:</strong> 42 story points/sprint (target: 50) - 🟡 Below target</li>
+                    <li><strong>Resource Utilization:</strong> 92% - 🟢 Good</li>
+                    <li><strong>Overtime Hours:</strong> 180 hours this month - 🔴 High (burnout risk)</li>
+                    <li><strong>Team Turnover:</strong> 1 developer left - 🟡 Concern</li>
+                </ul>
+
+                <h4>Scope Metrics</h4>
+                <ul>
+                    <li><strong>Original Requirements:</strong> 85 features</li>
+                    <li><strong>New Requirements Added:</strong> 12 features</li>
+                    <li><strong>Scope Creep Rate:</strong> 14% - 🟡 Moderate concern</li>
+                    <li><strong>Features Completed:</strong> 38 of 97 (39%) - 🟡 Behind</li>
+                </ul>
+            </div>
+
+            <h3>🔍 Analysis Questions for Students</h3>
+
+            <div class="quiz-section">
+                <div class="quiz-question">
+                    <h4>Question 1: Overall Project Health</h4>
+                    <p>Based on the KPIs presented, how would you rate the overall health of this project?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="a"> A) Excellent - on track for success
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="b"> B) Good - minor issues but manageable
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="c"> C) At Risk - significant concerns requiring action
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="d"> D) Critical - project likely to fail
+                        </label>
+                    </div>
+                    <button class="check-btn" onclick="checkAnswer('q1', 'c', 'The project is at risk. With SPI of 0.80 (20% behind schedule), CPI of 0.86 (over budget), high overtime hours, and scope creep, immediate corrective action is needed.')">Check Answer</button>
+                    <div id="q1-feedback" class="feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 2: Priority Issues</h4>
+                    <p>What should Sarah (the PM) prioritize addressing first?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="a"> A) Hire more developers to increase velocity
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="b"> B) Address team burnout and overtime hours
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="c"> C) Control scope creep and re-baseline the project
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="d"> D) All of the above need immediate attention
+                        </label>
+                    </div>
+                    <button class="check-btn" onclick="checkAnswer('q2', 'd', 'All issues are interconnected. High overtime causes burnout and turnover, which reduces velocity. Scope creep adds work without adjusting timeline/budget. A comprehensive recovery plan is needed.')">Check Answer</button>
+                    <div id="q2-feedback" class="feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 3: Forecasting</h4>
+                    <p>If current trends continue, what is the Estimate at Completion (EAC)?</p>
+                    <p><em>Formula: EAC = BAC / CPI, where BAC (Budget at Completion) = $400,000</em></p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="a"> A) $400,000 (on budget)
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="b"> B) $430,000 (7.5% over)
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="c"> C) $465,116 (16% over)
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="d"> D) $500,000 (25% over)
+                        </label>
+                    </div>
+                    <button class="check-btn" onclick="checkAnswer('q3', 'c', 'EAC = $400,000 / 0.86 = $465,116. This means if current cost efficiency continues, the project will be $65,116 over budget.')">Check Answer</button>
+                    <div id="q3-feedback" class="feedback"></div>
+                </div>
+            </div>
+
+            <h3>💡 Recommended Actions</h3>
+
+            <div class="key-concept">
+                <h4>Immediate Actions (Week 1-2):</h4>
+                <ol>
+                    <li><strong>Scope Management:</strong> Freeze new feature requests. Conduct scope review meeting with stakeholders to prioritize must-have vs. nice-to-have features.</li>
+                    <li><strong>Team Health:</strong> Implement mandatory no-overtime policy for 2 weeks. Assess team morale and address burnout concerns.</li>
+                    <li><strong>Schedule Recovery:</strong> Identify critical path activities and allocate additional resources to them.</li>
+                </ol>
+
+                <h4>Short-term Actions (Month 5):</h4>
+                <ol>
+                    <li><strong>Re-baseline:</strong> Update project plan with realistic timeline and budget based on current performance.</li>
+                    <li><strong>Quality Focus:</strong> Increase code review standards to prevent technical debt.</li>
+                    <li><strong>Communication:</strong> Provide transparent status update to stakeholders about challenges and recovery plan.</li>
+                </ol>
+
+                <h4>Long-term Improvements:</h4>
+                <ol>
+                    <li><strong>Process:</strong> Implement better change control process to prevent scope creep.</li>
+                    <li><strong>Monitoring:</strong> Increase frequency of KPI reviews from monthly to bi-weekly.</li>
+                    <li><strong>Team:</strong> Cross-train team members to reduce dependency on specific individuals.</li>
+                </ol>
+            </div>
+
+            <div class="tip-box">
+                <strong>🎓 Learning Point:</strong> This case study demonstrates why regular KPI monitoring is crucial. Problems identified at month 4 are much easier to fix than problems discovered at month 7. Early detection = more options for correction!
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div id="quiz" class="content-section">
+            <h2>Knowledge Check Quiz</h2>
+
+            <div class="quiz-section">
+                <div class="quiz-question">
+                    <h4>Question 1: KPI vs Metric</h4>
+                    <p>Which statement is TRUE?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz1" value="a"> A) All metrics are KPIs
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz1" value="b"> B) All KPIs are metrics
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz1" value="c"> C) KPIs and metrics are the same thing
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz1" value="d"> D) Metrics are more important than KPIs
+                        </label>
+                    </div>
+                    <button class="check-btn" onclick="checkAnswer('quiz1', 'b', 'Correct! All KPIs are metrics, but not all metrics are KPIs. KPIs are the most critical metrics that directly indicate project success.')">Check Answer</button>
+                    <div id="quiz1-feedback" class="feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 2: SPI Interpretation</h4>
+                    <p>Your project has an SPI of 1.15. What does this mean?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz2" value="a"> A) You're 15% over budget
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz2" value="b"> B) You're 15% behind schedule
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz2" value="c"> C) You're ahead of schedule, working at 115% efficiency
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz2" value="d"> D) You need 15% more resources
+                        </label>
+                    </div>
+                    <button class="check-btn" onclick="checkAnswer('quiz2', 'c', 'Correct! SPI > 1.0 means you\'re ahead of schedule. An SPI of 1.15 means you\'re completing work 15% faster than planned.')">Check Answer</button>
+                    <div id="quiz2-feedback" class="feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 3: SMART KPIs</h4>
+                    <p>Which of these is a SMART KPI?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz3" value="a"> A) "Make the project better"
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz3" value="b"> B) "Improve customer satisfaction"
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz3" value="c"> C) "Achieve 95% on-time delivery rate by Q4 2024"
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz3" value="d"> D) "Complete all tasks quickly"
+                        </label>
+                    </div>
+                    <button class="check-btn" onclick="checkAnswer('quiz3', 'c', 'Correct! This KPI is Specific (95% on-time delivery), Measurable (percentage), Achievable (realistic target), Relevant (delivery matters), and Time-bound (by Q4 2024).')">Check Answer</button>
+                    <div id="quiz3-feedback" class="feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 4: Cost Performance</h4>
+                    <p>If EV = $50,000 and AC = $60,000, what is the CPI and what does it indicate?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz4" value="a"> A) CPI = 1.2, project is under budget
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz4" value="b"> B) CPI = 0.83, project is over budget
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz4" value="c"> C) CPI = 10,000, project has cost variance
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz4" value="d"> D) CPI = -10,000, project is failing
+                        </label>
+                    </div>
+                    <button class="check-btn" onclick="checkAnswer('quiz4', 'b', 'Correct! CPI = EV / AC = $50,000 / $60,000 = 0.83. CPI < 1.0 means over budget. You\'re getting only 83 cents of value for every dollar spent.')">Check Answer</button>
+                    <div id="quiz4-feedback" class="feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 5: Choosing KPIs</h4>
+                    <p>You're managing a software project for a healthcare client. Which KPI is MOST relevant?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz5" value="a"> A) Number of lines of code written
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz5" value="b"> B) Team's coffee consumption
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz5" value="c"> C) Security vulnerability count and resolution time
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="quiz5" value="d"> D) Number of meetings held
+                        </label>
+                    </div>
+                    <button class="check-btn" onclick="checkAnswer('quiz5', 'c', 'Correct! For healthcare software, security is critical due to patient data protection requirements (HIPAA). Security vulnerabilities directly impact project success and compliance.')">Check Answer</button>
+                    <div id="quiz5-feedback" class="feedback"></div>
+                </div>
+            </div>
+
+            <h3>📝 Reflection Questions</h3>
+            <div class="key-concept">
+                <p>Think about these questions and discuss with your classmates:</p>
+                <ol>
+                    <li>Can you have too many KPIs? What problems might that cause?</li>
+                    <li>How often should KPIs be reviewed in a typical project?</li>
+                    <li>What happens if team members are measured on conflicting KPIs? (Example: speed vs. quality)</li>
+                    <li>How would you handle a situation where all KPIs look good, but stakeholders are still unhappy?</li>
+                    <li>What's the difference between leading indicators (predict future performance) and lagging indicators (measure past performance)? Give examples of each.</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all content sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show selected section
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function checkAnswer(questionId, correctAnswer, explanation) {
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedback = document.getElementById(`${questionId}-feedback`);
+            
+            if (!selectedOption) {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '⚠️ Please select an answer first!';
+                return;
+            }
+
+            const allOptions = document.querySelectorAll(`input[name="${questionId}"]`);
+            allOptions.forEach(option => {
+                const label = option.parentElement;
+                label.classList.remove('correct', 'incorrect');
+                if (option.value === correctAnswer) {
+                    label.classList.add('correct');
+                } else if (option.checked) {
+                    label.classList.add('incorrect');
+                }
+            });
+
+            if (selectedOption.value === correctAnswer) {
+                feedback.className = 'feedback show correct';
+                feedback.textContent = '✅ Correct! ' + explanation;
+            } else {
+                feedback.className = 'feedback show incorrect';
+                feedback.textContent = '❌ Not quite. ' + explanation;
+            }
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9935c1c3b75584a6',t:'MTc2MTI2OTkyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

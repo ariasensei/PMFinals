@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Closure 1 - Interactive Lesson</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .step-card {
+            transition: all 0.3s ease;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .checklist-item {
+            transition: all 0.3s ease;
+        }
+        
+        .checklist-item.checked {
+            opacity: 0.6;
+            text-decoration: line-through;
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease;
+        }
+        
+        .presentation-tip {
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        
+        .presentation-tip:hover {
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-blue-100 min-h-full">
+    <div class="max-w-6xl mx-auto p-6">
+        <!-- Header -->
+        <header class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h1 class="text-3xl font-bold text-green-900">🎯 Project Closure 1</h1>
+                    <p class="text-gray-600 mt-2">Project Management Finals - Week 5</p>
+                    <p class="text-sm text-gray-500">Lecturer: MK Basa</p>
+                </div>
+                <div class="text-right">
+                    <div class="bg-green-100 rounded-lg p-4">
+                        <p class="text-sm text-green-700 font-semibold">Your Progress</p>
+                        <div class="w-32 bg-gray-200 rounded-full h-3 mt-2">
+                            <div id="progressBar" class="progress-bar bg-green-600 h-3 rounded-full" style="width: 0%"></div>
+                        </div>
+                        <p id="progressText" class="text-xs text-green-600 mt-1">0% Complete</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ILO Section -->
+            <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-600">
+                <h3 class="font-bold text-green-900 mb-2">🎯 Intended Learning Outcomes (ILO)</h3>
+                <ul class="space-y-2">
+                    <li class="flex items-start">
+                        <span class="text-green-600 mr-2">✓</span>
+                        <span class="text-gray-700">Explain the steps in project closure</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-600 mr-2">✓</span>
+                        <span class="text-gray-700">Conduct project reviews to identify lessons learned</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-600 mr-2">✓</span>
+                        <span class="text-gray-700">Prepare for final project presentation requirements</span>
+                    </li>
+                </ul>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="bg-white rounded-lg shadow-lg mb-6">
+            <div class="flex border-b">
+                <button onclick="switchTab('overview')" class="tab-btn flex-1 px-6 py-4 font-semibold text-green-600 border-b-2 border-green-600" id="tab-overview">
+                    📚 Overview
+                </button>
+                <button onclick="switchTab('closure-steps')" class="tab-btn flex-1 px-6 py-4 font-semibold text-gray-600 hover:text-green-600" id="tab-closure-steps">
+                    📋 Closure Steps
+                </button>
+                <button onclick="switchTab('reviews')" class="tab-btn flex-1 px-6 py-4 font-semibold text-gray-600 hover:text-green-600" id="tab-reviews">
+                    🔍 Project Reviews
+                </button>
+                <button onclick="switchTab('presentation')" class="tab-btn flex-1 px-6 py-4 font-semibold text-gray-600 hover:text-green-600" id="tab-presentation">
+                    🎤 Final Presentation
+                </button>
+                <button onclick="switchTab('case-study')" class="tab-btn flex-1 px-6 py-4 font-semibold text-gray-600 hover:text-green-600" id="tab-case-study">
+                    🏢 Case Study
+                </button>
+                <button onclick="switchTab('activities')" class="tab-btn flex-1 px-6 py-4 font-semibold text-gray-600 hover:text-green-600" id="tab-activities">
+                    ✏️ Activities
+                </button>
+            </div>
+
+            <!-- Tab Contents -->
+            <div class="p-6">
+                <!-- Overview Tab -->
+                <div id="content-overview" class="tab-content active">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">Welcome to Project Closure Phase 1! 🚀</h2>
+                    
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded">
+                        <p class="text-gray-700 leading-relaxed">
+                            <strong>Why is project closure so important?</strong> Imagine building a house but never doing a final walkthrough, never getting the keys, and never celebrating the completion! Project closure is like that final walkthrough - it ensures everything is properly finished, documented, and celebrated. It's the difference between a professional project and an abandoned effort.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-6 mb-6">
+                        <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 shadow">
+                            <h3 class="text-xl font-bold text-green-900 mb-3">📋 Project Closure Steps</h3>
+                            <p class="text-gray-700 mb-3">A systematic approach to wrapping up all project activities properly.</p>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li>• Administrative closure</li>
+                                <li>• Contract closure</li>
+                                <li>• Resource release</li>
+                                <li>• Final deliverables</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 shadow">
+                            <h3 class="text-xl font-bold text-blue-900 mb-3">🔍 Project Reviews</h3>
+                            <p class="text-gray-700 mb-3">Learning from the journey to improve future projects.</p>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li>• Lessons learned sessions</li>
+                                <li>• Performance analysis</li>
+                                <li>• Stakeholder feedback</li>
+                                <li>• Process evaluation</li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 shadow">
+                            <h3 class="text-xl font-bold text-purple-900 mb-3">🎤 Final Presentation</h3>
+                            <p class="text-gray-700 mb-3">Showcasing achievements and sharing insights with stakeholders.</p>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li>• Executive summary</li>
+                                <li>• Key achievements</li>
+                                <li>• Lessons learned</li>
+                                <li>• Recommendations</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
+                        <h4 class="font-bold text-yellow-900 mb-2">💡 Real-World Connection</h4>
+                        <p class="text-gray-700">
+                            Think of project closure like graduating from college. You don't just stop attending classes - you complete final exams (project reviews), submit your thesis (final deliverables), attend graduation ceremony (final presentation), and receive your diploma (formal closure). Each step is essential for a proper ending!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Closure Steps Tab -->
+                <div id="content-closure-steps" class="tab-content">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">📋 Project Closure Steps</h2>
+                    
+                    <div class="bg-white border-2 border-green-200 rounded-lg p-6 mb-6">
+                        <h3 class="text-xl font-bold text-green-900 mb-4">What is Project Closure?</h3>
+                        <p class="text-gray-700 mb-4">
+                            Project closure is the formal process of completing all project activities, delivering final products, and officially ending the project. It's like the final chapter of a book - it brings everything together and provides a satisfying conclusion.
+                        </p>
+                        <div class="bg-green-50 rounded p-4">
+                            <p class="text-sm text-gray-700">
+                                <strong>Key Point:</strong> Proper closure ensures that nothing is left hanging, all stakeholders are satisfied, and valuable lessons are captured for future projects.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">The 6 Essential Closure Steps:</h3>
+
+                    <div class="space-y-4 mb-6">
+                        <div class="step-card bg-white rounded-lg shadow-lg p-6 border-l-4 border-blue-500">
+                            <div class="flex items-start">
+                                <div class="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4 flex-shrink-0">1</div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-blue-900 mb-2">📦 Complete Final Deliverables</h4>
+                                    <p class="text-gray-700 mb-3">Ensure all project outputs are finished and meet quality standards.</p>
+                                    <div class="bg-blue-50 rounded p-3">
+                                        <p class="text-sm font-semibold text-blue-900 mb-2">What to do:</p>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Review all deliverables against requirements</li>
+                                            <li>• Conduct final quality checks</li>
+                                            <li>• Get formal acceptance from stakeholders</li>
+                                            <li>• Package deliverables for handover</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-card bg-white rounded-lg shadow-lg p-6 border-l-4 border-green-500">
+                            <div class="flex items-start">
+                                <div class="bg-green-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4 flex-shrink-0">2</div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-green-900 mb-2">📄 Administrative Closure</h4>
+                                    <p class="text-gray-700 mb-3">Handle all the paperwork and formal procedures.</p>
+                                    <div class="bg-green-50 rounded p-3">
+                                        <p class="text-sm font-semibold text-green-900 mb-2">Includes:</p>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Archive project documents</li>
+                                            <li>• Update organizational databases</li>
+                                            <li>• Complete financial reconciliation</li>
+                                            <li>• Submit final reports</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-card bg-white rounded-lg shadow-lg p-6 border-l-4 border-purple-500">
+                            <div class="flex items-start">
+                                <div class="bg-purple-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4 flex-shrink-0">3</div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-purple-900 mb-2">🤝 Contract Closure</h4>
+                                    <p class="text-gray-700 mb-3">Formally close all contracts and vendor relationships.</p>
+                                    <div class="bg-purple-50 rounded p-3">
+                                        <p class="text-sm font-semibold text-purple-900 mb-2">Steps:</p>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Verify all contract requirements are met</li>
+                                            <li>• Process final payments</li>
+                                            <li>• Collect performance evaluations</li>
+                                            <li>• Formally terminate contracts</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-card bg-white rounded-lg shadow-lg p-6 border-l-4 border-orange-500">
+                            <div class="flex items-start">
+                                <div class="bg-orange-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4 flex-shrink-0">4</div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-orange-900 mb-2">👥 Release Project Resources</h4>
+                                    <p class="text-gray-700 mb-3">Return team members and resources to their home departments.</p>
+                                    <div class="bg-orange-50 rounded p-3">
+                                        <p class="text-sm font-semibold text-orange-900 mb-2">Actions:</p>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Conduct team member performance reviews</li>
+                                            <li>• Return equipment and materials</li>
+                                            <li>• Close project accounts and access</li>
+                                            <li>• Reassign team members to new projects</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-card bg-white rounded-lg shadow-lg p-6 border-l-4 border-red-500">
+                            <div class="flex items-start">
+                                <div class="bg-red-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4 flex-shrink-0">5</div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-red-900 mb-2">📊 Conduct Final Reviews</h4>
+                                    <p class="text-gray-700 mb-3">Analyze project performance and capture lessons learned.</p>
+                                    <div class="bg-red-50 rounded p-3">
+                                        <p class="text-sm font-semibold text-red-900 mb-2">Review areas:</p>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Schedule performance vs. plan</li>
+                                            <li>• Budget performance vs. baseline</li>
+                                            <li>• Quality achievements</li>
+                                            <li>• Stakeholder satisfaction</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-card bg-white rounded-lg shadow-lg p-6 border-l-4 border-indigo-500">
+                            <div class="flex items-start">
+                                <div class="bg-indigo-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4 flex-shrink-0">6</div>
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-indigo-900 mb-2">🎉 Celebrate Success</h4>
+                                    <p class="text-gray-700 mb-3">Recognize achievements and formally close the project.</p>
+                                    <div class="bg-indigo-50 rounded p-3">
+                                        <p class="text-sm font-semibold text-indigo-900 mb-2">Celebration activities:</p>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Hold project completion ceremony</li>
+                                            <li>• Recognize team contributions</li>
+                                            <li>• Share success stories</li>
+                                            <li>• Issue formal project closure notice</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6 border-2 border-green-300">
+                        <h4 class="font-bold text-green-900 mb-4">✅ Closure Success Checklist</h4>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <p class="font-semibold text-green-800 mb-2">Before You Close:</p>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>✓ All deliverables accepted</li>
+                                    <li>✓ All contracts completed</li>
+                                    <li>✓ Budget reconciled</li>
+                                    <li>✓ Resources released</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-blue-800 mb-2">Documentation Complete:</p>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>✓ Final report submitted</li>
+                                    <li>✓ Lessons learned documented</li>
+                                    <li>✓ Archives organized</li>
+                                    <li>✓ Stakeholders notified</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reviews Tab -->
+                <div id="content-reviews" class="tab-content">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🔍 Conducting Project Reviews</h2>
+                    
+                    <div class="bg-white border-2 border-blue-200 rounded-lg p-6 mb-6">
+                        <h3 class="text-xl font-bold text-blue-900 mb-4">Why Are Project Reviews Critical?</h3>
+                        <p class="text-gray-700 mb-4">
+                            Project reviews are like looking in the rearview mirror while driving - they help you understand where you've been so you can navigate better in the future. They transform experience into wisdom that benefits the entire organization.
+                        </p>
+                        <div class="bg-blue-50 rounded p-4">
+                            <p class="text-sm text-gray-700">
+                                <strong>Fun Fact:</strong> Organizations that consistently conduct project reviews are 40% more likely to deliver future projects on time and within budget!
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Types of Project Reviews:</h3>
+
+                    <div class="space-y-6 mb-6">
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h4 class="text-xl font-bold text-green-900 mb-4">1. 📝 Lessons Learned Sessions</h4>
+                            <p class="text-gray-700 mb-4">Structured discussions to capture what worked well and what didn't.</p>
+                            
+                            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                <div class="bg-green-50 rounded-lg p-4">
+                                    <h5 class="font-bold text-green-800 mb-2">What Went Well? ✅</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Successful strategies and approaches</li>
+                                        <li>• Effective tools and techniques</li>
+                                        <li>• Strong team collaboration moments</li>
+                                        <li>• Stakeholder engagement successes</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-red-50 rounded-lg p-4">
+                                    <h5 class="font-bold text-red-800 mb-2">What Could Improve? 🔄</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Process bottlenecks and delays</li>
+                                        <li>• Communication breakdowns</li>
+                                        <li>• Resource allocation issues</li>
+                                        <li>• Risk management gaps</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
+                                <h5 class="font-bold text-yellow-900 mb-2">💡 Best Practices for Lessons Learned:</h5>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Hold sessions while memories are fresh</li>
+                                    <li>• Create a safe, blame-free environment</li>
+                                    <li>• Focus on processes, not personalities</li>
+                                    <li>• Document specific, actionable insights</li>
+                                    <li>• Share findings with other project teams</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h4 class="text-xl font-bold text-blue-900 mb-4">2. 📊 Performance Analysis</h4>
+                            <p class="text-gray-700 mb-4">Quantitative review of how the project performed against its original plans.</p>
+                            
+                            <div class="grid md:grid-cols-4 gap-4 mb-4">
+                                <div class="bg-blue-50 rounded-lg p-4 text-center">
+                                    <h5 class="font-bold text-blue-800 mb-2">⏰ Schedule</h5>
+                                    <p class="text-sm text-gray-700">Compare planned vs. actual timeline</p>
+                                    <div class="mt-2">
+                                        <p class="text-xs text-gray-600">Example metrics:</p>
+                                        <p class="text-xs text-gray-600">• On-time delivery %</p>
+                                        <p class="text-xs text-gray-600">• Milestone variance</p>
+                                    </div>
+                                </div>
+                                <div class="bg-green-50 rounded-lg p-4 text-center">
+                                    <h5 class="font-bold text-green-800 mb-2">💰 Budget</h5>
+                                    <p class="text-sm text-gray-700">Analyze cost performance</p>
+                                    <div class="mt-2">
+                                        <p class="text-xs text-gray-600">Example metrics:</p>
+                                        <p class="text-xs text-gray-600">• Cost variance</p>
+                                        <p class="text-xs text-gray-600">• Budget utilization</p>
+                                    </div>
+                                </div>
+                                <div class="bg-purple-50 rounded-lg p-4 text-center">
+                                    <h5 class="font-bold text-purple-800 mb-2">🎯 Quality</h5>
+                                    <p class="text-sm text-gray-700">Evaluate deliverable quality</p>
+                                    <div class="mt-2">
+                                        <p class="text-xs text-gray-600">Example metrics:</p>
+                                        <p class="text-xs text-gray-600">• Defect rates</p>
+                                        <p class="text-xs text-gray-600">• Rework percentage</p>
+                                    </div>
+                                </div>
+                                <div class="bg-orange-50 rounded-lg p-4 text-center">
+                                    <h5 class="font-bold text-orange-800 mb-2">📋 Scope</h5>
+                                    <p class="text-sm text-gray-700">Review scope completion</p>
+                                    <div class="mt-2">
+                                        <p class="text-xs text-gray-600">Example metrics:</p>
+                                        <p class="text-xs text-gray-600">• Requirements met</p>
+                                        <p class="text-xs text-gray-600">• Change requests</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h4 class="text-xl font-bold text-purple-900 mb-4">3. 🗣️ Stakeholder Feedback</h4>
+                            <p class="text-gray-700 mb-4">Gather input from all project stakeholders about their experience.</p>
+                            
+                            <div class="space-y-4">
+                                <div class="bg-purple-50 rounded-lg p-4">
+                                    <h5 class="font-bold text-purple-800 mb-2">Feedback Collection Methods:</h5>
+                                    <div class="grid md:grid-cols-3 gap-3">
+                                        <div class="bg-white rounded p-3">
+                                            <p class="font-semibold text-sm text-gray-800">📋 Surveys</p>
+                                            <p class="text-xs text-gray-600">Structured questionnaires for quantitative data</p>
+                                        </div>
+                                        <div class="bg-white rounded p-3">
+                                            <p class="font-semibold text-sm text-gray-800">🎤 Interviews</p>
+                                            <p class="text-xs text-gray-600">One-on-one discussions for detailed insights</p>
+                                        </div>
+                                        <div class="bg-white rounded p-3">
+                                            <p class="font-semibold text-sm text-gray-800">👥 Focus Groups</p>
+                                            <p class="text-xs text-gray-600">Group discussions for diverse perspectives</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-purple-50 rounded-lg p-4">
+                                    <h5 class="font-bold text-purple-800 mb-2">Key Questions to Ask:</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• How satisfied are you with the project outcomes?</li>
+                                        <li>• Did the project meet your expectations?</li>
+                                        <li>• How effective was project communication?</li>
+                                        <li>• What would you change about the process?</li>
+                                        <li>• Would you work with this team again?</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-6 border-2 border-blue-300">
+                        <h4 class="font-bold text-blue-900 mb-4">🎯 Making Reviews Actionable</h4>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h5 class="font-bold text-blue-800 mb-3">📝 Document Everything</h5>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Create formal lessons learned reports</li>
+                                    <li>• Use templates for consistency</li>
+                                    <li>• Include specific examples and data</li>
+                                    <li>• Make recommendations actionable</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-purple-800 mb-3">🔄 Share and Apply</h5>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>• Present findings to leadership</li>
+                                    <li>• Update organizational processes</li>
+                                    <li>• Train other project managers</li>
+                                    <li>• Create knowledge repositories</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Presentation Tab -->
+                <div id="content-presentation" class="tab-content">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🎤 Final Project Presentation</h2>
+                    
+                    <div class="bg-white border-2 border-purple-200 rounded-lg p-6 mb-6">
+                        <h3 class="text-xl font-bold text-purple-900 mb-4">Why Final Presentations Matter</h3>
+                        <p class="text-gray-700 mb-4">
+                            Your final presentation is your moment to shine! It's like the grand finale of a fireworks show - it showcases all your hard work, celebrates achievements, and leaves a lasting impression on stakeholders. A great presentation can secure future funding, recognition, and career opportunities.
+                        </p>
+                        <div class="bg-purple-50 rounded p-4">
+                            <p class="text-sm text-gray-700">
+                                <strong>Remember:</strong> You're not just presenting data - you're telling the story of your project's journey and impact!
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Essential Presentation Components:</h3>
+
+                    <div class="space-y-6 mb-6">
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h4 class="text-xl font-bold text-blue-900 mb-4">1. 📋 Executive Summary (2-3 minutes)</h4>
+                            <p class="text-gray-700 mb-4">Your elevator pitch - the most important information in the shortest time.</p>
+                            
+                            <div class="bg-blue-50 rounded-lg p-4">
+                                <h5 class="font-bold text-blue-800 mb-2">Must Include:</h5>
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Project purpose and objectives</li>
+                                        <li>• Key achievements and deliverables</li>
+                                        <li>• Overall success metrics</li>
+                                    </ul>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Major challenges overcome</li>
+                                        <li>• Business impact and value</li>
+                                        <li>• Critical recommendations</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h4 class="text-xl font-bold text-green-900 mb-4">2. 🎯 Project Overview (3-4 minutes)</h4>
+                            <p class="text-gray-700 mb-4">Set the context and remind everyone what you set out to accomplish.</p>
+                            
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-green-50 rounded-lg p-4">
+                                    <h5 class="font-bold text-green-800 mb-2">Project Background</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Problem or opportunity addressed</li>
+                                        <li>• Project scope and boundaries</li>
+                                        <li>• Key stakeholders involved</li>
+                                        <li>• Timeline and milestones</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-green-50 rounded-lg p-4">
+                                    <h5 class="font-bold text-green-800 mb-2">Success Criteria</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Original objectives and goals</li>
+                                        <li>• Quality standards defined</li>
+                                        <li>• Budget and resource constraints</li>
+                                        <li>• Expected outcomes and benefits</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h4 class="text-xl font-bold text-purple-900 mb-4">3. 📊 Results and Achievements (5-6 minutes)</h4>
+                            <p class="text-gray-700 mb-4">The heart of your presentation - showcase what you accomplished!</p>
+                            
+                            <div class="space-y-4">
+                                <div class="bg-purple-50 rounded-lg p-4">
+                                    <h5 class="font-bold text-purple-800 mb-2">📈 Performance Metrics</h5>
+                                    <div class="grid md:grid-cols-4 gap-3">
+                                        <div class="bg-white rounded p-3 text-center">
+                                            <p class="font-bold text-blue-600 text-2xl">95%</p>
+                                            <p class="text-xs text-gray-600">On-time delivery</p>
+                                        </div>
+                                        <div class="bg-white rounded p-3 text-center">
+                                            <p class="font-bold text-green-600 text-2xl">$2K</p>
+                                            <p class="text-xs text-gray-600">Under budget</p>
+                                        </div>
+                                        <div class="bg-white rounded p-3 text-center">
+                                            <p class="font-bold text-purple-600 text-2xl">100%</p>
+                                            <p class="text-xs text-gray-600">Quality standards</p>
+                                        </div>
+                                        <div class="bg-white rounded p-3 text-center">
+                                            <p class="font-bold text-orange-600 text-2xl">4.8/5</p>
+                                            <p class="text-xs text-gray-600">Stakeholder satisfaction</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-purple-50 rounded-lg p-4">
+                                    <h5 class="font-bold text-purple-800 mb-2">🎯 Key Deliverables</h5>
+                                    <p class="text-sm text-gray-700 mb-2">Show, don't just tell! Include:</p>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Screenshots, photos, or demos of final products</li>
+                                        <li>• Before and after comparisons</li>
+                                        <li>• User testimonials or feedback</li>
+                                        <li>• Quantified business impact</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h4 class="text-xl font-bold text-orange-900 mb-4">4. 🔍 Lessons Learned (3-4 minutes)</h4>
+                            <p class="text-gray-700 mb-4">Share your insights to help others learn from your experience.</p>
+                            
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-orange-50 rounded-lg p-4">
+                                    <h5 class="font-bold text-green-800 mb-2">✅ What Worked Well</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Successful strategies and approaches</li>
+                                        <li>• Effective tools and processes</li>
+                                        <li>• Strong team collaboration</li>
+                                        <li>• Stakeholder engagement wins</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-orange-50 rounded-lg p-4">
+                                    <h5 class="font-bold text-red-800 mb-2">🔄 Areas for Improvement</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Process bottlenecks identified</li>
+                                        <li>• Communication challenges</li>
+                                        <li>• Resource allocation issues</li>
+                                        <li>• Risk management gaps</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h4 class="text-xl font-bold text-red-900 mb-4">5. 🚀 Recommendations and Next Steps (2-3 minutes)</h4>
+                            <p class="text-gray-700 mb-4">End with actionable insights and future opportunities.</p>
+                            
+                            <div class="bg-red-50 rounded-lg p-4">
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <h5 class="font-bold text-red-800 mb-2">For the Organization:</h5>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Process improvements to implement</li>
+                                            <li>• Best practices to standardize</li>
+                                            <li>• Training needs identified</li>
+                                            <li>• Technology upgrades suggested</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-bold text-red-800 mb-2">For Future Projects:</h5>
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            <li>• Similar project opportunities</li>
+                                            <li>• Scaling or expansion possibilities</li>
+                                            <li>• Follow-up projects needed</li>
+                                            <li>• Long-term maintenance plans</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg p-6 border-2 border-yellow-400">
+                            <h4 class="font-bold text-orange-900 mb-4">🎨 Presentation Design Tips</h4>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="presentation-tip bg-white rounded-lg p-4 shadow">
+                                    <h5 class="font-bold text-blue-900 mb-2">📊 Visual Impact</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Use charts and graphs</li>
+                                        <li>• Include photos and screenshots</li>
+                                        <li>• Limit text per slide</li>
+                                        <li>• Choose readable fonts</li>
+                                    </ul>
+                                </div>
+                                <div class="presentation-tip bg-white rounded-lg p-4 shadow">
+                                    <h5 class="font-bold text-green-900 mb-2">🎯 Content Flow</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Tell a compelling story</li>
+                                        <li>• Use logical progression</li>
+                                        <li>• Include smooth transitions</li>
+                                        <li>• End with strong conclusion</li>
+                                    </ul>
+                                </div>
+                                <div class="presentation-tip bg-white rounded-lg p-4 shadow">
+                                    <h5 class="font-bold text-purple-900 mb-2">🎤 Delivery Style</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Practice timing and pacing</li>
+                                        <li>• Prepare for questions</li>
+                                        <li>• Use confident body language</li>
+                                        <li>• Engage with audience</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-6 border-2 border-blue-400">
+                            <h4 class="font-bold text-blue-900 mb-4">⏰ Timing Guidelines</h4>
+                            <div class="grid md:grid-cols-5 gap-3">
+                                <div class="bg-white rounded-lg p-3 text-center">
+                                    <p class="font-bold text-blue-600">2-3 min</p>
+                                    <p class="text-xs text-gray-600">Executive Summary</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 text-center">
+                                    <p class="font-bold text-green-600">3-4 min</p>
+                                    <p class="text-xs text-gray-600">Project Overview</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 text-center">
+                                    <p class="font-bold text-purple-600">5-6 min</p>
+                                    <p class="text-xs text-gray-600">Results & Achievements</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 text-center">
+                                    <p class="font-bold text-orange-600">3-4 min</p>
+                                    <p class="text-xs text-gray-600">Lessons Learned</p>
+                                </div>
+                                <div class="bg-white rounded-lg p-3 text-center">
+                                    <p class="font-bold text-red-600">2-3 min</p>
+                                    <p class="text-xs text-gray-600">Recommendations</p>
+                                </div>
+                            </div>
+                            <p class="text-center text-sm text-gray-600 mt-3">
+                                <strong>Total: 15-20 minutes</strong> + 5-10 minutes for Q&A
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study Tab -->
+                <div id="content-case-study" class="tab-content">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">🏢 Real-Life Case Study</h2>
+                    
+                    <div class="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-lg p-6 mb-6 shadow-lg">
+                        <h3 class="text-2xl font-bold text-indigo-900 mb-3">🏗️ Case: University Library Renovation Project</h3>
+                        <p class="text-gray-700 font-semibold mb-2">Institution: Metro State University</p>
+                        <p class="text-gray-700">Project: Complete renovation of the main campus library</p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h4 class="text-xl font-bold text-blue-900 mb-3">📋 Project Background</h4>
+                            <div class="bg-blue-50 rounded-lg p-4">
+                                <p class="text-gray-700 mb-3">
+                                    Metro State University embarked on a $2.5 million, 18-month project to completely renovate their 50-year-old main library. The goal was to create a modern learning space with collaborative areas, updated technology, and improved accessibility while maintaining operations during construction.
+                                </p>
+                                <div class="grid md:grid-cols-4 gap-4 text-sm">
+                                    <div>
+                                        <p class="font-semibold text-blue-900">Budget:</p>
+                                        <p class="text-gray-700">$2.5 million</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-blue-900">Timeline:</p>
+                                        <p class="text-gray-700">18 months</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-blue-900">Team Size:</p>
+                                        <p class="text-gray-700">25 members</p>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold text-blue-900">Stakeholders:</p>
+                                        <p class="text-gray-700">15 groups</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h4 class="text-xl font-bold text-green-900 mb-3">📋 How They Applied Closure Steps</h4>
+                            <div class="space-y-4">
+                                <div class="bg-green-50 rounded-lg p-4">
+                                    <h5 class="font-semibold text-green-900 mb-2">Step 1: Complete Final Deliverables</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1 ml-4">
+                                        <li><strong>Action:</strong> Conducted final walkthrough with university administration</li>
+                                        <li><strong>Result:</strong> All 47 renovation items approved and signed off</li>
+                                        <li><strong>Challenge:</strong> Minor punch list items required additional 2 weeks</li>
+                                        <li><strong>Solution:</strong> Created detailed completion schedule with contractors</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-green-50 rounded-lg p-4">
+                                    <h5 class="font-semibold text-green-900 mb-2">Step 2: Administrative Closure</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1 ml-4">
+                                        <li><strong>Action:</strong> Organized 2,847 project documents into digital archive</li>
+                                        <li><strong>Result:</strong> Created searchable database for future reference</li>
+                                        <li><strong>Benefit:</strong> Saved 40+ hours for future renovation projects</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-green-50 rounded-lg p-4">
+                                    <h5 class="font-semibold text-green-900 mb-2">Step 3: Contract Closure</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1 ml-4">
+                                        <li><strong>Action:</strong> Closed contracts with 12 different vendors</li>
+                                        <li><strong>Challenge:</strong> One contractor had warranty disputes</li>
+                                        <li><strong>Solution:</strong> Negotiated extended warranty terms for resolution</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h4 class="text-xl font-bold text-purple-900 mb-3">🔍 Project Reviews Conducted</h4>
+                            <div class="space-y-4">
+                                <div class="bg-purple-50 rounded-lg p-4">
+                                    <h5 class="font-semibold text-purple-900 mb-3">Lessons Learned Session Results:</h5>
+                                    <div class="grid md:grid-cols-2 gap-4">
+                                        <div>
+                                            <p class="font-semibold text-green-800 mb-2">✅ What Worked Well:</p>
+                                            <ul class="text-sm text-gray-700 space-y-1">
+                                                <li>• Weekly stakeholder updates prevented surprises</li>
+                                                <li>• Phased construction kept library partially open</li>
+                                                <li>• Student advisory committee provided valuable input</li>
+                                                <li>• Digital project dashboard improved transparency</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-red-800 mb-2">🔄 Areas for Improvement:</p>
+                                            <ul class="text-sm text-gray-700 space-y-1">
+                                                <li>• Initial noise impact underestimated</li>
+                                                <li>• Technology integration took longer than planned</li>
+                                                <li>• Some furniture delivery delays occurred</li>
+                                                <li>• Staff training should have started earlier</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-purple-50 rounded-lg p-4">
+                                    <h5 class="font-semibold text-purple-900 mb-3">Performance Analysis Results:</h5>
+                                    <div class="grid md:grid-cols-4 gap-3">
+                                        <div class="bg-white rounded p-3 text-center">
+                                            <p class="text-sm font-semibold text-gray-800">Schedule</p>
+                                            <p class="text-2xl font-bold text-yellow-600">102%</p>
+                                            <p class="text-xs text-gray-600">2 weeks over (acceptable)</p>
+                                        </div>
+                                        <div class="bg-white rounded p-3 text-center">
+                                            <p class="text-sm font-semibold text-gray-800">Budget</p>
+                                            <p class="text-2xl font-bold text-green-600">97%</p>
+                                            <p class="text-xs text-gray-600">$75,000 under budget</p>
+                                        </div>
+                                        <div class="bg-white rounded p-3 text-center">
+                                            <p class="text-sm font-semibold text-gray-800">Quality</p>
+                                            <p class="text-2xl font-bold text-green-600">95%</p>
+                                            <p class="text-xs text-gray-600">Exceeded standards</p>
+                                        </div>
+                                        <div class="bg-white rounded p-3 text-center">
+                                            <p class="text-sm font-semibold text-gray-800">Satisfaction</p>
+                                            <p class="text-2xl font-bold text-green-600">4.6/5</p>
+                                            <p class="text-xs text-gray-600">Stakeholder rating</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h4 class="text-xl font-bold text-orange-900 mb-3">🎤 Final Presentation Highlights</h4>
+                            <div class="space-y-4">
+                                <div class="bg-orange-50 rounded-lg p-4">
+                                    <h5 class="font-semibold text-orange-900 mb-3">Presentation Structure Used:</h5>
+                                    <div class="space-y-3">
+                                        <div class="flex items-start">
+                                            <span class="bg-blue-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold mr-3 mt-1">1</span>
+                                            <div>
+                                                <p class="font-semibold text-gray-800">Executive Summary (3 minutes)</p>
+                                                <p class="text-sm text-gray-600">Highlighted $75K savings and 95% quality achievement</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <span class="bg-green-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold mr-3 mt-1">2</span>
+                                            <div>
+                                                <p class="font-semibold text-gray-800">Before & After Showcase (5 minutes)</p>
+                                                <p class="text-sm text-gray-600">Visual tour with photos and student testimonials</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <span class="bg-purple-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold mr-3 mt-1">3</span>
+                                            <div>
+                                                <p class="font-semibold text-gray-800">Impact Metrics (4 minutes)</p>
+                                                <p class="text-sm text-gray-600">300% increase in study space usage, 85% student satisfaction</p>
+                                            </div>
+                                        </div>
+                                        <div class="flex items-start">
+                                            <span class="bg-orange-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold mr-3 mt-1">4</span>
+                                            <div>
+                                                <p class="font-semibold text-gray-800">Lessons & Recommendations (3 minutes)</p>
+                                                <p class="text-sm text-gray-600">5 key insights for future campus renovation projects</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-orange-50 rounded-lg p-4">
+                                    <h5 class="font-semibold text-orange-900 mb-2">Presentation Success Factors:</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Used compelling before/after photos and videos</li>
+                                        <li>• Included live student testimonials via video</li>
+                                        <li>• Presented clear ROI calculations and usage statistics</li>
+                                        <li>• Acknowledged challenges honestly while highlighting solutions</li>
+                                        <li>• Ended with actionable recommendations for future projects</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <h4 class="text-xl font-bold text-indigo-900 mb-3">🎯 Project Impact & Legacy</h4>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-indigo-50 rounded-lg p-4">
+                                    <h5 class="font-semibold text-indigo-900 mb-2">📈 Measurable Outcomes:</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• 300% increase in daily library visitors</li>
+                                        <li>• 85% student satisfaction rating</li>
+                                        <li>• 40% increase in group study bookings</li>
+                                        <li>• 95% accessibility compliance achieved</li>
+                                        <li>• $75,000 returned to university budget</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-indigo-50 rounded-lg p-4">
+                                    <h5 class="font-semibold text-indigo-900 mb-2">🏆 Long-term Benefits:</h5>
+                                    <ul class="text-sm text-gray-700 space-y-1">
+                                        <li>• Became model for other campus renovations</li>
+                                        <li>• Project team received university excellence award</li>
+                                        <li>• Lessons learned applied to 3 subsequent projects</li>
+                                        <li>• Improved university ranking in student satisfaction</li>
+                                        <li>• Generated positive media coverage</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6 mt-6 border-2 border-green-400">
+                        <h4 class="font-bold text-green-900 mb-3">🤔 Reflection Questions:</h4>
+                        <ol class="space-y-2 text-gray-700">
+                            <li>1. How did proper closure steps contribute to the project's long-term success?</li>
+                            <li>2. What role did stakeholder feedback play in the project review process?</li>
+                            <li>3. How did the final presentation help secure future project opportunities?</li>
+                            <li>4. What lessons from this case study can you apply to your own projects?</li>
+                            <li>5. Why was it important to acknowledge challenges alongside successes?</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Activities Tab -->
+                <div id="content-activities" class="tab-content">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">✏️ Teaching Learning Activities</h2>
+                    
+                    <div class="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-lg p-6 mb-6 shadow-lg">
+                        <h3 class="text-xl font-bold text-orange-900 mb-2">🎯 Learning Activities Overview</h3>
+                        <p class="text-gray-700">Engage with these hands-on activities to master project closure skills!</p>
+                    </div>
+
+                    <!-- Activity 1 -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                        <div class="flex items-start mb-4">
+                            <div class="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4 flex-shrink-0">1</div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Group Activity: Draft Project Closure Checklist</h3>
+                                <p class="text-gray-700 mb-4">Work with your team to create a comprehensive closure checklist for your current project.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 rounded-lg p-5 mb-4">
+                            <h4 class="font-bold text-blue-900 mb-3">📝 Your Mission:</h4>
+                            <p class="text-gray-700 mb-3">
+                                Create a detailed closure checklist that your team can actually use for your final project. Make it specific to your project type and include all six closure steps we've learned.
+                            </p>
+                            
+                            <h4 class="font-bold text-blue-900 mb-3 mt-4">✅ Interactive Checklist Builder:</h4>
+                            <p class="text-gray-700 mb-3">Click on each item as you discuss and customize it for your project:</p>
+                        </div>
+
+                        <div class="bg-white border-2 border-blue-300 rounded-lg p-5">
+                            <div class="space-y-4" id="closureChecklist">
+                                <div class="border-b pb-4">
+                                    <h5 class="font-bold text-gray-900 mb-3">📦 Step 1: Complete Final Deliverables</h5>
+                                    <div class="space-y-2">
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Review all deliverables against original requirements</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Conduct final quality testing/review</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Get formal acceptance from stakeholders</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Package deliverables for handover</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="border-b pb-4">
+                                    <h5 class="font-bold text-gray-900 mb-3">📄 Step 2: Administrative Closure</h5>
+                                    <div class="space-y-2">
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Organize and archive all project documents</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Complete final budget reconciliation</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Submit final project report</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Update project management systems</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="border-b pb-4">
+                                    <h5 class="font-bold text-gray-900 mb-3">🤝 Step 3: Contract Closure</h5>
+                                    <div class="space-y-2">
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Verify all external agreements are fulfilled</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Process final payments to vendors/contractors</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Collect performance evaluations</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Formally close all contracts</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="border-b pb-4">
+                                    <h5 class="font-bold text-gray-900 mb-3">👥 Step 4: Release Resources</h5>
+                                    <div class="space-y-2">
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Conduct team member performance reviews</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Return borrowed equipment and materials</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Close project accounts and system access</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Transition team members to new assignments</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="border-b pb-4">
+                                    <h5 class="font-bold text-gray-900 mb-3">📊 Step 5: Conduct Reviews</h5>
+                                    <div class="space-y-2">
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Hold lessons learned session with team</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Analyze project performance metrics</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Collect stakeholder feedback</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Document recommendations for future projects</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h5 class="font-bold text-gray-900 mb-3">🎉 Step 6: Celebrate Success</h5>
+                                    <div class="space-y-2">
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Plan project completion celebration</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Recognize individual and team contributions</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Share success stories with organization</span>
+                                        </div>
+                                        <div class="checklist-item flex items-start p-2 bg-gray-50 rounded hover:bg-blue-50 cursor-pointer" onclick="toggleChecklistItem(this)">
+                                            <input type="checkbox" class="mt-1 mr-3 w-4 h-4 cursor-pointer">
+                                            <span class="text-sm text-gray-700">Issue formal project closure announcement</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mt-4 rounded">
+                            <p class="font-semibold text-yellow-900 mb-2">💡 Group Discussion Questions:</p>
+                            <ul class="text-sm text-gray-700 space-y-1">
+                                <li>• Which items need to be customized for your specific project?</li>
+                                <li>• What additional items should you add to this checklist?</li>
+                                <li>• Who will be responsible for each closure step?</li>
+                                <li>• What timeline will you follow for closure activities?</li>
+                                <li>• How will you ensure nothing is forgotten?</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Activity 2 -->
+                    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+                        <div class="flex items-start mb-4">
+                            <div class="bg-purple-500 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg mr-4 flex-shrink-0">2</div>
+                            <div class="flex-1">
+                                <h3 class="text-xl font-bold text-gray-900 mb-2">Workshop: Preparing for Final Presentation</h3>
+                                <p class="text-gray-700 mb-4">Practice and refine your final presentation skills with structured feedback.</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-purple-50 rounded-lg p-5 mb-4">
+                            <h4 class="font-bold text-purple-900 mb-3">🎯 Workshop Structure:</h4>
+                            <p class="text-gray-700 mb-3">
+                                Work in pairs to practice presentation segments and provide constructive feedback to each other.
+                            </p>
+                        </div>
+
+                        <div class="space-y-4">
+                            <div class="bg-white border-2 border-purple-300 rounded-lg p-5">
+                                <h4 class="font-bold text-gray-900 mb-4">🎤 Presentation Practice Stations</h4>
+                                
+                                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                    <div class="bg-blue-50 rounded-lg p-4">
+                                        <h5 class="font-bold text-blue-900 mb-2">Station 1: Executive Summary</h5>
+                                        <p class="text-sm text-gray-700 mb-2"><strong>Time Limit:</strong> 3 minutes</p>
+                                        <p class="text-sm text-gray-700 mb-2"><strong>Challenge:</strong> Summarize your entire project compellingly</p>
+                                        <div class="bg-white rounded p-2 mt-2">
+                                            <p class="text-xs text-gray-600"><strong>Practice Prompt:</strong> "You're in an elevator with the university president. You have 3 minutes to explain your project's value."</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-green-50 rounded-lg p-4">
+                                        <h5 class="font-bold text-green-900 mb-2">Station 2: Results Showcase</h5>
+                                        <p class="text-sm text-gray-700 mb-2"><strong>Time Limit:</strong> 5 minutes</p>
+                                        <p class="text-sm text-gray-700 mb-2"><strong>Challenge:</strong> Make your achievements visual and compelling</p>
+                                        <div class="bg-white rounded p-2 mt-2">
+                                            <p class="text-xs text-gray-600"><strong>Practice Prompt:</strong> "Show, don't just tell. Use visuals, demos, or stories to make your results memorable."</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div class="bg-orange-50 rounded-lg p-4">
+                                        <h5 class="font-bold text-orange-900 mb-2">Station 3: Lessons Learned</h5>
+                                        <p class="text-sm text-gray-700 mb-2"><strong>Time Limit:</strong> 4 minutes</p>
+                                        <p class="text-sm text-gray-700 mb-2"><strong>Challenge:</strong> Be honest about challenges while staying positive</p>
+                                        <div class="bg-white rounded p-2 mt-2">
+                                            <p class="text-xs text-gray-600"><strong>Practice Prompt:</strong> "Share a significant challenge and how you overcame it. What would you do differently?"</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-red-50 rounded-lg p-4">
+                                        <h5 class="font-bold text-red-900 mb-2">Station 4: Q&A Handling</h5>
+                                        <p class="text-sm text-gray-700 mb-2"><strong>Time Limit:</strong> 5 minutes</p>
+                                        <p class="text-sm text-gray-700 mb-2"><strong>Challenge:</strong> Handle difficult or unexpected questions</p>
+                                        <div class="bg-white rounded p-2 mt-2">
+                                            <p class="text-xs text-gray-600"><strong>Practice Prompt:</strong> "Your partner will ask challenging questions. Practice staying calm and providing thoughtful answers."</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white border-2 border-purple-300 rounded-lg p-5">
+                                <h4 class="font-bold text-gray-900 mb-4">📝 Peer Feedback Form</h4>
+                                
+                                <div class="space-y-4">
+                                    <div class="border-b pb-3">
+                                        <p class="font-semibold text-gray-800 mb-2">Content Quality (1-5 scale)</p>
+                                        <div class="flex gap-2 mb-2">
+                                            <button onclick="selectRating(this, 1)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">1</button>
+                                            <button onclick="selectRating(this, 2)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">2</button>
+                                            <button onclick="selectRating(this, 3)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">3</button>
+                                            <button onclick="selectRating(this, 4)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">4</button>
+                                            <button onclick="selectRating(this, 5)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">5</button>
+                                        </div>
+                                        <p class="text-xs text-gray-600">Was the information clear, relevant, and well-organized?</p>
+                                    </div>
+
+                                    <div class="border-b pb-3">
+                                        <p class="font-semibold text-gray-800 mb-2">Delivery Style (1-5 scale)</p>
+                                        <div class="flex gap-2 mb-2">
+                                            <button onclick="selectRating(this, 1)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">1</button>
+                                            <button onclick="selectRating(this, 2)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">2</button>
+                                            <button onclick="selectRating(this, 3)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">3</button>
+                                            <button onclick="selectRating(this, 4)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">4</button>
+                                            <button onclick="selectRating(this, 5)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">5</button>
+                                        </div>
+                                        <p class="text-xs text-gray-600">Was the presenter confident, engaging, and easy to follow?</p>
+                                    </div>
+
+                                    <div class="border-b pb-3">
+                                        <p class="font-semibold text-gray-800 mb-2">Visual Impact (1-5 scale)</p>
+                                        <div class="flex gap-2 mb-2">
+                                            <button onclick="selectRating(this, 1)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">1</button>
+                                            <button onclick="selectRating(this, 2)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">2</button>
+                                            <button onclick="selectRating(this, 3)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">3</button>
+                                            <button onclick="selectRating(this, 4)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">4</button>
+                                            <button onclick="selectRating(this, 5)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">5</button>
+                                        </div>
+                                        <p class="text-xs text-gray-600">Were visuals effective and supportive of the message?</p>
+                                    </div>
+
+                                    <div>
+                                        <p class="font-semibold text-gray-800 mb-2">Time Management (1-5 scale)</p>
+                                        <div class="flex gap-2 mb-2">
+                                            <button onclick="selectRating(this, 1)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">1</button>
+                                            <button onclick="selectRating(this, 2)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">2</button>
+                                            <button onclick="selectRating(this, 3)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">3</button>
+                                            <button onclick="selectRating(this, 4)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">4</button>
+                                            <button onclick="selectRating(this, 5)" class="rating-btn px-3 py-1 bg-gray-200 rounded text-sm hover:bg-purple-500 hover:text-white transition">5</button>
+                                        </div>
+                                        <p class="text-xs text-gray-600">Did the presenter stay within time limits and pace well?</p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 space-y-3">
+                                    <div>
+                                        <label class="block font-semibold text-gray-800 mb-1 text-sm">What worked really well?</label>
+                                        <textarea class="w-full border-2 border-gray-300 rounded p-2 text-sm focus:border-purple-500 focus:outline-none" rows="2" placeholder="Highlight specific strengths..."></textarea>
+                                    </div>
+                                    <div>
+                                        <label class="block font-semibold text-gray-800 mb-1 text-sm">Suggestions for improvement:</label>
+                                        <textarea class="w-full border-2 border-gray-300 rounded p-2 text-sm focus:border-purple-500 focus:outline-none" rows="2" placeholder="Provide constructive feedback..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Practice -->
+                    <div class="bg-white rounded-lg shadow-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">🎯 Individual Practice Exercises</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="bg-indigo-50 rounded-lg p-4 border-l-4 border-indigo-500">
+                                <p class="font-semibold text-indigo-900 mb-2">Exercise 1: Elevator Pitch Challenge</p>
+                                <p class="text-sm text-gray-700 mb-2">Write a 60-second elevator pitch for your project that includes:</p>
+                                <ul class="text-sm text-gray-700 space-y-1 ml-4">
+                                    <li>• The problem you solved</li>
+                                    <li>• Your key achievement</li>
+                                    <li>• The impact or value created</li>
+                                    <li>• One compelling statistic or story</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-green-50 rounded-lg p-4 border-l-4 border-green-500">
+                                <p class="font-semibold text-green-900 mb-2">Exercise 2: Lessons Learned Reflection</p>
+                                <p class="text-sm text-gray-700 mb-2">Complete this reflection for your current project:</p>
+                                <ul class="text-sm text-gray-700 space-y-1 ml-4">
+                                    <li>• What was your biggest challenge and how did you overcome it?</li>
+                                    <li>• What strategy worked better than expected?</li>
+                                    <li>• If you started over, what would you do differently?</li>
+                                    <li>• What advice would you give to future project teams?</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-orange-50 rounded-lg p-4 border-l-4 border-orange-500">
+                                <p class="font-semibold text-orange-900 mb-2">Exercise 3: Visual Storytelling</p>
+                                <p class="text-sm text-gray-700 mb-2">Create a visual story of your project using:</p>
+                                <ul class="text-sm text-gray-700 space-y-1 ml-4">
+                                    <li>• Before and after photos/screenshots</li>
+                                    <li>• A simple infographic showing key metrics</li>
+                                    <li>• A timeline of major milestones</li>
+                                    <li>• One chart showing your most impressive result</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- References Section -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mt-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">📚 References & Further Reading</h3>
+            <div class="space-y-3 text-gray-700">
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2">📖</span>
+                    <p class="text-sm">Project Management Institute. (2021). <em>A Guide to the Project Management Body of Knowledge (PMBOK Guide)</em> (Seventh Edition).</p>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2">📖</span>
+                    <p class="text-sm">Kerzner, H. (2022). <em>Project Management: A Systems Approach to Planning, Scheduling, and Controlling</em> (13th Edition).</p>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2">📖</span>
+                    <p class="text-sm">Wysocki, R. K. (2019). <em>Effective Project Management: Traditional, Agile, Extreme, Hybrid</em> (8th Edition).</p>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2">📖</span>
+                    <p class="text-sm">Larson, E. W., & Gray, C. F. (2021). <em>Project Management: The Managerial Process</em> (8th Edition).</p>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2">🌐</span>
+                    <p class="text-sm">PMI.org - Project Closure Best Practices and Templates</p>
+                </div>
+                <div class="flex items-start">
+                    <span class="text-green-600 mr-2">🌐</span>
+                    <p class="text-sm">Harvard Business Review - "The Art of Project Closure"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="text-center mt-8 pb-6">
+            <p class="text-gray-600 text-sm">© 2024 Project Management Finals - MK Basa | Created for educational purposes</p>
+        </footer>
+    </div>
+
+    <script>
+        let completedSections = 0;
+        const totalSections = 6;
+
+        function switchTab(tabName) {
+            const tabs = ['overview', 'closure-steps', 'reviews', 'presentation', 'case-study', 'activities'];
+            
+            tabs.forEach(tab => {
+                const content = document.getElementById(`content-${tab}`);
+                const button = document.getElementById(`tab-${tab}`);
+                
+                if (tab === tabName) {
+                    content.classList.add('active');
+                    button.classList.remove('text-gray-600');
+                    button.classList.add('text-green-600', 'border-b-2', 'border-green-600');
+                } else {
+                    content.classList.remove('active');
+                    button.classList.remove('text-green-600', 'border-b-2', 'border-green-600');
+                    button.classList.add('text-gray-600');
+                }
+            });
+
+            if (!document.getElementById(`tab-${tabName}`).dataset.visited) {
+                document.getElementById(`tab-${tabName}`).dataset.visited = 'true';
+                completedSections++;
+                updateProgress();
+            }
+        }
+
+        function updateProgress() {
+            const percentage = (completedSections / totalSections) * 100;
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = Math.round(percentage) + '% Complete';
+        }
+
+        function toggleChecklistItem(element) {
+            const checkbox = element.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+            
+            if (checkbox.checked) {
+                element.classList.add('checked');
+            } else {
+                element.classList.remove('checked');
+            }
+        }
+
+        function selectRating(button, rating) {
+            const container = button.parentElement;
+            const buttons = container.querySelectorAll('.rating-btn');
+            
+            buttons.forEach((btn, index) => {
+                if (index < rating) {
+                    btn.classList.remove('bg-gray-200');
+                    btn.classList.add('bg-purple-500', 'text-white');
+                } else {
+                    btn.classList.remove('bg-purple-500', 'text-white');
+                    btn.classList.add('bg-gray-200');
+                }
+            });
+        }
+
+        // Initialize with overview tab visited
+        document.getElementById('tab-overview').dataset.visited = 'true';
+        completedSections = 1;
+        updateProgress();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9935acca90be854a',t:'MTc2MTI2OTA3MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

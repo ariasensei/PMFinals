@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communication Management - Finals Week 1</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            height: 100%;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #667eea;
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+
+        .header p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .tab-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+        }
+
+        .key-point {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .case-study {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .case-study h4 {
+            margin-top: 0;
+            color: #2d3436;
+        }
+
+        .scenario {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #4caf50;
+        }
+
+        .activity-box {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px dashed #ff9800;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 10px;
+            margin: 8px 0;
+            background: #f8f9ff;
+            border-radius: 5px;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 15px;
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .stakeholder-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stakeholder-card {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .stakeholder-card h4 {
+            margin-top: 0;
+        }
+
+        .quiz-section {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .quiz-question {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .quiz-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1em;
+        }
+
+        .quiz-button:hover {
+            background: #764ba2;
+        }
+
+        .answer-feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .answer-feedback.correct {
+            background: #c8e6c9;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .answer-feedback.incorrect {
+            background: #ffcdd2;
+            color: #c62828;
+            display: block;
+        }
+
+        .communication-plan-template {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9ff;
+        }
+
+        .ilo-box {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .ilo-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .ilo-box ul {
+            margin: 10px 0;
+        }
+
+        .reference-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .interactive-element {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-element:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .interactive-element.expanded {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .hidden-content {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .tab-button {
+                width: 100%;
+            }
+            
+            .stakeholder-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Communication Management</h1>
+            <p><strong>Project Management Finals - Week 1</strong></p>
+            <p>Lecturer: MK Basa</p>
+        </div>
+
+        <div class="ilo-box">
+            <h3>🎯 Intended Learning Outcomes (ILO)</h3>
+            <ul>
+                <li>✅ Explain the importance of communication management in projects</li>
+                <li>✅ Develop a communication plan for effective information flow</li>
+                <li>✅ Analyze stakeholder engagement and management strategies</li>
+            </ul>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-button active" onclick="showTab('importance')">📢 Importance</button>
+            <button class="tab-button" onclick="showTab('plan')">📋 Communication Plan</button>
+            <button class="tab-button" onclick="showTab('stakeholders')">👥 Stakeholder Management</button>
+            <button class="tab-button" onclick="showTab('case-study')">💼 Case Study</button>
+            <button class="tab-button" onclick="showTab('activity')">✏️ Group Activity</button>
+            <button class="tab-button" onclick="showTab('quiz')">🎓 Quiz</button>
+        </div>
+
+        <div id="importance" class="content-section active">
+            <h2>📢 Importance of Communication Management</h2>
+            
+            <div class="key-point">
+                <h3>What is Communication Management?</h3>
+                <p>Communication Management is the systematic planning, implementing, monitoring, and revision of all channels of communication within a project. It ensures that the right information reaches the right people at the right time.</p>
+            </div>
+
+            <h3>Why is Communication Management Critical?</h3>
+            
+            <div class="scenario">
+                <h4>🎬 Real-Life Scenario: The Failed Product Launch</h4>
+                <p><strong>Company:</strong> TechStart Inc. (Mobile App Development)</p>
+                <p><strong>Problem:</strong> The development team built an amazing feature that took 3 months, but the marketing team had already promised clients a different feature. The CEO wasn't informed about the delay, and investors were expecting a launch date that was never communicated internally.</p>
+                <p><strong>Result:</strong> $500,000 wasted, damaged client relationships, and 6-month project delay.</p>
+                <p><strong>Root Cause:</strong> Poor communication management - no clear communication plan, undefined stakeholder roles, and irregular updates.</p>
+            </div>
+
+            <h3>Key Statistics</h3>
+            <ul class="checklist">
+                <li>90% of a project manager's time is spent on communication (PMI, 2021)</li>
+                <li>Poor communication is the primary cause of project failure 56% of the time</li>
+                <li>Effective communication can increase project success rates by 80%</li>
+                <li>Organizations with effective communication are 4.5x more likely to retain top talent</li>
+            </ul>
+
+            <h3>Core Benefits of Effective Communication Management</h3>
+            
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🎯 1. Alignment of Expectations</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p>Ensures everyone understands project goals, deliverables, and timelines. Prevents the "I thought you meant..." situations.</p>
+                    <p><strong>Example:</strong> A construction project where architects, engineers, and contractors all have the same understanding of building specifications.</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>⚡ 2. Faster Problem Resolution</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p>Issues are identified and escalated quickly when communication channels are clear.</p>
+                    <p><strong>Example:</strong> A software bug discovered by QA is immediately communicated to developers through Slack, fixed within hours instead of days.</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🤝 3. Stronger Stakeholder Relationships</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p>Regular, transparent communication builds trust and confidence.</p>
+                    <p><strong>Example:</strong> Weekly client updates showing progress keeps clients engaged and reduces anxiety about project status.</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>💰 4. Cost and Time Savings</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p>Reduces rework, misunderstandings, and delays.</p>
+                    <p><strong>Example:</strong> Clear requirements documentation prevents developers from building the wrong features, saving weeks of rework.</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🎯 5. Better Decision Making</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p>Stakeholders have access to accurate, timely information for informed decisions.</p>
+                    <p><strong>Example:</strong> Real-time budget reports help executives decide whether to approve additional resources.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="plan" class="content-section">
+            <h2>📋 Communication Plan</h2>
+            
+            <div class="key-point">
+                <h3>What is a Communication Plan?</h3>
+                <p>A Communication Plan is a documented strategy that outlines how, when, and what information will be shared with project stakeholders. It's your roadmap for keeping everyone informed and engaged.</p>
+            </div>
+
+            <h3>Essential Components of a Communication Plan</h3>
+
+            <div class="scenario">
+                <h4>📱 Real-Life Example: Mobile Banking App Project</h4>
+                <p>Let's follow "SecureBank" as they develop a new mobile banking app. Their communication plan includes:</p>
+                <ul>
+                    <li><strong>Daily:</strong> 15-minute stand-up meetings with dev team (Zoom)</li>
+                    <li><strong>Weekly:</strong> Progress reports to executives (Email + Dashboard)</li>
+                    <li><strong>Bi-weekly:</strong> Client demos (In-person presentations)</li>
+                    <li><strong>Monthly:</strong> Stakeholder newsletter (Email)</li>
+                    <li><strong>As-needed:</strong> Risk alerts (SMS + Email to key stakeholders)</li>
+                </ul>
+            </div>
+
+            <h3>Communication Plan Template</h3>
+            <div class="communication-plan-template">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>What (Information)</th>
+                            <th>Who (Audience)</th>
+                            <th>When (Frequency)</th>
+                            <th>How (Method)</th>
+                            <th>Who Delivers</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Project Status Updates</td>
+                            <td>Executive Sponsors</td>
+                            <td>Weekly</td>
+                            <td>Email Report</td>
+                            <td>Project Manager</td>
+                        </tr>
+                        <tr>
+                            <td>Technical Progress</td>
+                            <td>Development Team</td>
+                            <td>Daily</td>
+                            <td>Stand-up Meeting</td>
+                            <td>Scrum Master</td>
+                        </tr>
+                        <tr>
+                            <td>Budget Reports</td>
+                            <td>Finance Department</td>
+                            <td>Monthly</td>
+                            <td>Financial Dashboard</td>
+                            <td>Project Manager</td>
+                        </tr>
+                        <tr>
+                            <td>Risk Alerts</td>
+                            <td>All Stakeholders</td>
+                            <td>As Needed</td>
+                            <td>Email + SMS</td>
+                            <td>Risk Manager</td>
+                        </tr>
+                        <tr>
+                            <td>Client Demos</td>
+                            <td>Client Stakeholders</td>
+                            <td>Bi-weekly</td>
+                            <td>Video Conference</td>
+                            <td>Product Owner</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Steps to Create an Effective Communication Plan</h3>
+
+            <ul class="checklist">
+                <li><strong>Step 1:</strong> Identify all stakeholders (internal and external)</li>
+                <li><strong>Step 2:</strong> Determine information needs for each stakeholder group</li>
+                <li><strong>Step 3:</strong> Choose appropriate communication methods and tools</li>
+                <li><strong>Step 4:</strong> Define frequency and timing of communications</li>
+                <li><strong>Step 5:</strong> Assign responsibility for each communication</li>
+                <li><strong>Step 6:</strong> Document everything in a central location</li>
+                <li><strong>Step 7:</strong> Review and update regularly based on feedback</li>
+            </ul>
+
+            <div class="case-study">
+                <h4>💡 Pro Tips from Industry Experts</h4>
+                <ul>
+                    <li><strong>Use multiple channels:</strong> Don't rely on just email. Combine tools like Slack, project management software, and face-to-face meetings.</li>
+                    <li><strong>Tailor your message:</strong> Executives want high-level summaries; technical teams need detailed specifications.</li>
+                    <li><strong>Build in feedback loops:</strong> Always allow stakeholders to ask questions and provide input.</li>
+                    <li><strong>Document decisions:</strong> Keep a record of all major decisions and share them with relevant parties.</li>
+                </ul>
+            </div>
+
+            <h3>Common Communication Tools</h3>
+            <div class="stakeholder-grid">
+                <div class="stakeholder-card">
+                    <h4>📧 Email</h4>
+                    <p><strong>Best for:</strong> Formal updates, documentation, external stakeholders</p>
+                    <p><strong>Frequency:</strong> Weekly/Monthly</p>
+                </div>
+                <div class="stakeholder-card">
+                    <h4>💬 Instant Messaging</h4>
+                    <p><strong>Best for:</strong> Quick questions, team collaboration, urgent issues</p>
+                    <p><strong>Frequency:</strong> Daily/Real-time</p>
+                </div>
+                <div class="stakeholder-card">
+                    <h4>📊 Dashboards</h4>
+                    <p><strong>Best for:</strong> Real-time metrics, visual progress tracking</p>
+                    <p><strong>Frequency:</strong> Continuous access</p>
+                </div>
+                <div class="stakeholder-card">
+                    <h4>🎥 Video Meetings</h4>
+                    <p><strong>Best for:</strong> Complex discussions, team building, demos</p>
+                    <p><strong>Frequency:</strong> Weekly/Bi-weekly</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="stakeholders" class="content-section">
+            <h2>👥 Stakeholder Engagement and Management</h2>
+            
+            <div class="key-point">
+                <h3>Who are Stakeholders?</h3>
+                <p>Stakeholders are individuals, groups, or organizations who can affect or be affected by your project. They can be internal (team members, executives) or external (clients, vendors, end-users).</p>
+            </div>
+
+            <h3>Types of Stakeholders</h3>
+            <div class="stakeholder-grid">
+                <div class="stakeholder-card">
+                    <h4>🎯 Primary Stakeholders</h4>
+                    <p>Directly involved in the project</p>
+                    <p><strong>Examples:</strong> Project team, sponsors, clients</p>
+                </div>
+                <div class="stakeholder-card">
+                    <h4>🔄 Secondary Stakeholders</h4>
+                    <p>Indirectly affected by the project</p>
+                    <p><strong>Examples:</strong> End users, regulatory bodies, suppliers</p>
+                </div>
+                <div class="stakeholder-card">
+                    <h4>🔑 Key Stakeholders</h4>
+                    <p>High influence and interest</p>
+                    <p><strong>Examples:</strong> Executive sponsors, major clients</p>
+                </div>
+                <div class="stakeholder-card">
+                    <h4>👁️ Peripheral Stakeholders</h4>
+                    <p>Low influence but may be affected</p>
+                    <p><strong>Examples:</strong> Community groups, media</p>
+                </div>
+            </div>
+
+            <h3>Stakeholder Analysis Matrix</h3>
+            <div class="scenario">
+                <h4>📊 Power-Interest Grid</h4>
+                <p>This tool helps you prioritize stakeholder engagement based on their power (influence) and interest in the project.</p>
+                
+                <svg viewBox="0 0 600 400" style="width: 100%; max-width: 600px; margin: 20px auto; display: block;">
+                    <!-- Grid background -->
+                    <rect x="50" y="50" width="500" height="300" fill="#f8f9ff" stroke="#667eea" stroke-width="2"/>
+                    
+                    <!-- Vertical line -->
+                    <line x1="300" y1="50" x2="300" y2="350" stroke="#667eea" stroke-width="2"/>
+                    
+                    <!-- Horizontal line -->
+                    <line x1="50" y1="200" x2="550" y2="200" stroke="#667eea" stroke-width="2"/>
+                    
+                    <!-- Labels -->
+                    <text x="300" y="30" text-anchor="middle" font-weight="bold" fill="#333">INTEREST →</text>
+                    <text x="20" y="200" text-anchor="middle" font-weight="bold" fill="#333" transform="rotate(-90 20 200)">← POWER</text>
+                    
+                    <!-- Quadrant labels -->
+                    <text x="175" y="120" text-anchor="middle" font-weight="bold" fill="#764ba2">KEEP SATISFIED</text>
+                    <text x="175" y="140" text-anchor="middle" font-size="12" fill="#666">High Power, Low Interest</text>
+                    
+                    <text x="425" y="120" text-anchor="middle" font-weight="bold" fill="#e74c3c">MANAGE CLOSELY</text>
+                    <text x="425" y="140" text-anchor="middle" font-size="12" fill="#666">High Power, High Interest</text>
+                    
+                    <text x="175" y="270" text-anchor="middle" font-weight="bold" fill="#95a5a6">MONITOR</text>
+                    <text x="175" y="290" text-anchor="middle" font-size="12" fill="#666">Low Power, Low Interest</text>
+                    
+                    <text x="425" y="270" text-anchor="middle" font-weight="bold" fill="#3498db">KEEP INFORMED</text>
+                    <text x="425" y="290" text-anchor="middle" font-size="12" fill="#666">Low Power, High Interest</text>
+                    
+                    <!-- Example stakeholders -->
+                    <circle cx="450" cy="100" r="8" fill="#e74c3c"/>
+                    <text x="450" y="90" text-anchor="middle" font-size="11" fill="#333">CEO</text>
+                    
+                    <circle cx="480" cy="250" r="8" fill="#3498db"/>
+                    <text x="480" y="240" text-anchor="middle" font-size="11" fill="#333">End Users</text>
+                    
+                    <circle cx="150" cy="110" r="8" fill="#764ba2"/>
+                    <text x="150" y="100" text-anchor="middle" font-size="11" fill="#333">Legal</text>
+                    
+                    <circle cx="120" cy="280" r="8" fill="#95a5a6"/>
+                    <text x="120" y="270" text-anchor="middle" font-size="11" fill="#333">Media</text>
+                </svg>
+            </div>
+
+            <h3>Stakeholder Engagement Strategies</h3>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🎯 Strategy 1: Manage Closely (High Power, High Interest)</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Who:</strong> Executive sponsors, key clients, project champions</p>
+                    <p><strong>Approach:</strong> Frequent, detailed communication; involve in decision-making; seek regular feedback</p>
+                    <p><strong>Example:</strong> Weekly one-on-one meetings with CEO, monthly steering committee presentations</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>📢 Strategy 2: Keep Informed (Low Power, High Interest)</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Who:</strong> End users, team members, interested departments</p>
+                    <p><strong>Approach:</strong> Regular updates, newsletters, open forums for questions</p>
+                    <p><strong>Example:</strong> Monthly project newsletter, quarterly town halls, feedback surveys</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🤝 Strategy 3: Keep Satisfied (High Power, Low Interest)</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Who:</strong> Senior management, regulatory bodies, legal department</p>
+                    <p><strong>Approach:</strong> Keep informed of major milestones; don't overwhelm with details</p>
+                    <p><strong>Example:</strong> Monthly summary reports, quarterly reviews, alert on major issues only</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>👁️ Strategy 4: Monitor (Low Power, Low Interest)</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Who:</strong> Peripheral groups, general public, distant departments</p>
+                    <p><strong>Approach:</strong> Minimal communication; monitor for changes in interest or influence</p>
+                    <p><strong>Example:</strong> Include in general company announcements, annual reports</p>
+                </div>
+            </div>
+
+            <div class="case-study">
+                <h4>🏗️ Real-Life Case: Construction Project Stakeholder Management</h4>
+                <p><strong>Project:</strong> Building a new university library</p>
+                <p><strong>Challenge:</strong> Multiple stakeholder groups with competing interests</p>
+                
+                <h4>Stakeholder Groups:</h4>
+                <ul>
+                    <li><strong>University Board (High Power, High Interest):</strong> Weekly progress meetings, involved in major decisions, budget approvals</li>
+                    <li><strong>Students (Low Power, High Interest):</strong> Monthly updates via social media, design feedback sessions, virtual tours of progress</li>
+                    <li><strong>Local Government (High Power, Low Interest):</strong> Quarterly compliance reports, immediate notification of any issues affecting community</li>
+                    <li><strong>Neighboring Residents (Low Power, Medium Interest):</strong> Monthly newsletter about construction schedule, noise mitigation efforts, community liaison available</li>
+                </ul>
+                
+                <p><strong>Result:</strong> Project completed on time with 95% stakeholder satisfaction due to tailored communication approach.</p>
+            </div>
+
+            <h3>Best Practices for Stakeholder Management</h3>
+            <ul class="checklist">
+                <li>Identify stakeholders early in the project lifecycle</li>
+                <li>Regularly reassess stakeholder power and interest (they can change!)</li>
+                <li>Be proactive - don't wait for stakeholders to come to you</li>
+                <li>Manage expectations realistically - don't overpromise</li>
+                <li>Document all stakeholder interactions and decisions</li>
+                <li>Build relationships before you need them</li>
+                <li>Listen actively and address concerns promptly</li>
+                <li>Celebrate wins together to maintain engagement</li>
+            </ul>
+        </div>
+
+        <div id="case-study" class="content-section">
+            <h2>💼 Comprehensive Case Study Analysis</h2>
+            
+            <div class="case-study">
+                <h3>🚀 Case Study: "Project Phoenix" - E-Commerce Platform Redesign</h3>
+                
+                <h4>Background</h4>
+                <p><strong>Company:</strong> RetailMax, a mid-sized online retailer</p>
+                <p><strong>Project:</strong> Complete redesign of their e-commerce platform</p>
+                <p><strong>Timeline:</strong> 9 months</p>
+                <p><strong>Budget:</strong> $2.5 million</p>
+                <p><strong>Team Size:</strong> 35 people across 5 departments</p>
+                
+                <h4>The Challenge</h4>
+                <p>RetailMax's outdated platform was losing customers to competitors. The company needed a modern, mobile-friendly platform, but previous projects had failed due to poor communication and stakeholder misalignment.</p>
+                
+                <h4>Key Stakeholders Identified</h4>
+                <ul>
+                    <li><strong>CEO & Board:</strong> Concerned about ROI and timeline</li>
+                    <li><strong>Marketing Team:</strong> Wanted specific features for campaigns</li>
+                    <li><strong>IT Department:</strong> Worried about technical feasibility and security</li>
+                    <li><strong>Customer Service:</strong> Needed easy-to-use admin tools</li>
+                    <li><strong>Existing Customers:</strong> Concerned about learning new interface</li>
+                    <li><strong>Development Team:</strong> Needed clear requirements and realistic deadlines</li>
+                </ul>
+            </div>
+
+            <div class="scenario">
+                <h4>📋 Communication Plan Implemented</h4>
+                
+                <table style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Stakeholder</th>
+                            <th>Communication Method</th>
+                            <th>Frequency</th>
+                            <th>Content</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CEO & Board</td>
+                            <td>Executive Dashboard + Monthly Presentation</td>
+                            <td>Weekly (dashboard), Monthly (meeting)</td>
+                            <td>Budget status, major milestones, risks, ROI projections</td>
+                        </tr>
+                        <tr>
+                            <td>Marketing Team</td>
+                            <td>Bi-weekly Workshops + Slack Channel</td>
+                            <td>Bi-weekly + Daily</td>
+                            <td>Feature demos, feedback sessions, campaign planning</td>
+                        </tr>
+                        <tr>
+                            <td>IT Department</td>
+                            <td>Technical Review Meetings + Documentation</td>
+                            <td>Weekly</td>
+                            <td>Architecture decisions, security protocols, integration plans</td>
+                        </tr>
+                        <tr>
+                            <td>Customer Service</td>
+                            <td>Training Sessions + User Guides</td>
+                            <td>Monthly</td>
+                            <td>New features, admin tools, FAQ updates</td>
+                        </tr>
+                        <tr>
+                            <td>Customers</td>
+                            <td>Email Newsletter + Beta Program</td>
+                            <td>Monthly + Ongoing</td>
+                            <td>Upcoming changes, benefits, how to prepare</td>
+                        </tr>
+                        <tr>
+                            <td>Dev Team</td>
+                            <td>Daily Stand-ups + Sprint Reviews</td>
+                            <td>Daily + Bi-weekly</td>
+                            <td>Progress, blockers, technical discussions</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="key-point">
+                <h4>🎯 Critical Communication Moments</h4>
+                
+                <h4>Month 3: Major Scope Change Request</h4>
+                <p><strong>Situation:</strong> Marketing wanted to add a complex loyalty program feature mid-project.</p>
+                <p><strong>Communication Response:</strong></p>
+                <ul>
+                    <li>Immediate meeting with Marketing, IT, and Project Manager</li>
+                    <li>Impact analysis presented to CEO within 48 hours</li>
+                    <li>Options presented: delay launch by 2 months OR add feature in Phase 2</li>
+                    <li>Decision documented and communicated to all stakeholders within 24 hours</li>
+                </ul>
+                <p><strong>Outcome:</strong> Feature moved to Phase 2, project stayed on track</p>
+                
+                <h4>Month 6: Security Vulnerability Discovered</h4>
+                <p><strong>Situation:</strong> IT found a critical security issue requiring 3 weeks to fix.</p>
+                <p><strong>Communication Response:</strong></p>
+                <ul>
+                    <li>Immediate escalation to CEO and Board</li>
+                    <li>Risk assessment shared with all stakeholders</li>
+                    <li>Revised timeline communicated with clear rationale</li>
+                    <li>Weekly security updates provided until resolved</li>
+                </ul>
+                <p><strong>Outcome:</strong> Stakeholders appreciated transparency; no loss of confidence</p>
+            </div>
+
+            <div class="activity-box">
+                <h4>🤔 Analysis Questions for Discussion</h4>
+                <ol>
+                    <li><strong>Stakeholder Prioritization:</strong> How did the project team prioritize different stakeholder groups? Was this appropriate?</li>
+                    <li><strong>Communication Channels:</strong> Why do you think different channels were chosen for different stakeholders?</li>
+                    <li><strong>Crisis Communication:</strong> How did effective communication help manage the security vulnerability crisis?</li>
+                    <li><strong>Feedback Loops:</strong> What mechanisms were in place for stakeholders to provide feedback?</li>
+                    <li><strong>Improvements:</strong> What could have been done better in this communication plan?</li>
+                </ol>
+            </div>
+
+            <div class="scenario">
+                <h4>📊 Project Results</h4>
+                <ul class="checklist">
+                    <li><strong>Delivered:</strong> 2 weeks ahead of schedule</li>
+                    <li><strong>Budget:</strong> 3% under budget</li>
+                    <li><strong>Stakeholder Satisfaction:</strong> 92% (measured via survey)</li>
+                    <li><strong>Customer Adoption:</strong> 78% of customers actively using new platform within first month</li>
+                    <li><strong>Business Impact:</strong> 35% increase in online sales within 6 months</li>
+                </ul>
+                
+                <h4>Key Success Factors</h4>
+                <ul>
+                    <li>✅ Comprehensive stakeholder analysis at project start</li>
+                    <li>✅ Tailored communication plan for each stakeholder group</li>
+                    <li>✅ Proactive communication during crises</li>
+                    <li>✅ Regular feedback mechanisms and adjustments</li>
+                    <li>✅ Clear escalation paths for issues</li>
+                    <li>✅ Documentation of all major decisions</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="activity" class="content-section">
+            <h2>✏️ Group Activity: Draft Your Communication Plan</h2>
+            
+            <div class="activity-box">
+                <h3>🎯 Activity Instructions</h3>
+                <p><strong>Time:</strong> 30-40 minutes</p>
+                <p><strong>Group Size:</strong> 4-5 students per group</p>
+                
+                <h4>Scenario: Campus Event Management System</h4>
+                <p>Your university has hired your team to develop a new mobile app for managing campus events. Students can discover events, RSVP, get notifications, and provide feedback. The project has a 6-month timeline and a budget of $150,000.</p>
+                
+                <h4>Your Task:</h4>
+                <p>Create a comprehensive communication plan for this project.</p>
+            </div>
+
+            <div class="key-point">
+                <h3>Step 1: Identify Your Stakeholders (10 minutes)</h3>
+                <p>List all potential stakeholders for this project. Consider:</p>
+                <ul>
+                    <li>Who will use the app?</li>
+                    <li>Who is funding it?</li>
+                    <li>Who needs to approve it?</li>
+                    <li>Who will maintain it?</li>
+                    <li>Who might be affected by it?</li>
+                </ul>
+                
+                <p><strong>Hint:</strong> Think about students, faculty, administration, IT department, student organizations, etc.</p>
+            </div>
+
+            <div class="key-point">
+                <h3>Step 2: Analyze Stakeholder Power & Interest (10 minutes)</h3>
+                <p>For each stakeholder group, determine:</p>
+                <ul>
+                    <li>Their level of power/influence (High or Low)</li>
+                    <li>Their level of interest (High or Low)</li>
+                    <li>Which quadrant they fall into (Manage Closely, Keep Informed, Keep Satisfied, Monitor)</li>
+                </ul>
+            </div>
+
+            <div class="key-point">
+                <h3>Step 3: Create Communication Plan Table (15 minutes)</h3>
+                <p>Fill out a communication plan table with these columns:</p>
+                <ul>
+                    <li><strong>Stakeholder Group</strong></li>
+                    <li><strong>Information Needed</strong> (What do they need to know?)</li>
+                    <li><strong>Communication Method</strong> (Email, meeting, dashboard, etc.)</li>
+                    <li><strong>Frequency</strong> (Daily, weekly, monthly, as-needed)</li>
+                    <li><strong>Responsible Person</strong> (Who will communicate?)</li>
+                    <li><strong>Engagement Strategy</strong> (Based on their power/interest quadrant)</li>
+                </ul>
+            </div>
+
+            <div class="key-point">
+                <h3>Step 4: Identify Potential Communication Challenges (5 minutes)</h3>
+                <p>Discuss and list:</p>
+                <ul>
+                    <li>What could go wrong with communication in this project?</li>
+                    <li>How will you handle conflicting stakeholder interests?</li>
+                    <li>What's your plan for communicating bad news or delays?</li>
+                </ul>
+            </div>
+
+            <div class="scenario">
+                <h3>📝 Deliverable Template</h3>
+                <p>Your group should prepare a simple presentation or document including:</p>
+                <ol>
+                    <li><strong>Stakeholder List</strong> with power/interest classification</li>
+                    <li><strong>Communication Plan Table</strong> (at least 5 stakeholder groups)</li>
+                    <li><strong>Communication Tools</strong> you'll use and why</li>
+                    <li><strong>Risk Mitigation</strong> for communication challenges</li>
+                    <li><strong>Success Metrics</strong> - How will you measure if your communication is effective?</li>
+                </ol>
+            </div>
+
+            <div class="activity-box">
+                <h3>💡 Evaluation Criteria</h3>
+                <p>Your communication plan will be evaluated on:</p>
+                <ul class="checklist">
+                    <li><strong>Completeness:</strong> Did you identify all major stakeholders?</li>
+                    <li><strong>Appropriateness:</strong> Are communication methods suitable for each stakeholder?</li>
+                    <li><strong>Frequency:</strong> Is the communication frequency realistic and adequate?</li>
+                    <li><strong>Clarity:</strong> Is the plan clear and actionable?</li>
+                    <li><strong>Practicality:</strong> Can this plan actually be implemented?</li>
+                    <li><strong>Thoughtfulness:</strong> Did you consider potential challenges?</li>
+                </ul>
+            </div>
+
+            <div class="case-study">
+                <h3>🎓 Bonus Challenge</h3>
+                <p>If your group finishes early, consider these advanced questions:</p>
+                <ul>
+                    <li>How would your communication plan change if the project was delayed by 2 months?</li>
+                    <li>What if a major stakeholder (like the university president) suddenly became very interested in the project?</li>
+                    <li>How would you communicate if a security breach occurred during development?</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="quiz" class="content-section">
+            <h2>🎓 Knowledge Check Quiz</h2>
+            
+            <div class="quiz-section">
+                <div class="quiz-question">
+                    <h4>Question 1: Communication Management Fundamentals</h4>
+                    <p>According to PMI, approximately what percentage of a project manager's time is spent on communication?</p>
+                    <label><input type="radio" name="q1" value="a"> A) 50%</label><br>
+                    <label><input type="radio" name="q1" value="b"> B) 70%</label><br>
+                    <label><input type="radio" name="q1" value="c"> C) 90%</label><br>
+                    <label><input type="radio" name="q1" value="d"> D) 60%</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q1', 'c', 'Correct! Project managers spend approximately 90% of their time on communication activities.')">Submit Answer</button>
+                    <div id="q1-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 2: Stakeholder Analysis</h4>
+                    <p>A stakeholder with HIGH power but LOW interest should be:</p>
+                    <label><input type="radio" name="q2" value="a"> A) Managed Closely</label><br>
+                    <label><input type="radio" name="q2" value="b"> B) Kept Informed</label><br>
+                    <label><input type="radio" name="q2" value="c"> C) Kept Satisfied</label><br>
+                    <label><input type="radio" name="q2" value="d"> D) Monitored</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q2', 'c', 'Correct! High power, low interest stakeholders should be kept satisfied with key updates without overwhelming them with details.')">Submit Answer</button>
+                    <div id="q2-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 3: Communication Plan Components</h4>
+                    <p>Which of the following is NOT a typical component of a communication plan?</p>
+                    <label><input type="radio" name="q3" value="a"> A) Communication frequency</label><br>
+                    <label><input type="radio" name="q3" value="b"> B) Target audience</label><br>
+                    <label><input type="radio" name="q3" value="c"> C) Project budget details</label><br>
+                    <label><input type="radio" name="q3" value="d"> D) Communication method</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q3', 'c', 'Correct! While budget may be communicated, detailed budget information is not a standard component of the communication plan structure itself.')">Submit Answer</button>
+                    <div id="q3-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 4: Real-World Application</h4>
+                    <p>In the Project Phoenix case study, when a major scope change was requested, what was the MOST important communication action taken?</p>
+                    <label><input type="radio" name="q4" value="a"> A) Immediately accepting the change</label><br>
+                    <label><input type="radio" name="q4" value="b"> B) Rejecting the change outright</label><br>
+                    <label><input type="radio" name="q4" value="c"> C) Conducting impact analysis and presenting options to decision-makers</label><br>
+                    <label><input type="radio" name="q4" value="d"> D) Ignoring the request</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q4', 'c', 'Correct! The team conducted an impact analysis and presented clear options with consequences, allowing informed decision-making.')">Submit Answer</button>
+                    <div id="q4-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 5: Communication Methods</h4>
+                    <p>Which communication method is BEST for urgent, critical issues requiring immediate attention?</p>
+                    <label><input type="radio" name="q5" value="a"> A) Monthly newsletter</label><br>
+                    <label><input type="radio" name="q5" value="b"> B) Email report</label><br>
+                    <label><input type="radio" name="q5" value="c"> C) Phone call or instant message + follow-up email</label><br>
+                    <label><input type="radio" name="q5" value="d"> D) Quarterly meeting</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q5', 'c', 'Correct! Urgent issues require immediate, direct communication (phone/IM) followed by written documentation (email) for the record.')">Submit Answer</button>
+                    <div id="q5-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 6: Stakeholder Engagement</h4>
+                    <p>End users of a product typically fall into which stakeholder category?</p>
+                    <label><input type="radio" name="q6" value="a"> A) High Power, High Interest - Manage Closely</label><br>
+                    <label><input type="radio" name="q6" value="b"> B) Low Power, High Interest - Keep Informed</label><br>
+                    <label><input type="radio" name="q6" value="c"> C) High Power, Low Interest - Keep Satisfied</label><br>
+                    <label><input type="radio" name="q6" value="d"> D) Low Power, Low Interest - Monitor</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q6', 'b', 'Correct! End users typically have high interest in the product but low power over project decisions, so they should be kept informed.')">Submit Answer</button>
+                    <div id="q6-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 7: Communication Planning</h4>
+                    <p>What is the PRIMARY purpose of a communication plan?</p>
+                    <label><input type="radio" name="q7" value="a"> A) To document all project meetings</label><br>
+                    <label><input type="radio" name="q7" value="b"> B) To ensure the right information reaches the right people at the right time</label><br>
+                    <label><input type="radio" name="q7" value="c"> C) To create more work for the project manager</label><br>
+                    <label><input type="radio" name="q7" value="d"> D) To satisfy organizational requirements</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q7', 'b', 'Correct! The primary purpose is to ensure effective information flow to appropriate stakeholders at appropriate times.')">Submit Answer</button>
+                    <div id="q7-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 8: Critical Thinking</h4>
+                    <p>A project is experiencing delays. Which stakeholder group should be informed FIRST?</p>
+                    <label><input type="radio" name="q8" value="a"> A) End users</label><br>
+                    <label><input type="radio" name="q8" value="b"> B) Project sponsor and key decision-makers</label><br>
+                    <label><input type="radio" name="q8" value="c"> C) The entire organization</label><br>
+                    <label><input type="radio" name="q8" value="d"> D) External media</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q8', 'b', 'Correct! Project sponsors and key decision-makers should be informed first so they can make decisions about how to proceed and what to communicate to others.')">Submit Answer</button>
+                    <div id="q8-feedback" class="answer-feedback"></div>
+                </div>
+            </div>
+
+            <div class="key-point" style="margin-top: 30px;">
+                <h3>📚 Study Tips for Finals</h3>
+                <ul class="checklist">
+                    <li>Understand the WHY behind communication management, not just the WHAT</li>
+                    <li>Be able to create a communication plan from scratch</li>
+                    <li>Know how to classify stakeholders using the Power-Interest Grid</li>
+                    <li>Understand different engagement strategies for different stakeholder types</li>
+                    <li>Be prepared to analyze case studies and identify communication failures/successes</li>
+                    <li>Practice explaining concepts using real-world examples</li>
+                    <li>Review the PMBOK Guide Chapter on Stakeholder Management</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="reference-box">
+            <h3>📖 References & Further Reading</h3>
+            <ul>
+                <li>Project Management Institute. (2021). <em>A Guide to the Project Management Body of Knowledge (PMBOK Guide)</em> (Seventh Edition). PMI.</li>
+                <li>Kerzner, H. (2022). <em>Project Management: A Systems Approach to Planning, Scheduling, and Controlling</em> (13th ed.). Wiley.</li>
+                <li>Schwalbe, K. (2021). <em>Information Technology Project Management</em> (9th ed.). Cengage Learning.</li>
+                <li>Lester, A. (2021). <em>Project Management, Planning and Control</em> (8th ed.). Butterworth-Heinemann.</li>
+                <li>PMI. (2020). <em>The Standard for Project Management</em>. Project Management Institute.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            const sections = document.querySelectorAll('.content-section');
+            const buttons = document.querySelectorAll('.tab-button');
+            
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleContent(element) {
+            const hiddenContent = element.querySelector('.hidden-content');
+            const arrow = element.querySelector('span');
+            
+            if (hiddenContent.style.display === 'block') {
+                hiddenContent.style.display = 'none';
+                arrow.textContent = '▼';
+                element.classList.remove('expanded');
+            } else {
+                hiddenContent.style.display = 'block';
+                arrow.textContent = '▲';
+                element.classList.add('expanded');
+            }
+        }
+
+        function checkAnswer(questionId, correctAnswer, feedback) {
+            const selectedAnswer = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedbackDiv = document.getElementById(`${questionId}-feedback`);
+            
+            if (!selectedAnswer) {
+                feedbackDiv.className = 'answer-feedback incorrect';
+                feedbackDiv.textContent = 'Please select an answer first!';
+                return;
+            }
+            
+            if (selectedAnswer.value === correctAnswer) {
+                feedbackDiv.className = 'answer-feedback correct';
+                feedbackDiv.textContent = '✓ ' + feedback;
+            } else {
+                feedbackDiv.className = 'answer-feedback incorrect';
+                feedbackDiv.textContent = '✗ Incorrect. ' + feedback;
+            }
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9935643987b584a6',t:'MTc2MTI2NjA5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

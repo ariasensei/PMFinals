@@ -1,0 +1,2194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Monitoring and Control - Finals Week 3</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            height: 100%;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #667eea;
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+
+        .header p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .tab-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+        }
+
+        .key-point {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .case-study {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .case-study h4 {
+            margin-top: 0;
+            color: #2d3436;
+        }
+
+        .scenario {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #4caf50;
+        }
+
+        .activity-box {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px dashed #ff9800;
+        }
+
+        .tool-card {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tool-card h4 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .metric-card h4 {
+            margin-top: 0;
+            color: white;
+        }
+
+        .warning-box {
+            background: #ffebee;
+            border: 2px solid #f44336;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #c62828;
+            margin-top: 0;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .success-box h5 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+
+        .interactive-element {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-element:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .interactive-element.expanded {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .hidden-content {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .kpi-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 4px solid #667eea;
+        }
+
+        .kpi-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .kpi-label {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-green { background-color: #4caf50; }
+        .status-yellow { background-color: #ff9800; }
+        .status-red { background-color: #f44336; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9ff;
+        }
+
+        .ilo-box {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .ilo-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .reference-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 10px;
+            margin: 8px 0;
+            background: #f8f9ff;
+            border-radius: 5px;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 15px;
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .report-template {
+            background: #f8f9ff;
+            border: 2px solid #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .report-section {
+            margin: 15px 0;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+        }
+
+        .gantt-chart {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .gantt-bar {
+            height: 30px;
+            margin: 5px 0;
+            border-radius: 5px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .gantt-planned { background-color: #74b9ff; }
+        .gantt-actual { background-color: #00b894; }
+        .gantt-delayed { background-color: #e17055; }
+
+        .burndown-chart {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .chart-placeholder {
+            background: #f0f0f0;
+            height: 200px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .tab-button {
+                width: 100%;
+            }
+            
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Project Monitoring and Control</h1>
+            <p><strong>Project Management Finals - Week 3</strong></p>
+            <p>Lecturer: MK Basa</p>
+        </div>
+
+        <div class="ilo-box">
+            <h3>🎯 Intended Learning Outcomes (ILO)</h3>
+            <ul>
+                <li>✅ Apply tools for tracking project progress</li>
+                <li>✅ Prepare performance reports to monitor project status</li>
+            </ul>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-button active" onclick="showTab('overview')">📋 Overview</button>
+            <button class="tab-button" onclick="showTab('tracking-tools')">🔧 Progress Tracking Tools</button>
+            <button class="tab-button" onclick="showTab('performance-reporting')">📈 Performance Reporting</button>
+            <button class="tab-button" onclick="showTab('case-study')">💼 Real-World Case Study</button>
+            <button class="tab-button" onclick="showTab('activities')">🎯 Learning Activities</button>
+            <button class="tab-button" onclick="showTab('hands-on')">✋ Hands-On Practice</button>
+        </div>
+
+        <div id="overview" class="content-section active">
+            <h2>📋 Project Monitoring and Control Overview</h2>
+            
+            <div class="key-point">
+                <h3>What is Project Monitoring and Control?</h3>
+                <p>Project Monitoring and Control is the process of tracking, reviewing, and reporting project progress and performance to identify variances from the project management plan. It ensures projects stay on track and enables corrective actions when needed.</p>
+            </div>
+
+            <div class="scenario">
+                <h4>🏗️ Real-Life Scenario: Construction of a Shopping Mall</h4>
+                <p><strong>Project:</strong> Building a 3-story shopping mall in 18 months</p>
+                <p><strong>Budget:</strong> $50 million</p>
+                <p><strong>Challenge:</strong> How do you ensure the project stays on schedule and budget while maintaining quality?</p>
+                <p><strong>Solution:</strong> Implement comprehensive monitoring and control systems to track progress, costs, and quality metrics in real-time.</p>
+            </div>
+
+            <h3>Why Project Monitoring and Control Matters</h3>
+            
+            <div class="dashboard">
+                <div class="kpi-card">
+                    <div class="kpi-value">70%</div>
+                    <div class="kpi-label">of projects fail due to poor monitoring</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">189%</div>
+                    <div class="kpi-label">average cost overrun without proper control</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">222%</div>
+                    <div class="kpi-label">average schedule overrun without monitoring</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-value">85%</div>
+                    <div class="kpi-label">success rate with effective monitoring</div>
+                </div>
+            </div>
+
+            <h3>Key Components of Monitoring and Control</h3>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>📊 1. Performance Measurement</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>What it involves:</strong></p>
+                    <ul>
+                        <li>Collecting actual performance data</li>
+                        <li>Comparing against planned performance</li>
+                        <li>Identifying variances and trends</li>
+                        <li>Analyzing root causes of deviations</li>
+                    </ul>
+                    <p><strong>Example:</strong> In our shopping mall project, measuring actual construction progress against the planned schedule shows we're 2 weeks behind on foundation work.</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>📈 2. Progress Reporting</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>What it involves:</strong></p>
+                    <ul>
+                        <li>Creating regular status reports</li>
+                        <li>Communicating progress to stakeholders</li>
+                        <li>Highlighting risks and issues</li>
+                        <li>Providing forecasts and recommendations</li>
+                    </ul>
+                    <p><strong>Example:</strong> Weekly progress reports to the mall owner showing completion percentages, budget status, and upcoming milestones.</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>⚡ 3. Corrective Actions</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>What it involves:</strong></p>
+                    <ul>
+                        <li>Identifying when corrective action is needed</li>
+                        <li>Developing action plans to address issues</li>
+                        <li>Implementing changes to get back on track</li>
+                        <li>Monitoring the effectiveness of corrections</li>
+                    </ul>
+                    <p><strong>Example:</strong> Adding extra workers and extending work hours to make up for the 2-week delay in foundation work.</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🔄 4. Change Control</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>What it involves:</strong></p>
+                    <ul>
+                        <li>Managing requests for project changes</li>
+                        <li>Evaluating impact of proposed changes</li>
+                        <li>Approving or rejecting change requests</li>
+                        <li>Updating project plans and baselines</li>
+                    </ul>
+                    <p><strong>Example:</strong> The mall owner requests adding a fourth floor - evaluating cost, schedule, and feasibility impacts before approval.</p>
+                </div>
+            </div>
+
+            <div class="case-study">
+                <h4>💡 Success Story: London Olympics 2012</h4>
+                <p><strong>Challenge:</strong> Deliver Olympic venues and infrastructure on time for a fixed date with global visibility</p>
+                <p><strong>Monitoring Approach:</strong></p>
+                <ul>
+                    <li><strong>Integrated Dashboard:</strong> Real-time visibility across all venues and projects</li>
+                    <li><strong>Weekly Reviews:</strong> Regular progress meetings with all stakeholders</li>
+                    <li><strong>Risk Registers:</strong> Proactive identification and mitigation of risks</li>
+                    <li><strong>Earned Value Management:</strong> Precise tracking of cost and schedule performance</li>
+                </ul>
+                <p><strong>Result:</strong> All venues delivered on time and under budget, with the Olympic Park becoming a model for project management excellence.</p>
+            </div>
+
+            <h3>The Monitoring and Control Process</h3>
+            <div class="gantt-chart">
+                <h4>Typical Monitoring Cycle</h4>
+                <div class="gantt-bar gantt-planned">Week 1: Data Collection & Analysis</div>
+                <div class="gantt-bar gantt-actual">Week 2: Report Preparation</div>
+                <div class="gantt-bar gantt-planned">Week 3: Stakeholder Communication</div>
+                <div class="gantt-bar gantt-actual">Week 4: Corrective Action Planning</div>
+            </div>
+
+            <div class="key-point">
+                <h3>🎯 Key Success Factors</h3>
+                <ul class="checklist">
+                    <li>Establish clear baselines before starting monitoring</li>
+                    <li>Use the right tools for your project size and complexity</li>
+                    <li>Ensure data accuracy and timeliness</li>
+                    <li>Focus on actionable metrics, not just data collection</li>
+                    <li>Communicate findings clearly to all stakeholders</li>
+                    <li>Take corrective action promptly when needed</li>
+                    <li>Learn from variances to improve future projects</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="tracking-tools" class="content-section">
+            <h2>🔧 Progress Tracking Tools</h2>
+            
+            <div class="key-point">
+                <h3>Choosing the Right Tracking Tools</h3>
+                <p>The effectiveness of project monitoring depends heavily on using appropriate tools that match your project's complexity, team size, and organizational needs. Different tools serve different purposes and provide various levels of detail.</p>
+            </div>
+
+            <h3>Essential Progress Tracking Tools</h3>
+
+            <div class="tool-card">
+                <h4><span class="emoji">📊</span>Gantt Charts</h4>
+                <p><strong>Purpose:</strong> Visual timeline showing project tasks, dependencies, and progress</p>
+                <p><strong>Best for:</strong> Projects with clear sequential tasks and dependencies</p>
+                <p><strong>Key Features:</strong></p>
+                <ul>
+                    <li>Task duration and start/end dates</li>
+                    <li>Dependencies between tasks</li>
+                    <li>Critical path identification</li>
+                    <li>Progress tracking with percentage completion</li>
+                    <li>Resource allocation visualization</li>
+                </ul>
+                <p><strong>Real-world example:</strong> Construction projects use Gantt charts to show that electrical work can't start until plumbing is 80% complete.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4><span class="emoji">🔥</span>Burndown Charts</h4>
+                <p><strong>Purpose:</strong> Track remaining work over time in iterative projects</p>
+                <p><strong>Best for:</strong> Agile and Scrum projects with defined sprints</p>
+                <p><strong>Key Features:</strong></p>
+                <ul>
+                    <li>Visual representation of work remaining</li>
+                    <li>Ideal vs. actual progress comparison</li>
+                    <li>Early warning of schedule risks</li>
+                    <li>Team velocity tracking</li>
+                    <li>Sprint goal achievement monitoring</li>
+                </ul>
+                <p><strong>Real-world example:</strong> Software development teams use burndown charts to track story points completed during 2-week sprints.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4><span class="emoji">💰</span>Earned Value Management (EVM)</h4>
+                <p><strong>Purpose:</strong> Integrate scope, schedule, and cost performance measurement</p>
+                <p><strong>Best for:</strong> Large, complex projects with significant budgets</p>
+                <p><strong>Key Metrics:</strong></p>
+                <ul>
+                    <li><strong>PV (Planned Value):</strong> Budgeted cost of scheduled work</li>
+                    <li><strong>EV (Earned Value):</strong> Budgeted cost of completed work</li>
+                    <li><strong>AC (Actual Cost):</strong> Actual cost of completed work</li>
+                    <li><strong>SPI (Schedule Performance Index):</strong> EV/PV</li>
+                    <li><strong>CPI (Cost Performance Index):</strong> EV/AC</li>
+                </ul>
+                <p><strong>Real-world example:</strong> NASA uses EVM to track multi-billion dollar space missions, ensuring both schedule and budget performance.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4><span class="emoji">📋</span>Kanban Boards</h4>
+                <p><strong>Purpose:</strong> Visualize workflow and limit work in progress</p>
+                <p><strong>Best for:</strong> Continuous flow projects and operational work</p>
+                <p><strong>Key Features:</strong></p>
+                <ul>
+                    <li>Visual workflow columns (To Do, In Progress, Done)</li>
+                    <li>Work-in-progress (WIP) limits</li>
+                    <li>Cycle time measurement</li>
+                    <li>Bottleneck identification</li>
+                    <li>Continuous improvement focus</li>
+                </ul>
+                <p><strong>Real-world example:</strong> Marketing teams use Kanban boards to track campaign development from concept through launch.</p>
+            </div>
+
+            <div class="tool-card">
+                <h4><span class="emoji">🎯</span>Key Performance Indicators (KPIs)</h4>
+                <p><strong>Purpose:</strong> Measure critical success factors and project health</p>
+                <p><strong>Best for:</strong> All projects - provides high-level performance overview</p>
+                <p><strong>Common Project KPIs:</strong></p>
+                <ul>
+                    <li><strong>Schedule Performance:</strong> % of milestones on time</li>
+                    <li><strong>Budget Performance:</strong> Cost variance percentage</li>
+                    <li><strong>Quality Metrics:</strong> Defect rates, customer satisfaction</li>
+                    <li><strong>Resource Utilization:</strong> Team productivity measures</li>
+                    <li><strong>Risk Indicators:</strong> Number of open risks, risk exposure</li>
+                </ul>
+                <p><strong>Real-world example:</strong> IT projects track system uptime, user adoption rates, and bug resolution time as key KPIs.</p>
+            </div>
+
+            <div class="scenario">
+                <h4>🏢 Case Study: E-commerce Platform Development</h4>
+                <p><strong>Project:</strong> Building a new e-commerce platform for a retail company</p>
+                <p><strong>Timeline:</strong> 12 months</p>
+                <p><strong>Team:</strong> 25 developers, designers, and testers</p>
+                <p><strong>Budget:</strong> $2.5 million</p>
+                
+                <h4>Tracking Tools Implementation:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tool</th>
+                            <th>Purpose</th>
+                            <th>Frequency</th>
+                            <th>Key Metrics</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Gantt Chart</td>
+                            <td>Overall project timeline</td>
+                            <td>Weekly updates</td>
+                            <td>Milestone completion, critical path</td>
+                        </tr>
+                        <tr>
+                            <td>Burndown Charts</td>
+                            <td>Sprint progress tracking</td>
+                            <td>Daily updates</td>
+                            <td>Story points, velocity</td>
+                        </tr>
+                        <tr>
+                            <td>Kanban Board</td>
+                            <td>Development workflow</td>
+                            <td>Real-time</td>
+                            <td>Cycle time, WIP limits</td>
+                        </tr>
+                        <tr>
+                            <td>EVM Dashboard</td>
+                            <td>Cost and schedule performance</td>
+                            <td>Monthly</td>
+                            <td>CPI, SPI, EAC</td>
+                        </tr>
+                        <tr>
+                            <td>Quality KPIs</td>
+                            <td>Code quality and testing</td>
+                            <td>Weekly</td>
+                            <td>Bug rates, test coverage</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Digital Tools and Software</h3>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🔧 Microsoft Project</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Strengths:</strong></p>
+                    <ul>
+                        <li>Comprehensive project planning and tracking</li>
+                        <li>Advanced Gantt chart capabilities</li>
+                        <li>Resource management and leveling</li>
+                        <li>Integration with Microsoft Office suite</li>
+                    </ul>
+                    <p><strong>Best for:</strong> Traditional waterfall projects, construction, engineering</p>
+                    <p><strong>Cost:</strong> $10-55/user/month</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🎯 Jira</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Strengths:</strong></p>
+                    <ul>
+                        <li>Excellent for Agile and Scrum methodologies</li>
+                        <li>Customizable workflows and issue tracking</li>
+                        <li>Powerful reporting and analytics</li>
+                        <li>Integration with development tools</li>
+                    </ul>
+                    <p><strong>Best for:</strong> Software development, IT projects, Agile teams</p>
+                    <p><strong>Cost:</strong> $7-14/user/month</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>📊 Asana</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Strengths:</strong></p>
+                    <ul>
+                        <li>User-friendly interface and easy adoption</li>
+                        <li>Multiple project views (list, board, timeline)</li>
+                        <li>Good collaboration features</li>
+                        <li>Strong mobile app</li>
+                    </ul>
+                    <p><strong>Best for:</strong> Marketing teams, small to medium projects, creative work</p>
+                    <p><strong>Cost:</strong> Free for small teams, $10-25/user/month for advanced features</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🚀 Monday.com</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Strengths:</strong></p>
+                    <ul>
+                        <li>Highly visual and customizable</li>
+                        <li>Excellent automation capabilities</li>
+                        <li>Strong dashboard and reporting</li>
+                        <li>Good for cross-functional teams</li>
+                    </ul>
+                    <p><strong>Best for:</strong> Operations, marketing, general project management</p>
+                    <p><strong>Cost:</strong> $8-16/user/month</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Common Tool Selection Mistakes</h4>
+                <ul>
+                    <li><strong>Over-engineering:</strong> Choosing complex tools for simple projects</li>
+                    <li><strong>Under-tooling:</strong> Using basic tools for complex projects</li>
+                    <li><strong>Tool proliferation:</strong> Using too many different tools</li>
+                    <li><strong>Ignoring user adoption:</strong> Selecting tools the team won't use</li>
+                    <li><strong>Lack of integration:</strong> Tools that don't work well together</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <h5>💡 Tool Selection Best Practices</h5>
+                <ul class="checklist">
+                    <li>Start with project requirements, not tool features</li>
+                    <li>Consider team size, technical skills, and preferences</li>
+                    <li>Evaluate integration with existing systems</li>
+                    <li>Test tools with a pilot project before full rollout</li>
+                    <li>Provide adequate training and support</li>
+                    <li>Plan for data migration and backup</li>
+                    <li>Review and optimize tool usage regularly</li>
+                </ul>
+            </div>
+
+            <h3>Manual Tracking Methods</h3>
+            <p>While digital tools are powerful, sometimes simple manual methods are more appropriate:</p>
+
+            <div class="metric-card">
+                <h4>📝 Status Reports</h4>
+                <p><strong>When to use:</strong> Small projects, senior stakeholder communication</p>
+                <p><strong>Format:</strong> Weekly or bi-weekly written summaries</p>
+                <p><strong>Content:</strong> Accomplishments, upcoming work, issues, risks</p>
+            </div>
+
+            <div class="metric-card">
+                <h4>📞 Stand-up Meetings</h4>
+                <p><strong>When to use:</strong> Daily team coordination</p>
+                <p><strong>Format:</strong> 15-minute daily meetings</p>
+                <p><strong>Content:</strong> What I did yesterday, what I'll do today, any blockers</p>
+            </div>
+
+            <div class="metric-card">
+                <h4>📋 Checklists</h4>
+                <p><strong>When to use:</strong> Quality control, process compliance</p>
+                <p><strong>Format:</strong> Simple yes/no or completed/not completed lists</p>
+                <p><strong>Content:</strong> Required tasks, quality criteria, deliverable requirements</p>
+            </div>
+        </div>
+
+        <div id="performance-reporting" class="content-section">
+            <h2>📈 Performance Reporting</h2>
+            
+            <div class="key-point">
+                <h3>The Art and Science of Performance Reporting</h3>
+                <p>Performance reporting transforms raw project data into actionable insights for stakeholders. Effective reports tell a story about project health, highlight critical issues, and guide decision-making.</p>
+            </div>
+
+            <div class="scenario">
+                <h4>🏥 Real-World Example: Hospital Information System Implementation</h4>
+                <p><strong>Project:</strong> Implementing new patient management system across 5 hospitals</p>
+                <p><strong>Stakeholders:</strong> Hospital administrators, IT department, medical staff, patients</p>
+                <p><strong>Reporting Challenge:</strong> Each stakeholder group needs different information at different levels of detail</p>
+                <p><strong>Solution:</strong> Tiered reporting approach with executive dashboards, operational reports, and technical status updates</p>
+            </div>
+
+            <h3>Types of Performance Reports</h3>
+
+            <div class="tool-card">
+                <h4><span class="emoji">📊</span>Executive Dashboard</h4>
+                <p><strong>Audience:</strong> Senior executives, project sponsors</p>
+                <p><strong>Frequency:</strong> Monthly or at major milestones</p>
+                <p><strong>Focus:</strong> High-level status, key metrics, major risks</p>
+                <p><strong>Format:</strong> Visual, one-page summary with traffic light indicators</p>
+                
+                <div class="dashboard">
+                    <div class="kpi-card">
+                        <div class="status-indicator status-green"></div>
+                        <div class="kpi-value">85%</div>
+                        <div class="kpi-label">Overall Progress</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="status-indicator status-yellow"></div>
+                        <div class="kpi-value">$2.1M</div>
+                        <div class="kpi-label">Budget Used (of $2.5M)</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="status-indicator status-red"></div>
+                        <div class="kpi-value">3</div>
+                        <div class="kpi-label">High-Risk Issues</div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="status-indicator status-green"></div>
+                        <div class="kpi-value">Dec 15</div>
+                        <div class="kpi-label">Projected Completion</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tool-card">
+                <h4><span class="emoji">📋</span>Detailed Status Report</h4>
+                <p><strong>Audience:</strong> Project team, functional managers</p>
+                <p><strong>Frequency:</strong> Weekly or bi-weekly</p>
+                <p><strong>Focus:</strong> Detailed progress, resource utilization, upcoming activities</p>
+                <p><strong>Format:</strong> Structured document with sections for each project area</p>
+            </div>
+
+            <div class="tool-card">
+                <h4><span class="emoji">⚠️</span>Exception Reports</h4>
+                <p><strong>Audience:</strong> Project manager, key stakeholders</p>
+                <p><strong>Frequency:</strong> As needed when issues arise</p>
+                <p><strong>Focus:</strong> Specific problems, risks, or variances requiring attention</p>
+                <p><strong>Format:</strong> Brief, action-oriented communication</p>
+            </div>
+
+            <div class="tool-card">
+                <h4><span class="emoji">🎯</span>Milestone Reports</h4>
+                <p><strong>Audience:</strong> All stakeholders</p>
+                <p><strong>Frequency:</strong> At completion of major milestones</p>
+                <p><strong>Focus:</strong> Achievement summary, lessons learned, next phase preview</p>
+                <p><strong>Format:</strong> Comprehensive review with metrics and analysis</p>
+            </div>
+
+            <h3>Essential Report Components</h3>
+
+            <div class="report-template">
+                <h4>📄 Standard Performance Report Template</h4>
+                
+                <div class="report-section">
+                    <h5>1. Executive Summary</h5>
+                    <ul>
+                        <li>Overall project health (Red/Yellow/Green)</li>
+                        <li>Key accomplishments this period</li>
+                        <li>Critical issues requiring attention</li>
+                        <li>Forecast for next period</li>
+                    </ul>
+                </div>
+
+                <div class="report-section">
+                    <h5>2. Schedule Performance</h5>
+                    <ul>
+                        <li>Milestones completed vs. planned</li>
+                        <li>Critical path status</li>
+                        <li>Schedule variance analysis</li>
+                        <li>Projected completion date</li>
+                    </ul>
+                </div>
+
+                <div class="report-section">
+                    <h5>3. Budget Performance</h5>
+                    <ul>
+                        <li>Actual costs vs. budget</li>
+                        <li>Earned value metrics (if applicable)</li>
+                        <li>Cost variance analysis</li>
+                        <li>Forecast at completion</li>
+                    </ul>
+                </div>
+
+                <div class="report-section">
+                    <h5>4. Scope and Quality</h5>
+                    <ul>
+                        <li>Deliverables completed</li>
+                        <li>Quality metrics and issues</li>
+                        <li>Scope changes approved/pending</li>
+                        <li>Acceptance criteria status</li>
+                    </ul>
+                </div>
+
+                <div class="report-section">
+                    <h5>5. Risk and Issues</h5>
+                    <ul>
+                        <li>Top risks and mitigation status</li>
+                        <li>New risks identified</li>
+                        <li>Issues requiring escalation</li>
+                        <li>Risk exposure trends</li>
+                    </ul>
+                </div>
+
+                <div class="report-section">
+                    <h5>6. Resource Utilization</h5>
+                    <ul>
+                        <li>Team productivity metrics</li>
+                        <li>Resource allocation vs. plan</li>
+                        <li>Skill gaps or constraints</li>
+                        <li>Upcoming resource needs</li>
+                    </ul>
+                </div>
+
+                <div class="report-section">
+                    <h5>7. Next Period Outlook</h5>
+                    <ul>
+                        <li>Planned activities and milestones</li>
+                        <li>Key decisions needed</li>
+                        <li>Support required from stakeholders</li>
+                        <li>Potential challenges</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Effective Reporting Principles</h3>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🎯 Know Your Audience</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Executive Level:</strong></p>
+                    <ul>
+                        <li>High-level summaries with visual indicators</li>
+                        <li>Focus on business impact and ROI</li>
+                        <li>Highlight major risks and decisions needed</li>
+                        <li>Keep it to 1-2 pages maximum</li>
+                    </ul>
+                    <p><strong>Operational Level:</strong></p>
+                    <ul>
+                        <li>Detailed progress and performance data</li>
+                        <li>Resource utilization and productivity metrics</li>
+                        <li>Specific issues and action plans</li>
+                        <li>Comprehensive but organized information</li>
+                    </ul>
+                    <p><strong>Technical Level:</strong></p>
+                    <ul>
+                        <li>Detailed technical progress and quality metrics</li>
+                        <li>Specific technical challenges and solutions</li>
+                        <li>Resource needs and skill requirements</li>
+                        <li>Technical debt and architecture decisions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>📊 Use Visual Communication</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Effective Visual Elements:</strong></p>
+                    <ul>
+                        <li><strong>Traffic Light Indicators:</strong> Red/Yellow/Green status</li>
+                        <li><strong>Progress Bars:</strong> Percentage completion</li>
+                        <li><strong>Trend Charts:</strong> Performance over time</li>
+                        <li><strong>Dashboards:</strong> Multiple metrics at a glance</li>
+                        <li><strong>Gantt Charts:</strong> Schedule visualization</li>
+                    </ul>
+                    <p><strong>Visual Design Tips:</strong></p>
+                    <ul>
+                        <li>Use consistent colors and formatting</li>
+                        <li>Limit text and focus on key messages</li>
+                        <li>Make charts and graphs easy to read</li>
+                        <li>Use white space effectively</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>⏰ Timing and Frequency</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Report Frequency Guidelines:</strong></p>
+                    <ul>
+                        <li><strong>Daily:</strong> Team stand-ups, critical issue updates</li>
+                        <li><strong>Weekly:</strong> Detailed status reports, operational metrics</li>
+                        <li><strong>Monthly:</strong> Executive summaries, trend analysis</li>
+                        <li><strong>Milestone-based:</strong> Major deliverable completions</li>
+                        <li><strong>Ad-hoc:</strong> Exception reports, urgent issues</li>
+                    </ul>
+                    <p><strong>Timing Considerations:</strong></p>
+                    <ul>
+                        <li>Align with stakeholder meeting schedules</li>
+                        <li>Allow time for data collection and analysis</li>
+                        <li>Consider time zones for distributed teams</li>
+                        <li>Build in buffer time for report preparation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>📈 Focus on Actionable Insights</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Making Reports Actionable:</strong></p>
+                    <ul>
+                        <li>Highlight variances that require attention</li>
+                        <li>Provide specific recommendations</li>
+                        <li>Include clear next steps and owners</li>
+                        <li>Show trends, not just point-in-time data</li>
+                        <li>Connect metrics to business outcomes</li>
+                    </ul>
+                    <p><strong>Questions Reports Should Answer:</strong></p>
+                    <ul>
+                        <li>Are we on track to meet our objectives?</li>
+                        <li>What decisions need to be made?</li>
+                        <li>What support is needed from stakeholders?</li>
+                        <li>What are the biggest risks to success?</li>
+                        <li>How is performance trending over time?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="case-study">
+                <h4>📱 Case Study: Mobile App Development Reporting</h4>
+                <p><strong>Project:</strong> Developing a fitness tracking mobile app</p>
+                <p><strong>Team:</strong> 12 developers, 3 designers, 2 testers</p>
+                <p><strong>Duration:</strong> 6 months</p>
+                <p><strong>Methodology:</strong> Agile with 2-week sprints</p>
+                
+                <h4>Reporting Strategy:</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Report Type</th>
+                            <th>Audience</th>
+                            <th>Frequency</th>
+                            <th>Key Metrics</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Sprint Burndown</td>
+                            <td>Development Team</td>
+                            <td>Daily</td>
+                            <td>Story points remaining, velocity</td>
+                        </tr>
+                        <tr>
+                            <td>Sprint Review</td>
+                            <td>Product Owner, Stakeholders</td>
+                            <td>Bi-weekly</td>
+                            <td>Features completed, demo results</td>
+                        </tr>
+                        <tr>
+                            <td>Release Dashboard</td>
+                            <td>Executive Team</td>
+                            <td>Monthly</td>
+                            <td>Overall progress, budget, risks</td>
+                        </tr>
+                        <tr>
+                            <td>Quality Report</td>
+                            <td>QA Team, Tech Lead</td>
+                            <td>Weekly</td>
+                            <td>Bug counts, test coverage, performance</td>
+                        </tr>
+                        <tr>
+                            <td>Risk Assessment</td>
+                            <td>Project Manager, Sponsors</td>
+                            <td>Monthly</td>
+                            <td>Risk exposure, mitigation status</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Results:</h4>
+                <ul class="checklist">
+                    <li>Delivered on time with 95% of planned features</li>
+                    <li>Stayed within budget (2% under)</li>
+                    <li>High stakeholder satisfaction with transparency</li>
+                    <li>Early identification and resolution of technical risks</li>
+                    <li>Smooth launch with minimal post-release issues</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Common Reporting Pitfalls</h4>
+                <ul>
+                    <li><strong>Information Overload:</strong> Too much data, not enough insight</li>
+                    <li><strong>Outdated Information:</strong> Reports based on stale data</li>
+                    <li><strong>One-Size-Fits-All:</strong> Same report for all audiences</li>
+                    <li><strong>Lack of Context:</strong> Numbers without explanation</li>
+                    <li><strong>No Follow-up:</strong> Reports without action plans</li>
+                    <li><strong>Poor Timing:</strong> Reports that arrive too late to be useful</li>
+                    <li><strong>Inconsistent Format:</strong> Changing report structure confuses readers</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <h5>💡 Reporting Best Practices</h5>
+                <ul class="checklist">
+                    <li>Establish reporting standards and templates early</li>
+                    <li>Automate data collection where possible</li>
+                    <li>Validate data accuracy before reporting</li>
+                    <li>Use consistent terminology and definitions</li>
+                    <li>Include both quantitative and qualitative information</li>
+                    <li>Provide context and trend analysis</li>
+                    <li>Make reports easy to scan and digest</li>
+                    <li>Follow up on action items from previous reports</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="case-study" class="content-section">
+            <h2>💼 Real-World Case Study: Smart City Infrastructure Project</h2>
+            
+            <div class="case-study">
+                <h3>🏙️ Project Background</h3>
+                <p><strong>Project Name:</strong> "ConnectedCity 2025" - Smart Infrastructure Implementation</p>
+                <p><strong>Location:</strong> Mid-sized city (population 500,000)</p>
+                <p><strong>Duration:</strong> 36 months</p>
+                <p><strong>Budget:</strong> $150 million</p>
+                <p><strong>Scope:</strong> Smart traffic systems, IoT sensors, public WiFi, digital services platform</p>
+                <p><strong>Team Size:</strong> 200+ people across multiple vendors and city departments</p>
+            </div>
+
+            <div class="scenario">
+                <h4>🎯 Project Objectives</h4>
+                <ul>
+                    <li>Reduce traffic congestion by 25%</li>
+                    <li>Improve emergency response times by 30%</li>
+                    <li>Provide citywide public WiFi coverage</li>
+                    <li>Launch 15 digital citizen services</li>
+                    <li>Create integrated data analytics platform</li>
+                    <li>Achieve ROI within 5 years of completion</li>
+                </ul>
+            </div>
+
+            <h3>Monitoring and Control Challenges</h3>
+
+            <div class="warning-box">
+                <h4>⚠️ Challenge 1: Multiple Stakeholders and Vendors</h4>
+                <p><strong>Problem:</strong> 8 different vendors, 5 city departments, federal oversight, and citizen groups all needed different information at different frequencies.</p>
+                
+                <div class="success-box">
+                    <h5>💡 Solution: Tiered Reporting Structure</h5>
+                    <ul>
+                        <li><strong>Citizen Dashboard:</strong> Public website with high-level progress updates</li>
+                        <li><strong>Executive Summary:</strong> Monthly one-page report for mayor and city council</li>
+                        <li><strong>Operational Reports:</strong> Weekly detailed status for department heads</li>
+                        <li><strong>Vendor Scorecards:</strong> Performance tracking for each contractor</li>
+                        <li><strong>Technical Reviews:</strong> Bi-weekly deep dives with technical teams</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Challenge 2: Complex Dependencies</h4>
+                <p><strong>Problem:</strong> Traffic system installation depended on fiber optic network completion, which required street construction permits, which needed environmental approvals.</p>
+                
+                <div class="success-box">
+                    <h5>💡 Solution: Integrated Dependency Tracking</h5>
+                    <ul>
+                        <li><strong>Master Schedule:</strong> Gantt chart showing all cross-vendor dependencies</li>
+                        <li><strong>Critical Path Analysis:</strong> Weekly updates identifying bottlenecks</li>
+                        <li><strong>Dependency Dashboard:</strong> Real-time view of blocking issues</li>
+                        <li><strong>Escalation Matrix:</strong> Clear process for resolving dependency conflicts</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Challenge 3: Changing Requirements</h4>
+                <p><strong>Problem:</strong> New federal regulations, citizen feedback, and technology advances required frequent scope adjustments.</p>
+                
+                <div class="success-box">
+                    <h5>💡 Solution: Agile Change Management</h5>
+                    <ul>
+                        <li><strong>Change Control Board:</strong> Weekly meetings to evaluate change requests</li>
+                        <li><strong>Impact Assessment Process:</strong> Standardized evaluation of cost, schedule, and risk impacts</li>
+                        <li><strong>Flexible Architecture:</strong> Modular design allowing for component changes</li>
+                        <li><strong>Stakeholder Communication:</strong> Regular updates on approved changes and impacts</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Tracking Tools Implementation</h3>
+
+            <div class="tool-card">
+                <h4><span class="emoji">📊</span>Integrated Project Dashboard</h4>
+                <p><strong>Tool Used:</strong> Custom Power BI dashboard with real-time data feeds</p>
+                <p><strong>Key Features:</strong></p>
+                <ul>
+                    <li>Overall project health with traffic light indicators</li>
+                    <li>Budget utilization by work stream</li>
+                    <li>Milestone completion tracking</li>
+                    <li>Risk heat map with trending</li>
+                    <li>Vendor performance scorecards</li>
+                </ul>
+                <p><strong>Update Frequency:</strong> Real-time for some metrics, weekly for others</p>
+            </div>
+
+            <div class="tool-card">
+                <h4><span class="emoji">💰</span>Earned Value Management System</h4>
+                <p><strong>Tool Used:</strong> Microsoft Project Server with custom EVM reports</p>
+                <p><strong>Key Metrics Tracked:</strong></p>
+                <ul>
+                    <li><strong>Budget Performance Index (CPI):</strong> Maintained above 0.95</li>
+                    <li><strong>Schedule Performance Index (SPI):</strong> Target above 0.98</li>
+                    <li><strong>Estimate at Completion (EAC):</strong> Forecasted final cost</li>
+                    <li><strong>To Complete Performance Index (TCPI):</strong> Required efficiency</li>
+                </ul>
+                <p><strong>Reporting:</strong> Monthly EVM reports with variance analysis</p>
+            </div>
+
+            <div class="tool-card">
+                <h4><span class="emoji">🎯</span>Key Performance Indicators</h4>
+                <p><strong>Strategic KPIs:</strong></p>
+                <ul>
+                    <li>Infrastructure deployment completion percentage</li>
+                    <li>System integration test pass rates</li>
+                    <li>Citizen satisfaction scores (quarterly surveys)</li>
+                    <li>Vendor delivery performance ratings</li>
+                </ul>
+                <p><strong>Operational KPIs:</strong></p>
+                <ul>
+                    <li>Daily installation progress (sensors, access points, etc.)</li>
+                    <li>Defect rates and resolution times</li>
+                    <li>Resource utilization across teams</li>
+                    <li>Permit approval cycle times</li>
+                </ul>
+            </div>
+
+            <h3>Performance Reporting Strategy</h3>
+
+            <div class="report-template">
+                <h4>📄 Monthly Executive Report Structure</h4>
+                
+                <div class="report-section">
+                    <h5>Executive Summary (1 page)</h5>
+                    <div class="dashboard">
+                        <div class="kpi-card">
+                            <div class="status-indicator status-green"></div>
+                            <div class="kpi-value">78%</div>
+                            <div class="kpi-label">Overall Progress</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="status-indicator status-yellow"></div>
+                            <div class="kpi-value">$118M</div>
+                            <div class="kpi-label">Budget Used</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="status-indicator status-green"></div>
+                            <div class="kpi-value">Dec 2025</div>
+                            <div class="kpi-label">Projected Completion</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="status-indicator status-yellow"></div>
+                            <div class="kpi-value">2</div>
+                            <div class="kpi-label">High-Priority Risks</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="report-section">
+                    <h5>Work Stream Progress</h5>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Work Stream</th>
+                                <th>Progress</th>
+                                <th>Budget Status</th>
+                                <th>Key Issues</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Traffic Management</td>
+                                <td><span class="status-indicator status-green"></span>85%</td>
+                                <td>On budget</td>
+                                <td>None</td>
+                            </tr>
+                            <tr>
+                                <td>IoT Sensor Network</td>
+                                <td><span class="status-indicator status-yellow"></span>72%</td>
+                                <td>3% over budget</td>
+                                <td>Vendor delivery delays</td>
+                            </tr>
+                            <tr>
+                                <td>Public WiFi</td>
+                                <td><span class="status-indicator status-green"></span>90%</td>
+                                <td>2% under budget</td>
+                                <td>None</td>
+                            </tr>
+                            <tr>
+                                <td>Digital Services</td>
+                                <td><span class="status-indicator status-red"></span>65%</td>
+                                <td>On budget</td>
+                                <td>Integration challenges</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3>Crisis Management: The Fiber Optic Cable Crisis</h3>
+
+            <div class="scenario">
+                <h4>🚨 Month 18: Major Setback</h4>
+                <p><strong>Crisis:</strong> Primary fiber optic contractor discovered that 30% of installed cables were defective, requiring replacement.</p>
+                <p><strong>Impact:</strong> Potential 4-month delay and $8M cost overrun</p>
+                <p><strong>Stakeholder Pressure:</strong> Mayor facing re-election, federal funding at risk</p>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>📊 Crisis Response: Enhanced Monitoring</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Immediate Actions:</strong></p>
+                    <ul>
+                        <li><strong>Daily Reporting:</strong> Switched from weekly to daily progress reports</li>
+                        <li><strong>War Room Setup:</strong> Dedicated space with real-time dashboards</li>
+                        <li><strong>Vendor Oversight:</strong> On-site project managers for quality control</li>
+                        <li><strong>Stakeholder Communication:</strong> Twice-weekly updates to mayor and council</li>
+                    </ul>
+                    
+                    <p><strong>Recovery Tracking Metrics:</strong></p>
+                    <ul>
+                        <li>Cable replacement progress (linear feet per day)</li>
+                        <li>Quality test pass rates (100% inspection requirement)</li>
+                        <li>Recovery schedule adherence</li>
+                        <li>Additional cost tracking</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>💡 Recovery Strategy Implementation</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Parallel Work Streams:</strong></p>
+                    <ul>
+                        <li>Brought in second contractor for cable replacement</li>
+                        <li>Accelerated other work streams to minimize overall delay</li>
+                        <li>Implemented 24/7 work schedule for critical path items</li>
+                        <li>Negotiated vendor penalties and performance bonds</li>
+                    </ul>
+                    
+                    <p><strong>Enhanced Quality Control:</strong></p>
+                    <ul>
+                        <li>100% cable testing before installation</li>
+                        <li>Independent quality assurance team</li>
+                        <li>Real-time quality dashboards</li>
+                        <li>Vendor performance scorecards with penalties</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Final Results and Lessons Learned</h3>
+
+            <div class="success-box">
+                <h5>🏆 Project Outcomes</h5>
+                <ul class="checklist">
+                    <li><strong>Schedule:</strong> Completed 2 months late (due to fiber crisis)</li>
+                    <li><strong>Budget:</strong> 3% over budget ($154.5M total)</li>
+                    <li><strong>Scope:</strong> 100% of planned functionality delivered</li>
+                    <li><strong>Quality:</strong> All systems passed acceptance testing</li>
+                    <li><strong>Stakeholder Satisfaction:</strong> 85% approval rating from citizens</li>
+                    <li><strong>Business Benefits:</strong> Traffic congestion reduced by 28%</li>
+                    <li><strong>ROI:</strong> On track to achieve 5-year ROI target</li>
+                </ul>
+            </div>
+
+            <div class="key-point">
+                <h3>🎓 Key Lessons Learned</h3>
+                <ul>
+                    <li><strong>Early Warning Systems:</strong> Quality issues could have been detected earlier with better monitoring</li>
+                    <li><strong>Vendor Management:</strong> Performance bonds and penalties are essential for large contractors</li>
+                    <li><strong>Stakeholder Communication:</strong> Transparent, frequent communication builds trust during crises</li>
+                    <li><strong>Flexible Reporting:</strong> Ability to quickly adjust reporting frequency and detail is crucial</li>
+                    <li><strong>Integrated Dashboards:</strong> Real-time visibility enables faster decision-making</li>
+                    <li><strong>Risk Management:</strong> Continuous risk assessment and mitigation planning pays off</li>
+                    <li><strong>Change Control:</strong> Structured change management prevents scope creep</li>
+                </ul>
+            </div>
+
+            <div class="case-study">
+                <h4>📈 Post-Implementation Monitoring</h4>
+                <p><strong>Ongoing Monitoring (Year 1 Post-Launch):</strong></p>
+                <ul>
+                    <li><strong>System Performance:</strong> 99.7% uptime across all systems</li>
+                    <li><strong>Citizen Usage:</strong> 78% of residents using at least one digital service</li>
+                    <li><strong>Traffic Improvement:</strong> 28% reduction in average commute times</li>
+                    <li><strong>Emergency Response:</strong> 32% improvement in response times</li>
+                    <li><strong>Cost Savings:</strong> $12M annual operational savings achieved</li>
+                </ul>
+                
+                <p><strong>Continuous Improvement:</strong></p>
+                <ul>
+                    <li>Monthly performance reviews with city departments</li>
+                    <li>Quarterly citizen satisfaction surveys</li>
+                    <li>Annual technology refresh planning</li>
+                    <li>Ongoing vendor performance monitoring</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="activities" class="content-section">
+            <h2>🎯 Teaching Learning Activities</h2>
+            
+            <div class="key-point">
+                <h3>Learning Activities Overview</h3>
+                <p>These activities are designed to provide hands-on experience with project monitoring and control concepts, tools, and techniques through practical application and collaborative learning.</p>
+            </div>
+
+            <h3>Activity 1: Interactive Lecture on Progress Tracking Methods</h3>
+            <div class="activity-box">
+                <h4>🎓 Lecture Format: "Choose Your Own Adventure" Style</h4>
+                <p><strong>Duration:</strong> 45 minutes</p>
+                <p><strong>Format:</strong> Interactive presentation with real-time polling and decision points</p>
+                
+                <div class="scenario">
+                    <h4>📱 Scenario: Mobile Banking App Development</h4>
+                    <p><strong>Setting:</strong> You're the project manager for a new mobile banking app</p>
+                    <p><strong>Team:</strong> 15 developers, 3 designers, 2 testers</p>
+                    <p><strong>Timeline:</strong> 8 months</p>
+                    <p><strong>Budget:</strong> $1.2 million</p>
+                    <p><strong>Challenge:</strong> Choose the right tracking tools and methods</p>
+                </div>
+
+                <div class="interactive-element" onclick="toggleContent(this)">
+                    <strong>Decision Point 1: Project Methodology</strong> <span style="float: right;">▼</span>
+                    <div class="hidden-content">
+                        <p><strong>Options:</strong></p>
+                        <ul>
+                            <li><strong>Option A:</strong> Waterfall with detailed Gantt charts</li>
+                            <li><strong>Option B:</strong> Agile with Scrum and burndown charts</li>
+                            <li><strong>Option C:</strong> Hybrid approach with both methods</li>
+                        </ul>
+                        
+                        <p><strong>Class Discussion:</strong> What are the pros and cons of each approach for this project?</p>
+                        
+                        <div class="success-box">
+                            <h5>💡 Learning Outcome</h5>
+                            <p>Students learn to match tracking methods to project characteristics and understand the trade-offs between different approaches.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interactive-element" onclick="toggleContent(this)">
+                    <strong>Decision Point 2: Tracking Tools Selection</strong> <span style="float: right;">▼</span>
+                    <div class="hidden-content">
+                        <p><strong>Scenario Update:</strong> You chose Agile methodology. Now select your tracking tools.</p>
+                        
+                        <p><strong>Options:</strong></p>
+                        <ul>
+                            <li><strong>Option A:</strong> Jira + Confluence (Technical focus)</li>
+                            <li><strong>Option B:</strong> Asana + Slack (Collaboration focus)</li>
+                            <li><strong>Option C:</strong> Azure DevOps (Microsoft ecosystem)</li>
+                        </ul>
+                        
+                        <p><strong>Factors to Consider:</strong></p>
+                        <ul>
+                            <li>Team technical skills</li>
+                            <li>Integration with existing systems</li>
+                            <li>Cost and licensing</li>
+                            <li>Stakeholder reporting needs</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="interactive-element" onclick="toggleContent(this)">
+                    <strong>Decision Point 3: Reporting Strategy</strong> <span style="float: right;">▼</span>
+                    <div class="hidden-content">
+                        <p><strong>Stakeholders:</strong></p>
+                        <ul>
+                            <li>Bank executives (want high-level status)</li>
+                            <li>Development team (need detailed progress)</li>
+                            <li>Compliance team (require audit trails)</li>
+                            <li>Marketing team (need launch readiness info)</li>
+                        </ul>
+                        
+                        <p><strong>Challenge:</strong> Design a reporting strategy that meets all stakeholder needs without overwhelming anyone.</p>
+                        
+                        <p><strong>Class Activity:</strong> Break into groups and design reporting templates for each stakeholder group.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Activity 2: Hands-On Activity - Draft a Performance Report</h3>
+            <div class="activity-box">
+                <h4>✋ Individual Exercise: Create a Project Status Report</h4>
+                <p><strong>Duration:</strong> 60 minutes</p>
+                <p><strong>Format:</strong> Individual work with peer review</p>
+                
+                <div class="scenario">
+                    <h4>🏢 Project Scenario: Office Renovation Project</h4>
+                    <p><strong>Project:</strong> Renovating 3 floors of office space</p>
+                    <p><strong>Duration:</strong> 4 months (currently in month 3)</p>
+                    <p><strong>Budget:</strong> $500,000</p>
+                    <p><strong>Current Status:</strong> Some delays and budget concerns</p>
+                </div>
+
+                <div class="report-template">
+                    <h4>📊 Project Data Provided to Students</h4>
+                    
+                    <div class="report-section">
+                        <h5>Schedule Information</h5>
+                        <ul>
+                            <li>Floor 1: 100% complete (finished early)</li>
+                            <li>Floor 2: 85% complete (on schedule)</li>
+                            <li>Floor 3: 45% complete (2 weeks behind)</li>
+                            <li>Overall project: 76% complete</li>
+                        </ul>
+                    </div>
+
+                    <div class="report-section">
+                        <h5>Budget Information</h5>
+                        <ul>
+                            <li>Planned budget to date: $375,000</li>
+                            <li>Actual costs to date: $395,000</li>
+                            <li>Committed costs: $85,000</li>
+                            <li>Forecast at completion: $520,000</li>
+                        </ul>
+                    </div>
+
+                    <div class="report-section">
+                        <h5>Issues and Risks</h5>
+                        <ul>
+                            <li>Electrical contractor had COVID-19 outbreak (resolved)</li>
+                            <li>Flooring material delayed due to supply chain issues</li>
+                            <li>Client requested additional network outlets (+$15,000)</li>
+                            <li>Weather delays for exterior work</li>
+                        </ul>
+                    </div>
+
+                    <div class="report-section">
+                        <h5>Quality Metrics</h5>
+                        <ul>
+                            <li>Safety incidents: 0</li>
+                            <li>Rework required: 2% of completed work</li>
+                            <li>Client satisfaction: 8/10 (survey last week)</li>
+                            <li>Inspection pass rate: 95%</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h5>📝 Student Assignment</h5>
+                    <p><strong>Task:</strong> Create a one-page executive status report using the provided data</p>
+                    
+                    <p><strong>Requirements:</strong></p>
+                    <ul class="checklist">
+                        <li>Use visual indicators (traffic lights, progress bars)</li>
+                        <li>Include executive summary with key messages</li>
+                        <li>Highlight critical issues requiring attention</li>
+                        <li>Provide recommendations for next steps</li>
+                        <li>Make it suitable for a 5-minute presentation</li>
+                    </ul>
+                    
+                    <p><strong>Deliverable:</strong> PowerPoint slide or Word document formatted as executive report</p>
+                </div>
+
+                <div class="interactive-element" onclick="toggleContent(this)">
+                    <strong>Peer Review Process (15 minutes)</strong> <span style="float: right;">▼</span>
+                    <div class="hidden-content">
+                        <p><strong>Step 1:</strong> Pair up with another student</p>
+                        <p><strong>Step 2:</strong> Exchange reports and review using this checklist:</p>
+                        <ul>
+                            <li>Is the overall project status clear at first glance?</li>
+                            <li>Are the most critical issues highlighted?</li>
+                            <li>Would an executive understand what action is needed?</li>
+                            <li>Is the visual design clean and professional?</li>
+                            <li>Are recommendations specific and actionable?</li>
+                        </ul>
+                        <p><strong>Step 3:</strong> Provide written feedback and suggestions</p>
+                        <p><strong>Step 4:</strong> Discuss feedback with your partner</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Activity 3: Group Work - Simulated Project Progress Update</h3>
+            <div class="activity-box">
+                <h4>👥 Collaborative Exercise: Crisis Management Simulation</h4>
+                <p><strong>Duration:</strong> 90 minutes</p>
+                <p><strong>Format:</strong> Groups of 4-5 students</p>
+                <p><strong>Roles:</strong> Project Manager, Technical Lead, Business Analyst, Stakeholder Representative, Quality Manager</p>
+                
+                <div class="scenario">
+                    <h4>🚨 Crisis Scenario: E-learning Platform Launch</h4>
+                    <p><strong>Background:</strong> University e-learning platform must launch in 6 weeks for fall semester</p>
+                    <p><strong>Current Status:</strong> Multiple critical issues have emerged</p>
+                    <p><strong>Pressure:</strong> 50,000 students and faculty depending on the system</p>
+                    <p><strong>Stakes:</strong> University reputation and accreditation at risk</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4>🔥 Crisis Information (Revealed Progressively)</h4>
+                    
+                    <div class="interactive-element" onclick="toggleContent(this)">
+                        <strong>Round 1: Initial Crisis (15 minutes)</strong> <span style="float: right;">▼</span>
+                        <div class="hidden-content">
+                            <p><strong>Issues Discovered:</strong></p>
+                            <ul>
+                                <li>Performance testing shows system can only handle 5,000 concurrent users (need 15,000)</li>
+                                <li>Integration with student information system failing 30% of the time</li>
+                                <li>Mobile app crashes on iOS devices</li>
+                                <li>Accessibility compliance testing failed</li>
+                            </ul>
+                            
+                            <p><strong>Group Task:</strong> Assess the situation and create an immediate action plan</p>
+                            <p><strong>Deliverable:</strong> Priority matrix and initial response strategy</p>
+                        </div>
+                    </div>
+
+                    <div class="interactive-element" onclick="toggleContent(this)">
+                        <strong>Round 2: Stakeholder Pressure (20 minutes)</strong> <span style="float: right;">▼</span>
+                        <div class="hidden-content">
+                            <p><strong>New Information:</strong></p>
+                            <ul>
+                                <li>University President demands daily updates</li>
+                                <li>Faculty Senate threatens no-confidence vote if launch fails</li>
+                                <li>Media has picked up the story</li>
+                                <li>Backup vendor quotes $2M and 12 weeks for alternative solution</li>
+                            </ul>
+                            
+                            <p><strong>Group Task:</strong> Develop communication strategy and revised project plan</p>
+                            <p><strong>Deliverable:</strong> Stakeholder communication plan and recovery timeline</p>
+                        </div>
+                    </div>
+
+                    <div class="interactive-element" onclick="toggleContent(this)">
+                        <strong>Round 3: Resource Constraints (20 minutes)</strong> <span style="float: right;">▼</span>
+                        <div class="hidden-content">
+                            <p><strong>Additional Challenges:</strong></p>
+                            <ul>
+                                <li>Lead developer just gave 2-week notice</li>
+                                <li>Budget is already 90% spent</li>
+                                <li>University IT team is overwhelmed with other projects</li>
+                                <li>Vendor support team is in different time zone</li>
+                            </ul>
+                            
+                            <p><strong>Group Task:</strong> Finalize recovery plan with resource and budget constraints</p>
+                            <p><strong>Deliverable:</strong> Complete project recovery plan with monitoring strategy</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h5>📊 Final Presentation (15 minutes per group)</h5>
+                    <p><strong>Each group presents their crisis response including:</strong></p>
+                    <ul class="checklist">
+                        <li>Problem assessment and prioritization</li>
+                        <li>Recovery strategy and timeline</li>
+                        <li>Resource allocation and budget impact</li>
+                        <li>Stakeholder communication approach</li>
+                        <li>Monitoring and control measures</li>
+                        <li>Risk mitigation for remaining issues</li>
+                    </ul>
+                    
+                    <p><strong>Class Discussion:</strong> Compare approaches and identify best practices</p>
+                </div>
+            </div>
+
+            <h3>Activity 4: Tool Comparison Workshop</h3>
+            <div class="activity-box">
+                <h4>🔧 Hands-On Tool Evaluation</h4>
+                <p><strong>Duration:</strong> 45 minutes</p>
+                <p><strong>Format:</strong> Rotating stations with different tools</p>
+                
+                <div class="tool-card">
+                    <h4><span class="emoji">🚀</span>Station 1: Microsoft Project</h4>
+                    <p><strong>Task:</strong> Create a Gantt chart for a website development project</p>
+                    <p><strong>Focus:</strong> Dependencies, critical path, resource allocation</p>
+                    <p><strong>Time:</strong> 15 minutes per group</p>
+                </div>
+
+                <div class="tool-card">
+                    <h4><span class="emoji">📋</span>Station 2: Jira/Trello</h4>
+                    <p><strong>Task:</strong> Set up Kanban board for software development</p>
+                    <p><strong>Focus:</strong> Workflow design, WIP limits, burndown charts</p>
+                    <p><strong>Time:</strong> 15 minutes per group</p>
+                </div>
+
+                <div class="tool-card">
+                    <h4><span class="emoji">📊</span>Station 3: Excel/Google Sheets</h4>
+                    <p><strong>Task:</strong> Create project dashboard with KPIs</p>
+                    <p><strong>Focus:</strong> Data visualization, formulas, conditional formatting</p>
+                    <p><strong>Time:</strong> 15 minutes per group</p>
+                </div>
+
+                <div class="success-box">
+                    <h5>📝 Evaluation Criteria</h5>
+                    <p><strong>Students evaluate each tool on:</strong></p>
+                    <ul>
+                        <li>Ease of use (1-5 scale)</li>
+                        <li>Feature richness (1-5 scale)</li>
+                        <li>Collaboration capabilities (1-5 scale)</li>
+                        <li>Reporting quality (1-5 scale)</li>
+                        <li>Best use cases</li>
+                        <li>Limitations and drawbacks</li>
+                    </ul>
+                    
+                    <p><strong>Final Deliverable:</strong> Tool comparison matrix with recommendations</p>
+                </div>
+            </div>
+
+            <h3>Assessment and Reflection</h3>
+            <div class="key-point">
+                <h3>📚 Learning Assessment Methods</h3>
+                <ul class="checklist">
+                    <li><strong>Participation:</strong> Active engagement in discussions and activities (25%)</li>
+                    <li><strong>Report Quality:</strong> Executive report creation exercise (30%)</li>
+                    <li><strong>Group Presentation:</strong> Crisis management simulation results (25%)</li>
+                    <li><strong>Tool Evaluation:</strong> Comparative analysis of tracking tools (20%)</li>
+                </ul>
+            </div>
+
+            <div class="activity-box">
+                <h4>🤔 Reflection Questions</h4>
+                <p><strong>Individual reflection (10 minutes at end of session):</strong></p>
+                <ol>
+                    <li>What was the most challenging aspect of creating a performance report?</li>
+                    <li>How did working in a crisis simulation change your perspective on monitoring?</li>
+                    <li>Which tracking tool would you choose for your current/future projects and why?</li>
+                    <li>What key principles will you apply in your own project monitoring?</li>
+                    <li>How can you improve your skills in project monitoring and control?</li>
+                </ol>
+                
+                <p><strong>Class Discussion:</strong> Share insights and key takeaways</p>
+            </div>
+        </div>
+
+        <div id="hands-on" class="content-section">
+            <h2>✋ Hands-On Practice: Build Your Own Project Dashboard</h2>
+            
+            <div class="key-point">
+                <h3>Interactive Dashboard Creation</h3>
+                <p>This hands-on exercise will guide you through creating a comprehensive project dashboard using real project data. You'll learn to transform raw information into actionable insights.</p>
+            </div>
+
+            <div class="scenario">
+                <h4>🏗️ Practice Project: Community Center Construction</h4>
+                <p><strong>Project:</strong> Building a new community center with gym, meeting rooms, and café</p>
+                <p><strong>Duration:</strong> 12 months</p>
+                <p><strong>Budget:</strong> $2.8 million</p>
+                <p><strong>Current Status:</strong> Month 8 of 12</p>
+                <p><strong>Team:</strong> 45 people across multiple contractors</p>
+            </div>
+
+            <h3>Step 1: Data Collection and Analysis</h3>
+            <div class="activity-box">
+                <h4>📊 Project Data Set</h4>
+                <p><strong>Use this data to build your dashboard:</strong></p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Work Package</th>
+                            <th>Planned % Complete</th>
+                            <th>Actual % Complete</th>
+                            <th>Budget ($000s)</th>
+                            <th>Actual Cost ($000s)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Foundation & Structure</td>
+                            <td>100%</td>
+                            <td>100%</td>
+                            <td>$850</td>
+                            <td>$825</td>
+                            <td>Complete</td>
+                        </tr>
+                        <tr>
+                            <td>Electrical Systems</td>
+                            <td>90%</td>
+                            <td>75%</td>
+                            <td>$420</td>
+                            <td>$380</td>
+                            <td>Behind Schedule</td>
+                        </tr>
+                        <tr>
+                            <td>Plumbing & HVAC</td>
+                            <td>85%</td>
+                            <td>85%</td>
+                            <td>$380</td>
+                            <td>$395</td>
+                            <td>On Track</td>
+                        </tr>
+                        <tr>
+                            <td>Interior Finishing</td>
+                            <td>60%</td>
+                            <td>45%</td>
+                            <td>$650</td>
+                            <td>$290</td>
+                            <td>Behind Schedule</td>
+                        </tr>
+                        <tr>
+                            <td>Exterior & Landscaping</td>
+                            <td>40%</td>
+                            <td>20%</td>
+                            <td>$350</td>
+                            <td>$85</td>
+                            <td>Delayed</td>
+                        </tr>
+                        <tr>
+                            <td>Equipment & Furniture</td>
+                            <td>20%</td>
+                            <td>10%</td>
+                            <td>$150</td>
+                            <td>$25</td>
+                            <td>Not Started</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Step 2: Create Key Performance Indicators</h3>
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>📈 Calculate Your KPIs</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Exercise: Calculate these metrics using the data above:</strong></p>
+                    
+                    <div class="dashboard">
+                        <div class="kpi-card">
+                            <div class="kpi-value">?%</div>
+                            <div class="kpi-label">Overall Progress</div>
+                            <p><small>Hint: Weighted average by budget</small></p>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-value">$?M</div>
+                            <div class="kpi-label">Total Spent</div>
+                            <p><small>Sum of actual costs</small></p>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-value">?%</div>
+                            <div class="kpi-label">Budget Utilization</div>
+                            <p><small>Actual / Planned costs</small></p>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-value">?</div>
+                            <div class="kpi-label">Work Packages at Risk</div>
+                            <p><small>Count of behind/delayed items</small></p>
+                        </div>
+                    </div>
+                    
+                    <div class="success-box">
+                        <h5>💡 Solution</h5>
+                        <ul>
+                            <li><strong>Overall Progress:</strong> 71.4% (weighted by budget)</li>
+                            <li><strong>Total Spent:</strong> $2.0M</li>
+                            <li><strong>Budget Utilization:</strong> 71.4%</li>
+                            <li><strong>At Risk Packages:</strong> 3 (Electrical, Interior, Exterior)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Step 3: Design Visual Dashboard</h3>
+            <div class="activity-box">
+                <h4>🎨 Dashboard Design Exercise</h4>
+                <p><strong>Create a visual dashboard using your preferred tool (Excel, PowerPoint, or online tool):</strong></p>
+                
+                <div class="report-template">
+                    <h4>📊 Dashboard Requirements</h4>
+                    
+                    <div class="report-section">
+                        <h5>Header Section</h5>
+                        <ul>
+                            <li>Project name and current date</li>
+                            <li>Overall health indicator (Red/Yellow/Green)</li>
+                            <li>Key project metrics summary</li>
+                        </ul>
+                    </div>
+
+                    <div class="report-section">
+                        <h5>Progress Visualization</h5>
+                        <ul>
+                            <li>Progress bars for each work package</li>
+                            <li>Planned vs. actual comparison</li>
+                            <li>Color coding for status</li>
+                        </ul>
+                    </div>
+
+                    <div class="report-section">
+                        <h5>Budget Analysis</h5>
+                        <ul>
+                            <li>Budget vs. actual spending chart</li>
+                            <li>Forecast to completion</li>
+                            <li>Variance analysis</li>
+                        </ul>
+                    </div>
+
+                    <div class="report-section">
+                        <h5>Risk Indicators</h5>
+                        <ul>
+                            <li>Work packages behind schedule</li>
+                            <li>Budget overruns</li>
+                            <li>Critical path impacts</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Step 4: Create Performance Report</h3>
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>📝 Write Executive Summary</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Based on your dashboard, write a 3-paragraph executive summary:</strong></p>
+                    
+                    <div class="report-section">
+                        <h5>Paragraph 1: Overall Status</h5>
+                        <p><em>Template: "The Community Center project is currently [status] with [progress]% completion after 8 months. Overall project health is [color] due to [main reasons]."</em></p>
+                    </div>
+
+                    <div class="report-section">
+                        <h5>Paragraph 2: Key Issues</h5>
+                        <p><em>Template: "The primary concerns are [list top 2-3 issues]. These issues are impacting [schedule/budget/quality] and require [type of intervention]."</em></p>
+                    </div>
+
+                    <div class="report-section">
+                        <h5>Paragraph 3: Recommendations</h5>
+                        <p><em>Template: "To get the project back on track, we recommend [specific actions]. With these measures, we project [revised timeline/budget] for completion."</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Step 5: Scenario Analysis</h3>
+            <div class="warning-box">
+                <h4>🚨 New Crisis: Weather Delays</h4>
+                <p><strong>Update:</strong> Severe weather has delayed exterior work by 3 weeks and damaged some completed interior work.</p>
+                
+                <p><strong>Impact Assessment:</strong></p>
+                <ul>
+                    <li>Exterior & Landscaping: Now 0% complete (was 20%)</li>
+                    <li>Interior Finishing: Reduced to 35% complete (was 45%)</li>
+                    <li>Additional costs: $75,000 for repairs and weather protection</li>
+                    <li>Schedule impact: 3-week delay to overall completion</li>
+                </ul>
+                
+                <div class="success-box">
+                    <h5>📊 Exercise: Update Your Dashboard</h5>
+                    <ul class="checklist">
+                        <li>Recalculate all KPIs with new data</li>
+                        <li>Update visual indicators and status</li>
+                        <li>Revise executive summary</li>
+                        <li>Add crisis response section</li>
+                        <li>Include recovery plan timeline</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Step 6: Stakeholder Communication</h3>
+            <div class="activity-box">
+                <h4>📢 Multi-Audience Reporting</h4>
+                <p><strong>Create different versions of your report for different stakeholders:</strong></p>
+                
+                <div class="tool-card">
+                    <h4><span class="emoji">👔</span>City Council Version</h4>
+                    <p><strong>Focus:</strong> High-level status, budget impact, community benefits</p>
+                    <p><strong>Format:</strong> 1-slide summary with key metrics</p>
+                    <p><strong>Tone:</strong> Professional, reassuring, solution-focused</p>
+                </div>
+
+                <div class="tool-card">
+                    <h4><span class="emoji">🔧</span>Construction Team Version</h4>
+                    <p><strong>Focus:</strong> Detailed work package status, resource needs, technical issues</p>
+                    <p><strong>Format:</strong> Multi-page detailed report</p>
+                    <p><strong>Tone:</strong> Technical, action-oriented, specific</p>
+                </div>
+
+                <div class="tool-card">
+                    <h4><span class="emoji">👥</span>Community Newsletter Version</h4>
+                    <p><strong>Focus:</strong> Progress highlights, opening timeline, community impact</p>
+                    <p><strong>Format:</strong> Brief article with photos/visuals</p>
+                    <p><strong>Tone:</strong> Positive, accessible, engaging</p>
+                </div>
+            </div>
+
+            <h3>Step 7: Lessons Learned and Best Practices</h3>
+            <div class="key-point">
+                <h3>🎓 Reflection Questions</h3>
+                <p><strong>After completing the dashboard exercise, consider:</strong></p>
+                <ul>
+                    <li>What was most challenging about transforming data into insights?</li>
+                    <li>How did creating different stakeholder versions change your approach?</li>
+                    <li>What would you do differently in a real project situation?</li>
+                    <li>Which visual elements were most effective for communication?</li>
+                    <li>How would you automate this process for ongoing reporting?</li>
+                </ul>
+            </div>
+
+            <div class="success-box">
+                <h5>💡 Dashboard Best Practices Learned</h5>
+                <ul class="checklist">
+                    <li>Start with stakeholder information needs, not available data</li>
+                    <li>Use visual indicators for quick status assessment</li>
+                    <li>Include both current status and trends over time</li>
+                    <li>Highlight exceptions and items requiring attention</li>
+                    <li>Provide context and interpretation, not just numbers</li>
+                    <li>Keep executive versions simple and action-oriented</li>
+                    <li>Update regularly and consistently</li>
+                    <li>Test dashboard effectiveness with actual users</li>
+                </ul>
+            </div>
+
+            <div class="case-study">
+                <h4>🏆 Extension Exercise: Advanced Analytics</h4>
+                <p><strong>For advanced students, try these additional challenges:</strong></p>
+                <ul>
+                    <li><strong>Earned Value Analysis:</strong> Calculate CPI, SPI, and EAC for the project</li>
+                    <li><strong>Trend Analysis:</strong> Create charts showing performance trends over time</li>
+                    <li><strong>Risk Modeling:</strong> Develop probability-impact matrices for identified risks</li>
+                    <li><strong>Forecasting:</strong> Use current performance to predict final outcomes</li>
+                    <li><strong>Automation:</strong> Create formulas that automatically update KPIs</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="reference-box">
+            <h3>📖 References & Further Reading</h3>
+            
+            <h4>Primary Reference:</h4>
+            <ul>
+                <li>Project Management Institute. (2021). <em>A Guide to the Project Management Body of Knowledge (PMBOK Guide)</em> (Seventh Edition). PMI.</li>
+            </ul>
+            
+            <h4>Additional Academic Sources:</h4>
+            <ul>
+                <li>Kerzner, H. (2022). <em>Project Management: A Systems Approach to Planning, Scheduling, and Controlling</em> (13th ed.). Wiley.</li>
+                <li>Fleming, Q. W., & Koppelman, J. M. (2016). <em>Earned Value Project Management</em> (4th ed.). Project Management Institute.</li>
+                <li>Larson, E. W., & Gray, C. F. (2021). <em>Project Management: The Managerial Process</em> (8th ed.). McGraw-Hill Education.</li>
+                <li>Verzuh, E. (2015). <em>The Fast Forward MBA in Project Management</em> (5th ed.). Wiley.</li>
+            </ul>
+            
+            <h4>Monitoring and Control Specific:</h4>
+            <ul>
+                <li>Anbari, F. T. (2003). Earned value project management method and extensions. <em>Project Management Journal, 34</em>(4), 12-23.</li>
+                <li>Lipke, W. (2003). Schedule is different. <em>The Measurable News</em>, Summer, 31-34.</li>
+                <li>Marshall, R. A. (2007). The contribution of earned value management to project success on contracted efforts. <em>Journal of Contract Management, 5</em>(1), 21-331.</li>
+            </ul>
+            
+            <h4>Tools and Technology:</h4>
+            <ul>
+                <li>Schwalbe, K. (2019). <em>Information Technology Project Management</em> (9th ed.). Cengage Learning.</li>
+                <li>Heldman, K. (2018). <em>PMP: Project Management Professional Exam Study Guide</em> (9th ed.). Sybex.</li>
+                <li>Mulcahy, R. (2018). <em>PMP Exam Prep</em> (9th ed.). RMC Publications.</li>
+            </ul>
+            
+            <h4>Performance Measurement and Reporting:</h4>
+            <ul>
+                <li>Kaplan, R. S., & Norton, D. P. (2006). <em>Alignment: Using the Balanced Scorecard to Create Corporate Synergies</em>. Harvard Business Review Press.</li>
+                <li>Few, S. (2012). <em>Information Dashboard Design: Displaying Data for At-a-Glance Monitoring</em> (2nd ed.). Analytics Press.</li>
+                <li>Tufte, E. R. (2001). <em>The Visual Display of Quantitative Information</em> (2nd ed.). Graphics Press.</li>
+            </ul>
+            
+            <h4>Research Articles:</h4>
+            <ul>
+                <li>Zwikael, O., & Ahn, M. (2011). The effectiveness of risk management: An analysis of project risk planning across industries and countries. <em>Risk Analysis, 31</em>(1), 25-37.</li>
+                <li>Mir, F. A., & Pinnington, A. H. (2014). Exploring the value of project management: Linking project management performance and project success. <em>International Journal of Project Management, 32</em>(2), 202-217.</li>
+                <li>Joslin, R., & Müller, R. (2015). Relationships between a project management methodology and project success in different project governance contexts. <em>International Journal of Project Management, 33</em>(6), 1377-1392.</li>
+            </ul>
+            
+            <h4>Online Resources:</h4>
+            <ul>
+                <li>PMI Standards: <em>pmi.org/pmbok-guide-standards</em></li>
+                <li>Earned Value Management Association: <em>evmassociation.org</em></li>
+                <li>Project Management Tools Comparison: <em>capterra.com/project-management-software</em></li>
+                <li>Microsoft Project Learning Center: <em>support.microsoft.com/project</em></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            const sections = document.querySelectorAll('.content-section');
+            const buttons = document.querySelectorAll('.tab-button');
+            
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleContent(element) {
+            const hiddenContent = element.querySelector('.hidden-content');
+            const arrow = element.querySelector('span');
+            
+            if (hiddenContent.style.display === 'block') {
+                hiddenContent.style.display = 'none';
+                arrow.textContent = '▼';
+                element.classList.remove('expanded');
+            } else {
+                hiddenContent.style.display = 'block';
+                arrow.textContent = '▲';
+                element.classList.add('expanded');
+            }
+        }
+
+        // Simulate real-time dashboard updates
+        function updateKPIs() {
+            const kpiValues = document.querySelectorAll('.kpi-value');
+            kpiValues.forEach(kpi => {
+                if (kpi.textContent.includes('%')) {
+                    // Simulate small changes in percentage values
+                    const currentValue = parseInt(kpi.textContent);
+                    const newValue = currentValue + Math.floor(Math.random() * 3) - 1;
+                    kpi.textContent = Math.max(0, Math.min(100, newValue)) + '%';
+                }
+            });
+        }
+
+        // Update KPIs every 30 seconds for demonstration
+        setInterval(updateKPIs, 30000);
+
+        // Add interactive progress bars
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const width = Math.random() * 100;
+                bar.style.width = width + '%';
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99357fc626d0854a',t:'MTc2MTI2NzIyNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

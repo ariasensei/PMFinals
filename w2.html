@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Team Management and Leadership - Finals Week 2</title>
+    <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            height: 100%;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #667eea;
+            margin: 0 0 10px 0;
+            font-size: 2.5em;
+        }
+
+        .header p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .tab-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+        }
+
+        .key-point {
+            background: #f8f9ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .case-study {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .case-study h4 {
+            margin-top: 0;
+            color: #2d3436;
+        }
+
+        .scenario {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #4caf50;
+        }
+
+        .activity-box {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px dashed #ff9800;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 10px;
+            margin: 8px 0;
+            background: #f8f9ff;
+            border-radius: 5px;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 15px;
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .role-card {
+            background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .role-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .role-card h4 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .leadership-style {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .leadership-style h4 {
+            margin-top: 0;
+            color: white;
+        }
+
+        .conflict-scenario {
+            background: #ffebee;
+            border: 2px solid #f44336;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .conflict-scenario h4 {
+            color: #c62828;
+            margin-top: 0;
+        }
+
+        .solution-box {
+            background: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .solution-box h5 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+
+        .quiz-section {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .quiz-question {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .quiz-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1em;
+        }
+
+        .quiz-button:hover {
+            background: #764ba2;
+        }
+
+        .answer-feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .answer-feedback.correct {
+            background: #c8e6c9;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .answer-feedback.incorrect {
+            background: #ffcdd2;
+            color: #c62828;
+            display: block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9ff;
+        }
+
+        .ilo-box {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .ilo-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .ilo-box ul {
+            margin: 10px 0;
+        }
+
+        .reference-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 0.9em;
+        }
+
+        .interactive-element {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-element:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .interactive-element.expanded {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .hidden-content {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        .team-development-stage {
+            background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .team-development-stage h4 {
+            margin-top: 0;
+            color: white;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .tab-button {
+                width: 100%;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👥 Project Team Management & Leadership</h1>
+            <p><strong>Project Management Finals - Week 2</strong></p>
+            <p>Lecturer: MK Basa</p>
+        </div>
+
+        <div class="ilo-box">
+            <h3>🎯 Intended Learning Outcomes (ILO)</h3>
+            <ul>
+                <li>✅ Identify roles and responsibilities of project team members</li>
+                <li>✅ Demonstrate strategies for building and leading effective project teams</li>
+                <li>✅ Apply techniques for managing team dynamics and resolving conflicts</li>
+            </ul>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="tab-button active" onclick="showTab('roles')">👔 Roles & Responsibilities</button>
+            <button class="tab-button" onclick="showTab('building')">🏗️ Building Teams</button>
+            <button class="tab-button" onclick="showTab('leadership')">🎯 Leadership</button>
+            <button class="tab-button" onclick="showTab('dynamics')">⚖️ Team Dynamics</button>
+            <button class="tab-button" onclick="showTab('conflicts')">🤝 Conflict Resolution</button>
+            <button class="tab-button" onclick="showTab('activities')">🎭 Interactive Activities</button>
+            <button class="tab-button" onclick="showTab('case-study')">💼 Case Study</button>
+            <button class="tab-button" onclick="showTab('quiz')">📝 Quiz #1</button>
+        </div>
+
+        <div id="roles" class="content-section active">
+            <h2>👔 Roles and Responsibilities of Project Team Members</h2>
+            
+            <div class="key-point">
+                <h3>What Makes a Successful Project Team?</h3>
+                <p>A project team is a temporary group of individuals with complementary skills who work together to achieve specific project objectives. Success depends on clear roles, shared accountability, and effective collaboration.</p>
+            </div>
+
+            <div class="scenario">
+                <h4>🎬 Real-Life Scenario: Netflix Original Series Production</h4>
+                <p><strong>Project:</strong> Producing a 10-episode Netflix original series</p>
+                <p><strong>Challenge:</strong> Coordinating 200+ team members across multiple locations with a $50M budget and 8-month timeline</p>
+                <p><strong>Key Success Factor:</strong> Crystal-clear role definitions and accountability structures</p>
+            </div>
+
+            <h3>Core Project Team Roles</h3>
+            
+            <div class="team-grid">
+                <div class="role-card">
+                    <h4><span class="emoji">🎯</span>Project Manager</h4>
+                    <p><strong>Primary Responsibility:</strong> Overall project success</p>
+                    <ul>
+                        <li>Planning and scheduling</li>
+                        <li>Resource allocation</li>
+                        <li>Risk management</li>
+                        <li>Stakeholder communication</li>
+                        <li>Quality assurance</li>
+                    </ul>
+                    <p><strong>Netflix Example:</strong> Executive Producer coordinating all departments</p>
+                </div>
+
+                <div class="role-card">
+                    <h4><span class="emoji">💰</span>Project Sponsor</h4>
+                    <p><strong>Primary Responsibility:</strong> Project funding and strategic direction</p>
+                    <ul>
+                        <li>Provides funding and resources</li>
+                        <li>Makes high-level decisions</li>
+                        <li>Removes organizational barriers</li>
+                        <li>Champions the project</li>
+                    </ul>
+                    <p><strong>Netflix Example:</strong> Content Acquisition Executive</p>
+                </div>
+
+                <div class="role-card">
+                    <h4><span class="emoji">🔧</span>Technical Lead</h4>
+                    <p><strong>Primary Responsibility:</strong> Technical architecture and implementation</p>
+                    <ul>
+                        <li>Technical decision making</li>
+                        <li>Code/design quality</li>
+                        <li>Mentoring team members</li>
+                        <li>Technology standards</li>
+                    </ul>
+                    <p><strong>Netflix Example:</strong> Director of Photography</p>
+                </div>
+
+                <div class="role-card">
+                    <h4><span class="emoji">📊</span>Business Analyst</h4>
+                    <p><strong>Primary Responsibility:</strong> Requirements and process analysis</p>
+                    <ul>
+                        <li>Gathering requirements</li>
+                        <li>Process documentation</li>
+                        <li>Stakeholder liaison</li>
+                        <li>Solution validation</li>
+                    </ul>
+                    <p><strong>Netflix Example:</strong> Script Supervisor</p>
+                </div>
+
+                <div class="role-card">
+                    <h4><span class="emoji">🎨</span>Subject Matter Expert (SME)</h4>
+                    <p><strong>Primary Responsibility:</strong> Domain expertise and guidance</p>
+                    <ul>
+                        <li>Specialized knowledge</li>
+                        <li>Best practices guidance</li>
+                        <li>Quality validation</li>
+                        <li>Training and support</li>
+                    </ul>
+                    <p><strong>Netflix Example:</strong> Historical Consultant for period dramas</p>
+                </div>
+
+                <div class="role-card">
+                    <h4><span class="emoji">⚡</span>Team Members</h4>
+                    <p><strong>Primary Responsibility:</strong> Executing assigned tasks</p>
+                    <ul>
+                        <li>Completing deliverables</li>
+                        <li>Following processes</li>
+                        <li>Collaborating effectively</li>
+                        <li>Reporting progress</li>
+                    </ul>
+                    <p><strong>Netflix Example:</strong> Actors, Camera Operators, Editors</p>
+                </div>
+            </div>
+
+            <h3>RACI Matrix: Clarifying Accountability</h3>
+            <div class="key-point">
+                <p><strong>RACI</strong> is a tool to define roles and responsibilities:</p>
+                <ul>
+                    <li><strong>R</strong>esponsible: Who does the work</li>
+                    <li><strong>A</strong>ccountable: Who is ultimately answerable</li>
+                    <li><strong>C</strong>onsulted: Who provides input</li>
+                    <li><strong>I</strong>nformed: Who needs to know</li>
+                </ul>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Activity</th>
+                        <th>Project Manager</th>
+                        <th>Technical Lead</th>
+                        <th>Team Member</th>
+                        <th>Sponsor</th>
+                        <th>SME</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Project Planning</td>
+                        <td>R, A</td>
+                        <td>C</td>
+                        <td>C</td>
+                        <td>I</td>
+                        <td>C</td>
+                    </tr>
+                    <tr>
+                        <td>Technical Design</td>
+                        <td>I</td>
+                        <td>R, A</td>
+                        <td>C</td>
+                        <td>I</td>
+                        <td>C</td>
+                    </tr>
+                    <tr>
+                        <td>Task Execution</td>
+                        <td>I</td>
+                        <td>C</td>
+                        <td>R, A</td>
+                        <td>I</td>
+                        <td>C</td>
+                    </tr>
+                    <tr>
+                        <td>Budget Approval</td>
+                        <td>R</td>
+                        <td>I</td>
+                        <td>I</td>
+                        <td>A</td>
+                        <td>I</td>
+                    </tr>
+                    <tr>
+                        <td>Quality Review</td>
+                        <td>A</td>
+                        <td>R</td>
+                        <td>R</td>
+                        <td>I</td>
+                        <td>C</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="case-study">
+                <h4>💡 Real-World Example: Spotify's Agile Teams</h4>
+                <p>Spotify organizes their teams into "Squads" (small cross-functional teams), "Tribes" (collections of squads), and "Guilds" (communities of practice). Each role is clearly defined:</p>
+                <ul>
+                    <li><strong>Squad Lead:</strong> Like a project manager for the team</li>
+                    <li><strong>Product Owner:</strong> Defines what to build</li>
+                    <li><strong>Developers:</strong> Build the features</li>
+                    <li><strong>UX Designer:</strong> Ensures great user experience</li>
+                    <li><strong>Data Analyst:</strong> Measures success</li>
+                </ul>
+                <p><strong>Result:</strong> Clear roles enable rapid innovation and high team autonomy while maintaining alignment with company goals.</p>
+            </div>
+
+            <h3>Key Principles for Effective Role Definition</h3>
+            <ul class="checklist">
+                <li>Make roles specific and measurable</li>
+                <li>Avoid overlapping responsibilities</li>
+                <li>Ensure every critical task has an owner</li>
+                <li>Define decision-making authority clearly</li>
+                <li>Include both individual and team responsibilities</li>
+                <li>Review and adjust roles as project evolves</li>
+                <li>Communicate role changes to all stakeholders</li>
+                <li>Document roles in accessible formats</li>
+            </ul>
+        </div>
+
+        <div id="building" class="content-section">
+            <h2>🏗️ Building and Leading Effective Project Teams</h2>
+            
+            <div class="key-point">
+                <h3>The Foundation of High-Performing Teams</h3>
+                <p>Building effective project teams is both an art and a science. It requires understanding individual strengths, creating psychological safety, and fostering collaboration toward shared goals.</p>
+            </div>
+
+            <h3>Tuckman's Team Development Model</h3>
+            <p>Teams typically progress through five stages of development:</p>
+
+            <div class="team-development-stage">
+                <h4>🌱 1. Forming</h4>
+                <p><strong>Characteristics:</strong> Politeness, uncertainty, dependence on leader</p>
+                <p><strong>Leader Focus:</strong> Set clear expectations, establish ground rules, facilitate introductions</p>
+                <p><strong>Example:</strong> First team meeting where everyone is getting to know each other</p>
+            </div>
+
+            <div class="team-development-stage">
+                <h4>⚡ 2. Storming</h4>
+                <p><strong>Characteristics:</strong> Conflict, competition, questioning authority</p>
+                <p><strong>Leader Focus:</strong> Facilitate open communication, address conflicts, clarify roles</p>
+                <p><strong>Example:</strong> Disagreements about project approach or individual responsibilities</p>
+            </div>
+
+            <div class="team-development-stage">
+                <h4>🤝 3. Norming</h4>
+                <p><strong>Characteristics:</strong> Cooperation, shared responsibility, team cohesion</p>
+                <p><strong>Leader Focus:</strong> Encourage collaboration, establish team norms, celebrate progress</p>
+                <p><strong>Example:</strong> Team develops working agreements and starts collaborating effectively</p>
+            </div>
+
+            <div class="team-development-stage">
+                <h4>🚀 4. Performing</h4>
+                <p><strong>Characteristics:</strong> High productivity, autonomy, shared leadership</p>
+                <p><strong>Leader Focus:</strong> Delegate effectively, provide resources, remove obstacles</p>
+                <p><strong>Example:</strong> Team works independently and efficiently toward project goals</p>
+            </div>
+
+            <div class="team-development-stage">
+                <h4>👋 5. Adjourning</h4>
+                <p><strong>Characteristics:</strong> Project completion, team dissolution, reflection</p>
+                <p><strong>Leader Focus:</strong> Celebrate achievements, conduct lessons learned, support transition</p>
+                <p><strong>Example:</strong> Project wrap-up and team members moving to new assignments</p>
+            </div>
+
+            <div class="scenario">
+                <h4>🎮 Case Study: Video Game Development Team</h4>
+                <p><strong>Company:</strong> Indie game studio developing their first major title</p>
+                <p><strong>Team:</strong> 12 people (programmers, artists, designers, sound engineers)</p>
+                <p><strong>Timeline:</strong> 18 months</p>
+                
+                <h4>Team Building Journey:</h4>
+                <p><strong>Forming (Month 1):</strong> Team lead organized skill-sharing sessions where each member presented their expertise. Created team charter with shared vision.</p>
+                
+                <p><strong>Storming (Months 2-3):</strong> Conflicts arose between artists wanting creative freedom and programmers needing technical constraints. Some team members questioned the game concept.</p>
+                
+                <p><strong>Norming (Months 4-6):</strong> Established daily stand-ups, weekly creative reviews, and monthly team retrospectives. Created shared decision-making processes.</p>
+                
+                <p><strong>Performing (Months 7-16):</strong> Team hit their stride, consistently meeting milestones. Members started cross-training and helping each other proactively.</p>
+                
+                <p><strong>Adjourning (Months 17-18):</strong> Successful game launch, team celebration, and documentation of lessons learned for future projects.</p>
+            </div>
+
+            <h3>Strategies for Building Effective Teams</h3>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🎯 1. Clear Vision and Goals</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Why it matters:</strong> Teams need to understand the "why" behind their work</p>
+                    <p><strong>How to implement:</strong></p>
+                    <ul>
+                        <li>Create a compelling project vision statement</li>
+                        <li>Break down goals into measurable objectives</li>
+                        <li>Regularly remind team of the bigger picture</li>
+                        <li>Connect individual contributions to overall success</li>
+                    </ul>
+                    <p><strong>Example:</strong> "We're not just building an app; we're helping students learn more effectively and reduce academic stress."</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🧩 2. Complementary Skills and Diversity</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Why it matters:</strong> Diverse teams make better decisions and are more innovative</p>
+                    <p><strong>How to implement:</strong></p>
+                    <ul>
+                        <li>Map required skills against team capabilities</li>
+                        <li>Include different perspectives (technical, business, user)</li>
+                        <li>Balance experience levels (senior and junior members)</li>
+                        <li>Consider cognitive diversity (different thinking styles)</li>
+                    </ul>
+                    <p><strong>Example:</strong> A web development team including front-end developer, back-end developer, UX designer, and business analyst</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🛡️ 3. Psychological Safety</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Why it matters:</strong> Team members need to feel safe to take risks, make mistakes, and speak up</p>
+                    <p><strong>How to implement:</strong></p>
+                    <ul>
+                        <li>Encourage questions and admit when you don't know something</li>
+                        <li>Treat mistakes as learning opportunities</li>
+                        <li>Listen actively and show genuine interest in ideas</li>
+                        <li>Address any behavior that makes others feel unsafe</li>
+                    </ul>
+                    <p><strong>Example:</strong> Google's Project Aristotle found psychological safety was the #1 factor in team effectiveness</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>📞 4. Effective Communication Channels</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Why it matters:</strong> Information flow is the lifeblood of team collaboration</p>
+                    <p><strong>How to implement:</strong></p>
+                    <ul>
+                        <li>Establish regular meeting rhythms (daily, weekly, monthly)</li>
+                        <li>Use appropriate tools for different types of communication</li>
+                        <li>Create both formal and informal communication opportunities</li>
+                        <li>Ensure remote team members are fully included</li>
+                    </ul>
+                    <p><strong>Example:</strong> Slack for quick questions, Zoom for complex discussions, Jira for task tracking</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🎉 5. Recognition and Celebration</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Why it matters:</strong> Recognition motivates and reinforces desired behaviors</p>
+                    <p><strong>How to implement:</strong></p>
+                    <ul>
+                        <li>Celebrate both individual and team achievements</li>
+                        <li>Recognize effort, not just results</li>
+                        <li>Make recognition timely and specific</li>
+                        <li>Use various forms: public praise, written thanks, small rewards</li>
+                    </ul>
+                    <p><strong>Example:</strong> Weekly "wins" sharing in team meetings, peer nomination systems, milestone celebrations</p>
+                </div>
+            </div>
+
+            <div class="case-study">
+                <h4>🏆 Success Story: Airbnb's Cross-Functional Teams</h4>
+                <p>Airbnb organizes around cross-functional teams that include:</p>
+                <ul>
+                    <li><strong>Product Manager:</strong> Defines what to build</li>
+                    <li><strong>Engineer:</strong> Builds the solution</li>
+                    <li><strong>Designer:</strong> Creates user experience</li>
+                    <li><strong>Data Scientist:</strong> Measures impact</li>
+                </ul>
+                <p><strong>Key Success Factors:</strong></p>
+                <ul>
+                    <li>Teams have end-to-end ownership of features</li>
+                    <li>Regular "Demo Days" where teams showcase work</li>
+                    <li>Emphasis on user empathy through host/guest interactions</li>
+                    <li>Failure parties to celebrate learning from mistakes</li>
+                </ul>
+                <p><strong>Result:</strong> Rapid innovation and high employee engagement, contributing to Airbnb's global success</p>
+            </div>
+
+            <h3>Team Building Activities and Techniques</h3>
+            <div class="activity-box">
+                <h4>🎯 Practical Team Building Ideas</h4>
+                <ul>
+                    <li><strong>Skills Inventory:</strong> Map everyone's skills and interests</li>
+                    <li><strong>Working Agreements:</strong> Collaboratively create team norms</li>
+                    <li><strong>Retrospectives:</strong> Regular reflection on what's working/not working</li>
+                    <li><strong>Pair Programming/Working:</strong> Knowledge sharing and collaboration</li>
+                    <li><strong>Cross-training:</strong> Help team members learn each other's roles</li>
+                    <li><strong>Social Activities:</strong> Virtual coffee chats, team lunches, game sessions</li>
+                    <li><strong>Innovation Time:</strong> Dedicated time for creative exploration</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="leadership" class="content-section">
+            <h2>🎯 Leadership in Project Management</h2>
+            
+            <div class="key-point">
+                <h3>Leadership vs. Management</h3>
+                <p><strong>Management</strong> is about planning, organizing, and controlling. <strong>Leadership</strong> is about inspiring, influencing, and empowering people to achieve extraordinary results.</p>
+            </div>
+
+            <div class="scenario">
+                <h4>🚀 Leadership in Action: SpaceX Falcon Heavy Project</h4>
+                <p><strong>Challenge:</strong> Develop the world's most powerful operational rocket</p>
+                <p><strong>Leadership Approach:</strong> Elon Musk combined visionary leadership with hands-on technical involvement</p>
+                <ul>
+                    <li><strong>Vision:</strong> "Make life multiplanetary"</li>
+                    <li><strong>Empowerment:</strong> Engineers given authority to make rapid decisions</li>
+                    <li><strong>Learning Culture:</strong> "Failure is an option here. If you're not failing, you're not innovating enough"</li>
+                    <li><strong>Transparency:</strong> Open communication about challenges and setbacks</li>
+                </ul>
+                <p><strong>Result:</strong> Successful launch and landing, revolutionizing space industry</p>
+            </div>
+
+            <h3>Leadership Styles in Project Management</h3>
+
+            <div class="leadership-style">
+                <h4>🎯 Transformational Leadership</h4>
+                <p><strong>Best for:</strong> Innovation projects, change initiatives, long-term projects</p>
+                <p><strong>Characteristics:</strong> Inspirational vision, intellectual stimulation, individual consideration</p>
+                <p><strong>Example:</strong> Steve Jobs leading iPhone development - inspiring team to "think different" and create revolutionary product</p>
+                <p><strong>When to use:</strong> When you need breakthrough innovation or major organizational change</p>
+            </div>
+
+            <div class="leadership-style">
+                <h4>🤝 Servant Leadership</h4>
+                <p><strong>Best for:</strong> Agile teams, knowledge work, collaborative environments</p>
+                <p><strong>Characteristics:</strong> Serving team needs, removing obstacles, empowering others</p>
+                <p><strong>Example:</strong> Scrum Master facilitating team success rather than directing activities</p>
+                <p><strong>When to use:</strong> When team has high expertise and needs support rather than direction</p>
+            </div>
+
+            <div class="leadership-style">
+                <h4>⚡ Situational Leadership</h4>
+                <p><strong>Best for:</strong> Teams with varying skill levels, dynamic environments</p>
+                <p><strong>Characteristics:</strong> Adapting style based on team member competence and commitment</p>
+                <p><strong>Example:</strong> Directing new team members, coaching developing members, supporting experienced members, delegating to experts</p>
+                <p><strong>When to use:</strong> When team members have different experience levels or project phases require different approaches</p>
+            </div>
+
+            <div class="leadership-style">
+                <h4>🎖️ Authentic Leadership</h4>
+                <p><strong>Best for:</strong> Building trust, crisis situations, ethical challenges</p>
+                <p><strong>Characteristics:</strong> Self-awareness, genuine relationships, balanced processing, moral perspective</p>
+                <p><strong>Example:</strong> Leader admitting mistakes, sharing personal challenges, staying true to values under pressure</p>
+                <p><strong>When to use:</strong> When trust is critical or team faces ethical dilemmas</p>
+            </div>
+
+            <h3>Core Leadership Competencies for Project Managers</h3>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🧠 1. Emotional Intelligence</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Components:</strong></p>
+                    <ul>
+                        <li><strong>Self-awareness:</strong> Understanding your emotions and triggers</li>
+                        <li><strong>Self-regulation:</strong> Managing your emotional responses</li>
+                        <li><strong>Empathy:</strong> Understanding others' emotions and perspectives</li>
+                        <li><strong>Social skills:</strong> Building relationships and influencing others</li>
+                    </ul>
+                    <p><strong>Practical Application:</strong> Recognizing when a team member is stressed and adjusting your communication style accordingly</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>💬 2. Communication Excellence</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Key Skills:</strong></p>
+                    <ul>
+                        <li><strong>Active Listening:</strong> Fully focusing on and understanding the speaker</li>
+                        <li><strong>Clear Messaging:</strong> Conveying information simply and effectively</li>
+                        <li><strong>Feedback Delivery:</strong> Providing constructive, actionable feedback</li>
+                        <li><strong>Difficult Conversations:</strong> Addressing conflicts and performance issues</li>
+                    </ul>
+                    <p><strong>Practical Application:</strong> Using the SBI model (Situation-Behavior-Impact) for giving feedback</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🎯 3. Decision Making</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Decision-Making Process:</strong></p>
+                    <ul>
+                        <li><strong>Gather Information:</strong> Collect relevant data and perspectives</li>
+                        <li><strong>Analyze Options:</strong> Consider alternatives and their consequences</li>
+                        <li><strong>Involve Stakeholders:</strong> Get input from affected parties</li>
+                        <li><strong>Make Timely Decisions:</strong> Balance thoroughness with speed</li>
+                        <li><strong>Communicate Rationale:</strong> Explain the reasoning behind decisions</li>
+                    </ul>
+                    <p><strong>Practical Application:</strong> Using decision matrices to evaluate complex choices objectively</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>⚡ 4. Adaptability</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Adaptive Behaviors:</strong></p>
+                    <ul>
+                        <li><strong>Flexibility:</strong> Adjusting plans when circumstances change</li>
+                        <li><strong>Learning Agility:</strong> Quickly acquiring new skills and knowledge</li>
+                        <li><strong>Resilience:</strong> Bouncing back from setbacks and failures</li>
+                        <li><strong>Innovation:</strong> Finding creative solutions to new challenges</li>
+                    </ul>
+                    <p><strong>Practical Application:</strong> Pivoting project approach when initial strategy isn't working</p>
+                </div>
+            </div>
+
+            <div class="case-study">
+                <h4>🎬 Leadership Case Study: Pixar's Creative Leadership</h4>
+                <p><strong>Challenge:</strong> Maintaining creative excellence while meeting commercial deadlines</p>
+                <p><strong>Leadership Approach:</strong> Ed Catmull and John Lasseter created a unique leadership model:</p>
+                
+                <h4>Key Leadership Principles:</h4>
+                <ul>
+                    <li><strong>Psychological Safety:</strong> "Braintrust" meetings where anyone can critique work without fear</li>
+                    <li><strong>Iterative Excellence:</strong> "We don't get it right, we get it right eventually"</li>
+                    <li><strong>Distributed Leadership:</strong> Directors have creative authority, producers handle logistics</li>
+                    <li><strong>Learning Culture:</strong> Post-mortems after every project to capture lessons</li>
+                </ul>
+                
+                <h4>Results:</h4>
+                <ul>
+                    <li>24 consecutive #1 opening weekend films</li>
+                    <li>Multiple Academy Awards</li>
+                    <li>High employee satisfaction and retention</li>
+                    <li>Consistent innovation in animation technology</li>
+                </ul>
+                
+                <p><strong>Key Takeaway:</strong> Great leaders create environments where others can do their best work</p>
+            </div>
+
+            <h3>Developing Your Leadership Skills</h3>
+            <ul class="checklist">
+                <li>Seek feedback regularly from team members and stakeholders</li>
+                <li>Practice active listening in every interaction</li>
+                <li>Take on stretch assignments that challenge your comfort zone</li>
+                <li>Find mentors who exemplify leadership qualities you admire</li>
+                <li>Reflect on your leadership experiences through journaling</li>
+                <li>Study great leaders and analyze their approaches</li>
+                <li>Develop your emotional intelligence through self-awareness exercises</li>
+                <li>Practice giving difficult feedback in low-stakes situations</li>
+            </ul>
+        </div>
+
+        <div id="dynamics" class="content-section">
+            <h2>⚖️ Managing Team Dynamics</h2>
+            
+            <div class="key-point">
+                <h3>Understanding Team Dynamics</h3>
+                <p>Team dynamics are the unconscious, psychological forces that influence team behavior, performance, and relationships. Managing these dynamics is crucial for project success.</p>
+            </div>
+
+            <div class="scenario">
+                <h4>🏥 Real-Life Example: Hospital Emergency Room Team</h4>
+                <p><strong>Setting:</strong> High-pressure emergency room during flu season</p>
+                <p><strong>Team:</strong> Doctors, nurses, technicians, administrators</p>
+                <p><strong>Challenge:</strong> Coordinating under extreme time pressure with life-or-death consequences</p>
+                <p><strong>Success Factors:</strong> Clear protocols, defined roles, mutual respect, and continuous communication</p>
+            </div>
+
+            <h3>Key Elements of Team Dynamics</h3>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🎭 1. Team Roles and Personalities</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Belbin Team Roles:</strong></p>
+                    <ul>
+                        <li><strong>Coordinator:</strong> Clarifies goals, promotes decision-making</li>
+                        <li><strong>Shaper:</strong> Challenges team, drives for results</li>
+                        <li><strong>Plant:</strong> Creative, generates ideas and solutions</li>
+                        <li><strong>Monitor Evaluator:</strong> Analyzes options objectively</li>
+                        <li><strong>Implementer:</strong> Turns ideas into practical actions</li>
+                        <li><strong>Resource Investigator:</strong> Explores opportunities, develops contacts</li>
+                        <li><strong>Team Worker:</strong> Supports team, improves communication</li>
+                        <li><strong>Completer Finisher:</strong> Ensures quality and meets deadlines</li>
+                        <li><strong>Specialist:</strong> Provides expert knowledge</li>
+                    </ul>
+                    <p><strong>Management Tip:</strong> Identify which roles are missing or overrepresented in your team</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🔄 2. Communication Patterns</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Healthy Communication Patterns:</strong></p>
+                    <ul>
+                        <li><strong>Open dialogue:</strong> Everyone feels comfortable speaking up</li>
+                        <li><strong>Active listening:</strong> Team members truly hear each other</li>
+                        <li><strong>Constructive feedback:</strong> Focus on behavior and improvement</li>
+                        <li><strong>Inclusive participation:</strong> All voices are heard and valued</li>
+                    </ul>
+                    <p><strong>Warning Signs:</strong></p>
+                    <ul>
+                        <li>Side conversations and gossip</li>
+                        <li>Dominant personalities overshadowing others</li>
+                        <li>Passive-aggressive behavior</li>
+                        <li>Information hoarding</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>⚡ 3. Power Dynamics</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Sources of Power in Teams:</strong></p>
+                    <ul>
+                        <li><strong>Formal Authority:</strong> Official position or title</li>
+                        <li><strong>Expertise:</strong> Specialized knowledge or skills</li>
+                        <li><strong>Information:</strong> Access to critical information</li>
+                        <li><strong>Relationships:</strong> Network and influence</li>
+                        <li><strong>Personal:</strong> Charisma and interpersonal skills</li>
+                    </ul>
+                    <p><strong>Management Strategies:</strong></p>
+                    <ul>
+                        <li>Distribute leadership opportunities</li>
+                        <li>Recognize different types of contributions</li>
+                        <li>Address power imbalances directly</li>
+                        <li>Create multiple channels for influence</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🎯 4. Group Decision Making</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Decision-Making Approaches:</strong></p>
+                    <ul>
+                        <li><strong>Consensus:</strong> Everyone agrees (slow but high buy-in)</li>
+                        <li><strong>Majority Vote:</strong> Democratic but may leave minorities unsatisfied</li>
+                        <li><strong>Delegation:</strong> Leader or expert decides (fast but less buy-in)</li>
+                        <li><strong>Consultation:</strong> Leader decides after gathering input</li>
+                    </ul>
+                    <p><strong>Best Practices:</strong></p>
+                    <ul>
+                        <li>Match decision method to situation urgency and importance</li>
+                        <li>Be clear about who has decision-making authority</li>
+                        <li>Ensure all relevant perspectives are considered</li>
+                        <li>Document decisions and rationale</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Common Team Dynamic Challenges</h3>
+
+            <div class="conflict-scenario">
+                <h4>⚠️ Challenge 1: Social Loafing</h4>
+                <p><strong>Problem:</strong> Some team members reduce effort when working in groups, relying on others to carry the load.</p>
+                <div class="solution-box">
+                    <h5>💡 Solutions:</h5>
+                    <ul>
+                        <li>Make individual contributions visible and measurable</li>
+                        <li>Assign specific, accountable roles to each member</li>
+                        <li>Use peer evaluation and feedback systems</li>
+                        <li>Keep team size optimal (5-9 members)</li>
+                        <li>Celebrate individual achievements alongside team success</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="conflict-scenario">
+                <h4>⚠️ Challenge 2: Groupthink</h4>
+                <p><strong>Problem:</strong> Team prioritizes harmony over critical thinking, leading to poor decisions.</p>
+                <div class="solution-box">
+                    <h5>💡 Solutions:</h5>
+                    <ul>
+                        <li>Assign devil's advocate roles</li>
+                        <li>Encourage diverse perspectives and dissenting opinions</li>
+                        <li>Bring in external experts for critical decisions</li>
+                        <li>Use structured decision-making processes</li>
+                        <li>Leader should avoid stating preferences early</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="conflict-scenario">
+                <h4>⚠️ Challenge 3: Communication Breakdown</h4>
+                <p><strong>Problem:</strong> Information doesn't flow effectively, leading to misunderstandings and duplicated effort.</p>
+                <div class="solution-box">
+                    <h5>💡 Solutions:</h5>
+                    <ul>
+                        <li>Establish clear communication protocols</li>
+                        <li>Use multiple communication channels appropriately</li>
+                        <li>Regular check-ins and status updates</li>
+                        <li>Document important decisions and share widely</li>
+                        <li>Address communication issues immediately</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="case-study">
+                <h4>🎯 Success Story: IDEO's Design Thinking Teams</h4>
+                <p><strong>Challenge:</strong> Creating innovative solutions for complex problems with diverse, multidisciplinary teams</p>
+                
+                <h4>Team Dynamic Management Strategies:</h4>
+                <ul>
+                    <li><strong>Psychological Safety:</strong> "Fail early and often" culture encourages risk-taking</li>
+                    <li><strong>Structured Collaboration:</strong> Clear phases (Empathize, Define, Ideate, Prototype, Test)</li>
+                    <li><strong>Visual Communication:</strong> Extensive use of sketches, prototypes, and visual aids</li>
+                    <li><strong>Diverse Perspectives:</strong> Teams include engineers, designers, anthropologists, business experts</li>
+                    <li><strong>Rapid Iteration:</strong> Quick cycles of building and testing ideas</li>
+                </ul>
+                
+                <h4>Results:</h4>
+                <ul>
+                    <li>Consistent innovation across multiple industries</li>
+                    <li>High client satisfaction and repeat business</li>
+                    <li>Strong team engagement and creativity</li>
+                    <li>Methodology adopted by organizations worldwide</li>
+                </ul>
+            </div>
+
+            <h3>Tools for Managing Team Dynamics</h3>
+            <div class="activity-box">
+                <h4>🛠️ Practical Tools and Techniques</h4>
+                <ul>
+                    <li><strong>Team Charter:</strong> Document shared purpose, values, and working agreements</li>
+                    <li><strong>Regular Retrospectives:</strong> Reflect on what's working and what needs improvement</li>
+                    <li><strong>Personality Assessments:</strong> MBTI, DISC, or StrengthsFinder to understand differences</li>
+                    <li><strong>Ground Rules:</strong> Establish norms for meetings, communication, and collaboration</li>
+                    <li><strong>Conflict Resolution Process:</strong> Clear steps for addressing disagreements</li>
+                    <li><strong>Feedback Mechanisms:</strong> Regular opportunities for team members to share concerns</li>
+                    <li><strong>Team Building Activities:</strong> Both work-related and social bonding experiences</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="conflicts" class="content-section">
+            <h2>🤝 Conflict Resolution in Project Teams</h2>
+            
+            <div class="key-point">
+                <h3>Understanding Conflict in Projects</h3>
+                <p>Conflict is inevitable in project teams due to competing priorities, resource constraints, and diverse perspectives. The key is not to avoid conflict, but to manage it constructively.</p>
+            </div>
+
+            <div class="scenario">
+                <h4>🏗️ Real-Life Conflict Scenario: Construction Project</h4>
+                <p><strong>Project:</strong> Building a new office complex</p>
+                <p><strong>Conflict:</strong> Architects want premium materials for aesthetic appeal, while engineers prefer cost-effective alternatives for structural integrity. Project manager is caught between client expectations and budget constraints.</p>
+                <p><strong>Stakes:</strong> $50M budget, 18-month timeline, reputation of all parties involved</p>
+            </div>
+
+            <h3>Types of Project Conflicts</h3>
+
+            <div class="team-grid">
+                <div class="role-card">
+                    <h4><span class="emoji">📋</span>Task Conflicts</h4>
+                    <p><strong>About:</strong> Disagreements over goals, procedures, or work distribution</p>
+                    <p><strong>Example:</strong> Team debates whether to use Agile or Waterfall methodology</p>
+                    <p><strong>Impact:</strong> Can be productive if managed well</p>
+                </div>
+
+                <div class="role-card">
+                    <h4><span class="emoji">🔄</span>Process Conflicts</h4>
+                    <p><strong>About:</strong> Disagreements over how to accomplish tasks</p>
+                    <p><strong>Example:</strong> Disputes over meeting frequency or decision-making authority</p>
+                    <p><strong>Impact:</strong> Usually counterproductive</p>
+                </div>
+
+                <div class="role-card">
+                    <h4><span class="emoji">👥</span>Relationship Conflicts</h4>
+                    <p><strong>About:</strong> Personal tensions and incompatibilities</p>
+                    <p><strong>Example:</strong> Personality clashes or communication style differences</p>
+                    <p><strong>Impact:</strong> Almost always harmful to team performance</p>
+                </div>
+
+                <div class="role-card">
+                    <h4><span class="emoji">💰</span>Resource Conflicts</h4>
+                    <p><strong>About:</strong> Competition for limited resources</p>
+                    <p><strong>Example:</strong> Multiple teams wanting the same skilled developer</p>
+                    <p><strong>Impact:</strong> Can motivate efficiency or create destructive competition</p>
+                </div>
+            </div>
+
+            <h3>The Thomas-Kilmann Conflict Resolution Model</h3>
+            <p>Five approaches to handling conflict based on assertiveness and cooperativeness:</p>
+
+            <div class="leadership-style">
+                <h4>🏃 Competing (High Assertiveness, Low Cooperation)</h4>
+                <p><strong>When to use:</strong> Emergency situations, unpopular decisions, protecting vital interests</p>
+                <p><strong>Example:</strong> Project manager overriding team preferences to meet critical deadline</p>
+                <p><strong>Pros:</strong> Quick decisions, clear authority</p>
+                <p><strong>Cons:</strong> Can damage relationships, reduces buy-in</p>
+            </div>
+
+            <div class="leadership-style">
+                <h4>🤝 Collaborating (High Assertiveness, High Cooperation)</h4>
+                <p><strong>When to use:</strong> Complex issues, when both parties' concerns are important</p>
+                <p><strong>Example:</strong> Working together to find solution that meets both budget and quality requirements</p>
+                <p><strong>Pros:</strong> Win-win solutions, high commitment</p>
+                <p><strong>Cons:</strong> Time-consuming, requires trust</p>
+            </div>
+
+            <div class="leadership-style">
+                <h4>🤲 Compromising (Medium Assertiveness, Medium Cooperation)</h4>
+                <p><strong>When to use:</strong> Time pressure, equally powerful parties, temporary solutions needed</p>
+                <p><strong>Example:</strong> Each department gets 50% of disputed budget allocation</p>
+                <p><strong>Pros:</strong> Quick resolution, appears fair</p>
+                <p><strong>Cons:</strong> May not address root causes, partial satisfaction</p>
+            </div>
+
+            <div class="leadership-style">
+                <h4>🕊️ Accommodating (Low Assertiveness, High Cooperation)</h4>
+                <p><strong>When to use:</strong> Preserving relationships, when you're wrong, building goodwill</p>
+                <p><strong>Example:</strong> Accepting another team's approach to maintain project harmony</p>
+                <p><strong>Pros:</strong> Maintains relationships, shows flexibility</p>
+                <p><strong>Cons:</strong> May not meet your needs, can be seen as weakness</p>
+            </div>
+
+            <div class="leadership-style">
+                <h4>🚶 Avoiding (Low Assertiveness, Low Cooperation)</h4>
+                <p><strong>When to use:</strong> Trivial issues, when emotions are high, gathering information</p>
+                <p><strong>Example:</strong> Postponing discussion until more information is available</p>
+                <p><strong>Pros:</strong> Prevents escalation, buys time</p>
+                <p><strong>Cons:</strong> Issues may worsen, appears indecisive</p>
+            </div>
+
+            <h3>Step-by-Step Conflict Resolution Process</h3>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🎯 Step 1: Identify and Acknowledge the Conflict</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Actions:</strong></p>
+                    <ul>
+                        <li>Recognize early warning signs (tension, decreased communication, missed deadlines)</li>
+                        <li>Address conflicts promptly before they escalate</li>
+                        <li>Acknowledge that conflict exists without assigning blame</li>
+                        <li>Separate people from problems</li>
+                    </ul>
+                    <p><strong>Example:</strong> "I've noticed some tension between the design and development teams regarding the user interface requirements. Let's discuss this openly."</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>👂 Step 2: Listen to All Parties</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Actions:</strong></p>
+                    <ul>
+                        <li>Give each party uninterrupted time to explain their perspective</li>
+                        <li>Ask clarifying questions to understand underlying interests</li>
+                        <li>Reflect back what you hear to ensure understanding</li>
+                        <li>Identify common ground and shared goals</li>
+                    </ul>
+                    <p><strong>Technique:</strong> Use active listening phrases like "What I hear you saying is..." or "Help me understand..."</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>🔍 Step 3: Identify Root Causes</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Actions:</strong></p>
+                    <ul>
+                        <li>Look beyond surface symptoms to underlying issues</li>
+                        <li>Use techniques like "5 Whys" to dig deeper</li>
+                        <li>Consider systemic factors (processes, resources, communication)</li>
+                        <li>Distinguish between positions (what people want) and interests (why they want it)</li>
+                    </ul>
+                    <p><strong>Example:</strong> Surface issue is disagreement about meeting frequency. Root cause might be lack of trust or unclear decision-making authority.</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>💡 Step 4: Generate Solutions Together</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Actions:</strong></p>
+                    <ul>
+                        <li>Brainstorm multiple options without immediate evaluation</li>
+                        <li>Encourage creative thinking and "what if" scenarios</li>
+                        <li>Focus on interests rather than positions</li>
+                        <li>Look for win-win solutions that address everyone's core needs</li>
+                    </ul>
+                    <p><strong>Technique:</strong> Use "Yes, and..." instead of "Yes, but..." to build on ideas</p>
+                </div>
+            </div>
+
+            <div class="interactive-element" onclick="toggleContent(this)">
+                <strong>✅ Step 5: Agree on Solution and Follow Up</strong> <span style="float: right;">▼</span>
+                <div class="hidden-content">
+                    <p><strong>Actions:</strong></p>
+                    <ul>
+                        <li>Evaluate options against objective criteria</li>
+                        <li>Get explicit agreement from all parties</li>
+                        <li>Document the agreement and next steps</li>
+                        <li>Schedule follow-up to ensure implementation</li>
+                        <li>Learn from the conflict to prevent similar issues</li>
+                    </ul>
+                    <p><strong>Documentation:</strong> Include what was agreed, who is responsible, and when to check progress</p>
+                </div>
+            </div>
+
+            <div class="case-study">
+                <h4>🎯 Conflict Resolution Case Study: Software Development Team</h4>
+                <p><strong>Situation:</strong> A software development team is behind schedule. The QA team insists on thorough testing, while developers want to skip some tests to meet the deadline. The product manager is pressuring for release.</p>
+                
+                <h4>Conflict Resolution Process:</h4>
+                <p><strong>Step 1 - Acknowledge:</strong> Project manager calls a meeting acknowledging the tension and competing pressures.</p>
+                
+                <p><strong>Step 2 - Listen:</strong></p>
+                <ul>
+                    <li><strong>QA Team:</strong> "We're concerned about releasing buggy software that will damage our reputation"</li>
+                    <li><strong>Developers:</strong> "We've been working overtime and feel the timeline was unrealistic from the start"</li>
+                    <li><strong>Product Manager:</strong> "The client is expecting delivery and we risk losing the contract"</li>
+                </ul>
+                
+                <p><strong>Step 3 - Root Causes:</strong></p>
+                <ul>
+                    <li>Unrealistic initial timeline estimation</li>
+                    <li>Lack of clear quality standards</li>
+                    <li>Poor communication with client about risks</li>
+                </ul>
+                
+                <p><strong>Step 4 - Generate Solutions:</strong></p>
+                <ul>
+                    <li>Release core features on time with comprehensive testing</li>
+                    <li>Negotiate with client for phased delivery</li>
+                    <li>Implement automated testing to speed up QA process</li>
+                    <li>Add buffer time to future project estimates</li>
+                </ul>
+                
+                <p><strong>Step 5 - Agreement:</strong> Team agreed to deliver core features with full testing, communicate transparently with client about timeline for remaining features, and implement better estimation practices for future projects.</p>
+                
+                <p><strong>Result:</strong> Client appreciated transparency, core features delivered successfully, and team learned valuable lessons for future projects.</p>
+            </div>
+
+            <h3>Preventing Conflicts</h3>
+            <ul class="checklist">
+                <li>Establish clear roles, responsibilities, and decision-making authority</li>
+                <li>Create open communication channels and regular check-ins</li>
+                <li>Set realistic expectations and timelines</li>
+                <li>Build trust through transparency and follow-through</li>
+                <li>Address small issues before they become big problems</li>
+                <li>Provide conflict resolution training for team members</li>
+                <li>Celebrate diversity and different perspectives</li>
+                <li>Establish ground rules for respectful disagreement</li>
+            </ul>
+        </div>
+
+        <div id="activities" class="content-section">
+            <h2>🎭 Interactive Learning Activities</h2>
+            
+            <div class="key-point">
+                <h3>Teaching Learning Activities Overview</h3>
+                <p>These interactive activities are designed to help you practice and apply project team management and leadership concepts in realistic scenarios.</p>
+            </div>
+
+            <h3>Activity 1: Interactive Leadership Lecture</h3>
+            <div class="activity-box">
+                <h4>🎯 Leadership Styles Simulator</h4>
+                <p><strong>Objective:</strong> Practice adapting leadership styles to different situations</p>
+                
+                <div class="scenario">
+                    <h4>📱 Scenario: Mobile App Development Crisis</h4>
+                    <p><strong>Situation:</strong> Your mobile app development team is 2 weeks behind schedule. The client is demanding daily updates, your lead developer just quit, and team morale is low. You need to decide how to lead the team through this crisis.</p>
+                    
+                    <div class="interactive-element" onclick="toggleContent(this)">
+                        <strong>Option A: Directive Leadership</strong> <span style="float: right;">▼</span>
+                        <div class="hidden-content">
+                            <p><strong>Your Action:</strong> Take direct control, assign specific tasks, set strict deadlines, and monitor progress hourly.</p>
+                            <p><strong>Likely Outcome:</strong> ✅ Quick decisions and clear direction. ❌ May increase stress and reduce creativity.</p>
+                            <p><strong>Best When:</strong> Team lacks experience or crisis requires immediate action.</p>
+                            <button class="quiz-button" onclick="showLeadershipFeedback('directive')">Choose This Style</button>
+                            <div id="directive-feedback" class="answer-feedback"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-element" onclick="toggleContent(this)">
+                        <strong>Option B: Coaching Leadership</strong> <span style="float: right;">▼</span>
+                        <div class="hidden-content">
+                            <p><strong>Your Action:</strong> Work closely with team members, provide guidance and training, help them develop solutions.</p>
+                            <p><strong>Likely Outcome:</strong> ✅ Builds team capability and confidence. ❌ Takes time you may not have.</p>
+                            <p><strong>Best When:</strong> Team has potential but needs development and support.</p>
+                            <button class="quiz-button" onclick="showLeadershipFeedback('coaching')">Choose This Style</button>
+                            <div id="coaching-feedback" class="answer-feedback"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-element" onclick="toggleContent(this)">
+                        <strong>Option C: Supporting Leadership</strong> <span style="float: right;">▼</span>
+                        <div class="hidden-content">
+                            <p><strong>Your Action:</strong> Listen to team concerns, provide resources they request, facilitate team problem-solving.</p>
+                            <p><strong>Likely Outcome:</strong> ✅ Maintains team autonomy and morale. ❌ May lack urgency needed for crisis.</p>
+                            <p><strong>Best When:</strong> Team is competent but needs emotional support and resources.</p>
+                            <button class="quiz-button" onclick="showLeadershipFeedback('supporting')">Choose This Style</button>
+                            <div id="supporting-feedback" class="answer-feedback"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-element" onclick="toggleContent(this)">
+                        <strong>Option D: Delegating Leadership</strong> <span style="float: right;">▼</span>
+                        <div class="hidden-content">
+                            <p><strong>Your Action:</strong> Give team full authority to solve the problem, step back and let them handle it.</p>
+                            <p><strong>Likely Outcome:</strong> ✅ Empowers experienced team. ❌ Risky if team lacks crisis management experience.</p>
+                            <p><strong>Best When:</strong> Team is highly experienced and motivated.</p>
+                            <button class="quiz-button" onclick="showLeadershipFeedback('delegating')">Choose This Style</button>
+                            <div id="delegating-feedback" class="answer-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Activity 2: Role-Play - Handling Team Conflicts</h3>
+            <div class="activity-box">
+                <h4>🎭 Conflict Resolution Role-Play Scenarios</h4>
+                <p><strong>Instructions:</strong> Work in groups of 3-4. Each person takes a role and acts out the scenario. Practice different conflict resolution approaches.</p>
+                
+                <div class="conflict-scenario">
+                    <h4>🎬 Scenario 1: The Design vs. Development Clash</h4>
+                    <p><strong>Characters:</strong></p>
+                    <ul>
+                        <li><strong>Sarah (UX Designer):</strong> Wants pixel-perfect design, concerned about user experience</li>
+                        <li><strong>Mike (Lead Developer):</strong> Focused on technical feasibility and timeline</li>
+                        <li><strong>Alex (Project Manager):</strong> Needs to resolve conflict and keep project on track</li>
+                        <li><strong>Zane (Product Owner):</strong> Represents client interests and budget constraints</li>
+                    </ul>
+                    
+                    <p><strong>Conflict:</strong> Sarah insists on complex animations that Mike says will take 3 extra weeks to implement. The client wants the product launched in 4 weeks. Tensions are rising in daily meetings.</p>
+                    
+                    <div class="solution-box">
+                        <h5>🎯 Role-Play Instructions:</h5>
+                        <ol>
+                            <li><strong>Round 1 (5 min):</strong> Act out the conflict naturally - let tensions escalate</li>
+                            <li><strong>Round 2 (10 min):</strong> Project Manager uses conflict resolution steps</li>
+                            <li><strong>Round 3 (5 min):</strong> Debrief - what worked, what didn't?</li>
+                        </ol>
+                        
+                        <p><strong>Conflict Resolution Checklist for PM:</strong></p>
+                        <ul class="checklist">
+                            <li>Acknowledge the conflict exists</li>
+                            <li>Listen to each party's concerns</li>
+                            <li>Identify underlying interests (not just positions)</li>
+                            <li>Generate multiple solution options</li>
+                            <li>Agree on next steps and follow-up</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="conflict-scenario">
+                    <h4>🎬 Scenario 2: The Remote Team Communication Crisis</h4>
+                    <p><strong>Characters:</strong></p>
+                    <ul>
+                        <li><strong>Emma (Team Lead - New York):</strong> Prefers detailed written communication</li>
+                        <li><strong>Carlos (Developer - Mexico City):</strong> Prefers quick video calls, different time zone</li>
+                        <li><strong>Priya (QA Engineer - Mumbai):</strong> Feels left out of important decisions</li>
+                        <li><strong>David (Scrum Master):</strong> Needs to improve team communication</li>
+                    </ul>
+                    
+                    <p><strong>Conflict:</strong> Important decisions are being made in informal calls between Emma and Carlos. Priya feels excluded and is missing critical information. Work is being duplicated and quality is suffering.</p>
+                    
+                    <div class="solution-box">
+                        <h5>🎯 Discussion Points After Role-Play:</h5>
+                        <ul>
+                            <li>How did cultural and time zone differences affect the conflict?</li>
+                            <li>What communication tools and processes could prevent this?</li>
+                            <li>How can remote teams ensure inclusive decision-making?</li>
+                            <li>What role should the Scrum Master play in facilitating communication?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Activity 3: Group Discussion - Building Effective Teams</h3>
+            <div class="activity-box">
+                <h4>💬 Collaborative Team Building Workshop</h4>
+                <p><strong>Format:</strong> Small groups (4-5 students) + large group sharing</p>
+                
+                <div class="scenario">
+                    <h4>🏢 Discussion Scenario: New Product Launch Team</h4>
+                    <p><strong>Challenge:</strong> You're forming a new cross-functional team to launch an innovative product in 6 months. The team will include members from different departments, experience levels, and cultural backgrounds.</p>
+                    
+                    <h4>📋 Group Discussion Questions (20 minutes):</h4>
+                    <ol>
+                        <li><strong>Team Composition:</strong> What roles and skills do you need? How do you ensure diversity?</li>
+                        <li><strong>Team Charter:</strong> What should be included in your team charter?</li>
+                        <li><strong>Communication Plan:</strong> How will you ensure effective communication?</li>
+                        <li><strong>Conflict Prevention:</strong> What potential conflicts do you anticipate and how will you prevent them?</li>
+                        <li><strong>Success Metrics:</strong> How will you measure team effectiveness?</li>
+                    </ol>
+                    
+                    <h4>🎯 Deliverable: Team Building Action Plan</h4>
+                    <p>Each group creates a 1-page action plan addressing:</p>
+                    <ul class="checklist">
+                        <li>Team structure and roles (RACI matrix)</li>
+                        <li>Communication protocols and tools</li>
+                        <li>Team development activities</li>
+                        <li>Conflict resolution process</li>
+                        <li>Performance measurement approach</li>
+                    </ul>
+                </div>
+                
+                <div class="solution-box">
+                    <h5>💡 Large Group Sharing (15 minutes):</h5>
+                    <p>Each group presents their action plan (3 minutes each). Class discusses:</p>
+                    <ul>
+                        <li>Common themes across all plans</li>
+                        <li>Most creative or innovative ideas</li>
+                        <li>Potential challenges not addressed</li>
+                        <li>Best practices to adopt</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Activity 4: Individual Reflection Report</h3>
+            <div class="activity-box">
+                <h4>📝 Personal Leadership Development Reflection</h4>
+                <p><strong>Assignment:</strong> Write a 2-3 page reflection report on your personal leadership development journey</p>
+                
+                <div class="key-point">
+                    <h4>📋 Reflection Report Guidelines</h4>
+                    
+                    <h5>Section 1: Self-Assessment (1 page)</h5>
+                    <ul>
+                        <li><strong>Leadership Style:</strong> What's your natural leadership style? Use examples from group work or personal experience.</li>
+                        <li><strong>Strengths & Weaknesses:</strong> What are your leadership strengths? What areas need development?</li>
+                        <li><strong>Emotional Intelligence:</strong> How well do you manage your emotions and understand others?</li>
+                        <li><strong>Communication Skills:</strong> How effectively do you communicate in team settings?</li>
+                    </ul>
+                    
+                    <h5>Section 2: Learning Application (1 page)</h5>
+                    <ul>
+                        <li><strong>Key Insights:</strong> What were the most important concepts you learned about team management?</li>
+                        <li><strong>Activity Reflection:</strong> How did the role-play and group activities change your perspective?</li>
+                        <li><strong>Real-World Connections:</strong> How do these concepts apply to your current or future work?</li>
+                        <li><strong>Conflict Resolution:</strong> Describe a conflict you've experienced and how you would handle it differently now.</li>
+                    </ul>
+                    
+                    <h5>Section 3: Development Plan (1 page)</h5>
+                    <ul>
+                        <li><strong>Goals:</strong> What specific leadership skills do you want to develop?</li>
+                        <li><strong>Action Steps:</strong> What concrete actions will you take to improve?</li>
+                        <li><strong>Resources:</strong> What books, courses, or experiences will help you grow?</li>
+                        <li><strong>Timeline:</strong> When will you achieve these development goals?</li>
+                    </ul>
+                </div>
+                
+                <div class="solution-box">
+                    <h5>📊 Grading Rubric (100 points total):</h5>
+                    <ul>
+                        <li><strong>Self-Awareness (25 points):</strong> Honest, insightful self-assessment</li>
+                        <li><strong>Concept Application (25 points):</strong> Clear connection to course concepts</li>
+                        <li><strong>Critical Thinking (25 points):</strong> Analysis and synthesis of learning</li>
+                        <li><strong>Development Planning (25 points):</strong> Specific, actionable improvement plan</li>
+                    </ul>
+                    
+                    <p><strong>Due Date:</strong> One week after completing the interactive activities</p>
+                    <p><strong>Format:</strong> Double-spaced, 12-point font, APA style references</p>
+                </div>
+            </div>
+
+            <h3>Bonus Activity: Team Effectiveness Assessment</h3>
+            <div class="activity-box">
+                <h4>📊 Evaluate Your Current Team</h4>
+                <p><strong>Instructions:</strong> Think of a current or recent team you've been part of (class project, work, sports, etc.). Rate each factor from 1-5 and reflect on improvement opportunities.</p>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Team Effectiveness Factor</th>
+                            <th>Rating (1-5)</th>
+                            <th>Evidence/Examples</th>
+                            <th>Improvement Ideas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Clear roles and responsibilities</td>
+                            <td>___</td>
+                            <td>_________________</td>
+                            <td>_________________</td>
+                        </tr>
+                        <tr>
+                            <td>Psychological safety</td>
+                            <td>___</td>
+                            <td>_________________</td>
+                            <td>_________________</td>
+                        </tr>
+                        <tr>
+                            <td>Effective communication</td>
+                            <td>___</td>
+                            <td>_________________</td>
+                            <td>_________________</td>
+                        </tr>
+                        <tr>
+                            <td>Shared goals and vision</td>
+                            <td>___</td>
+                            <td>_________________</td>
+                            <td>_________________</td>
+                        </tr>
+                        <tr>
+                            <td>Conflict resolution</td>
+                            <td>___</td>
+                            <td>_________________</td>
+                            <td>_________________</td>
+                        </tr>
+                        <tr>
+                            <td>Leadership effectiveness</td>
+                            <td>___</td>
+                            <td>_________________</td>
+                            <td>_________________</td>
+                        </tr>
+                        <tr>
+                            <td>Team collaboration</td>
+                            <td>___</td>
+                            <td>_________________</td>
+                            <td>_________________</td>
+                        </tr>
+                        <tr>
+                            <td>Results achievement</td>
+                            <td>___</td>
+                            <td>_________________</td>
+                            <td>_________________</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="key-point">
+                    <h4>🎯 Reflection Questions:</h4>
+                    <ul>
+                        <li>What was your team's biggest strength?</li>
+                        <li>What was the most significant challenge?</li>
+                        <li>If you could lead this team again, what would you do differently?</li>
+                        <li>How could the concepts from this lesson have helped your team?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="case-study" class="content-section">
+            <h2>💼 Comprehensive Case Study: Project Phoenix Rising</h2>
+            
+            <div class="case-study">
+                <h3>🚀 Background: Digital Transformation at MegaCorp</h3>
+                <p><strong>Company:</strong> MegaCorp, a traditional manufacturing company (50,000 employees)</p>
+                <p><strong>Project:</strong> "Phoenix Rising" - Digital transformation of supply chain management</p>
+                <p><strong>Timeline:</strong> 24 months</p>
+                <p><strong>Budget:</strong> $75 million</p>
+                <p><strong>Team Size:</strong> 150 people across 12 countries</p>
+                <p><strong>Complexity:</strong> Integration with 200+ legacy systems, regulatory compliance in multiple countries</p>
+            </div>
+
+            <div class="scenario">
+                <h4>🎯 Project Objectives</h4>
+                <ul>
+                    <li>Reduce supply chain costs by 20%</li>
+                    <li>Improve delivery times by 30%</li>
+                    <li>Increase visibility across global operations</li>
+                    <li>Enable real-time decision making</li>
+                    <li>Prepare for future AI and IoT integration</li>
+                </ul>
+            </div>
+
+            <h3>Team Management Challenges and Solutions</h3>
+
+            <div class="conflict-scenario">
+                <h4>⚠️ Challenge 1: Cultural and Geographic Diversity</h4>
+                <p><strong>Problem:</strong> Team members from 12 countries with different work cultures, time zones, and communication styles. Misunderstandings and coordination difficulties.</p>
+                
+                <div class="solution-box">
+                    <h5>💡 Solutions Implemented:</h5>
+                    <ul>
+                        <li><strong>Cultural Intelligence Training:</strong> All team members completed cultural awareness workshops</li>
+                        <li><strong>Follow-the-Sun Model:</strong> Work handed off between time zones for 24/7 progress</li>
+                        <li><strong>Cultural Liaisons:</strong> Local team leads who understood both local culture and project requirements</li>
+                        <li><strong>Standardized Communication:</strong> Common templates, terminology, and meeting structures</li>
+                        <li><strong>Virtual Team Building:</strong> Monthly global video calls with cultural sharing sessions</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="conflict-scenario">
+                <h4>⚠️ Challenge 2: Resistance to Change</h4>
+                <p><strong>Problem:</strong> Long-term employees resistant to new digital processes. Some departments actively sabotaging implementation.</p>
+                
+                <div class="solution-box">
+                    <h5>💡 Solutions Implemented:</h5>
+                    <ul>
+                        <li><strong>Change Champions Network:</strong> Identified influential employees in each department to advocate for change</li>
+                        <li><strong>WIIFM Communication:</strong> "What's In It For Me" messaging showing personal benefits</li>
+                        <li><strong>Gradual Implementation:</strong> Phased rollout allowing people to adapt slowly</li>
+                        <li><strong>Success Stories:</strong> Highlighted early wins and positive impacts</li>
+                        <li><strong>Training and Support:</strong> Comprehensive training programs with ongoing support</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="conflict-scenario">
+                <h4>⚠️ Challenge 3: Technical vs. Business Conflict</h4>
+                <p><strong>Problem:</strong> IT team focused on technical elegance while business users wanted quick, practical solutions. Frequent disagreements about priorities and approaches.</p>
+                
+                <div class="solution-box">
+                    <h5>💡 Solutions Implemented:</h5>
+                    <ul>
+                        <li><strong>Cross-Functional Teams:</strong> Mixed IT and business representatives in each workstream</li>
+                        <li><strong>User Story Workshops:</strong> Business users wrote requirements in user story format</li>
+                        <li><strong>Regular Demos:</strong> Bi-weekly demonstrations of working software to business users</li>
+                        <li><strong>Business Value Metrics:</strong> All technical decisions evaluated against business impact</li>
+                        <li><strong>Rotation Program:</strong> IT members spent time with business users and vice versa</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Leadership Approaches Used</h3>
+
+            <div class="leadership-style">
+                <h4>🎯 Transformational Leadership (Project Sponsor - CEO)</h4>
+                <p><strong>Approach:</strong> Created compelling vision of "MegaCorp 2030" - a fully digital, agile organization</p>
+                <p><strong>Actions:</strong></p>
+                <ul>
+                    <li>Quarterly all-hands meetings sharing progress and vision</li>
+                    <li>Personal visits to major implementation sites</li>
+                    <li>Investment in employee development and reskilling</li>
+                    <li>Public commitment to digital transformation goals</li>
+                </ul>
+            </div>
+
+            <div class="leadership-style">
+                <h4>🤝 Servant Leadership (Project Manager)</h4>
+                <p><strong>Approach:</strong> Focused on removing obstacles and empowering team members</p>
+                <p><strong>Actions:</strong></p>
+                <ul>
+                    <li>Daily "blocker removal" sessions with team leads</li>
+                    <li>Escalated organizational issues to executive level</li>
+                    <li>Provided resources and training as requested by teams</li>
+                    <li>Regular one-on-one coaching sessions with struggling team members</li>
+                </ul>
+            </div>
+
+            <div class="leadership-style">
+                <h4>⚡ Situational Leadership (Technical Leads)</h4>
+                <p><strong>Approach:</strong> Adapted leadership style based on team member experience and situation</p>
+                <p><strong>Actions:</strong></p>
+                <ul>
+                    <li>Directing style for new team members and complex technical challenges</li>
+                    <li>Coaching style for developing team members</li>
+                    <li>Supporting style for experienced members working on familiar tasks</li>
+                    <li>Delegating style for expert team members on routine work</li>
+                </ul>
+            </div>
+
+            <h3>Team Development Journey</h3>
+
+            <div class="team-development-stage">
+                <h4>🌱 Forming (Months 1-3)</h4>
+                <p><strong>Activities:</strong> Team formation, role clarification, initial planning</p>
+                <p><strong>Challenges:</strong> Cultural differences, unclear expectations, technology learning curve</p>
+                <p><strong>Leadership Focus:</strong> Clear communication, relationship building, skill assessment</p>
+            </div>
+
+            <div class="team-development-stage">
+                <h4>⚡ Storming (Months 4-8)</h4>
+                <p><strong>Activities:</strong> First major deliverables, process refinement, conflict emergence</p>
+                <p><strong>Challenges:</strong> Technical disagreements, resource conflicts, change resistance</p>
+                <p><strong>Leadership Focus:</strong> Conflict resolution, process improvement, stakeholder management</p>
+            </div>
+
+            <div class="team-development-stage">
+                <h4>🤝 Norming (Months 9-15)</h4>
+                <p><strong>Activities:</strong> Established workflows, successful deliveries, team cohesion</p>
+                <p><strong>Challenges:</strong> Maintaining momentum, scaling processes, integration complexity</p>
+                <p><strong>Leadership Focus:</strong> Process optimization, knowledge sharing, performance management</p>
+            </div>
+
+            <div class="team-development-stage">
+                <h4>🚀 Performing (Months 16-22)</h4>
+                <p><strong>Activities:</strong> High productivity, self-organization, innovation</p>
+                <p><strong>Challenges:</strong> Maintaining quality at speed, managing success, preparing for transition</p>
+                <p><strong>Leadership Focus:</strong> Strategic guidance, obstacle removal, succession planning</p>
+            </div>
+
+            <div class="team-development-stage">
+                <h4>👋 Adjourning (Months 23-24)</h4>
+                <p><strong>Activities:</strong> Project completion, knowledge transfer, team transition</p>
+                <p><strong>Challenges:</strong> Maintaining focus, emotional closure, career transitions</p>
+                <p><strong>Leadership Focus:</strong> Recognition, lessons learned, future opportunities</p>
+            </div>
+
+            <div class="scenario">
+                <h4>📊 Final Results</h4>
+                <ul class="checklist">
+                    <li><strong>Budget:</strong> Delivered 5% under budget ($71.25M)</li>
+                    <li><strong>Timeline:</strong> Completed 2 months early</li>
+                    <li><strong>Objectives:</strong> Exceeded all performance targets</li>
+                    <li><strong>Team Satisfaction:</strong> 89% would work on similar project again</li>
+                    <li><strong>Business Impact:</strong> $200M in cost savings over first 3 years</li>
+                    <li><strong>Recognition:</strong> Won industry award for digital transformation</li>
+                    <li><strong>Career Impact:</strong> 78% of team members received promotions within 2 years</li>
+                </ul>
+            </div>
+
+            <div class="key-point">
+                <h3>🎓 Key Lessons Learned</h3>
+                <ul>
+                    <li><strong>Invest in Relationships:</strong> Time spent building trust and understanding pays dividends</li>
+                    <li><strong>Adapt Leadership Style:</strong> Different situations and people require different approaches</li>
+                    <li><strong>Address Conflicts Early:</strong> Small issues become big problems if ignored</li>
+                    <li><strong>Celebrate Progress:</strong> Regular recognition maintains momentum and morale</li>
+                    <li><strong>Empower Teams:</strong> Give people authority to make decisions within their expertise</li>
+                    <li><strong>Communicate Constantly:</strong> Over-communication is better than under-communication</li>
+                    <li><strong>Plan for Change:</strong> Resistance is normal; plan strategies to address it</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="quiz" class="content-section">
+            <h2>📝 Quiz #1: Project Team Management and Leadership</h2>
+            
+            <div class="quiz-section">
+                <div class="quiz-question">
+                    <h4>Question 1: Team Development Stages</h4>
+                    <p>According to Tuckman's model, which stage is characterized by high productivity and self-organization?</p>
+                    <label><input type="radio" name="q1" value="a"> A) Forming</label><br>
+                    <label><input type="radio" name="q1" value="b"> B) Storming</label><br>
+                    <label><input type="radio" name="q1" value="c"> C) Norming</label><br>
+                    <label><input type="radio" name="q1" value="d"> D) Performing</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q1', 'd', 'Correct! The Performing stage is characterized by high productivity, autonomy, and self-organization.')">Submit Answer</button>
+                    <div id="q1-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 2: RACI Matrix</h4>
+                    <p>In a RACI matrix, who is ultimately answerable for the completion of a task?</p>
+                    <label><input type="radio" name="q2" value="a"> A) Responsible</label><br>
+                    <label><input type="radio" name="q2" value="b"> B) Accountable</label><br>
+                    <label><input type="radio" name="q2" value="c"> C) Consulted</label><br>
+                    <label><input type="radio" name="q2" value="d"> D) Informed</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q2', 'b', 'Correct! Accountable means ultimately answerable for the completion and success of the task.')">Submit Answer</button>
+                    <div id="q2-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 3: Leadership Styles</h4>
+                    <p>Which leadership style is most appropriate when team members have high expertise but need support and encouragement?</p>
+                    <label><input type="radio" name="q3" value="a"> A) Directing</label><br>
+                    <label><input type="radio" name="q3" value="b"> B) Coaching</label><br>
+                    <label><input type="radio" name="q3" value="c"> C) Supporting</label><br>
+                    <label><input type="radio" name="q3" value="d"> D) Delegating</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q3', 'c', 'Correct! Supporting style is best for competent team members who need encouragement and support.')">Submit Answer</button>
+                    <div id="q3-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 4: Conflict Resolution</h4>
+                    <p>Which conflict resolution approach seeks win-win solutions through high assertiveness and high cooperation?</p>
+                    <label><input type="radio" name="q4" value="a"> A) Competing</label><br>
+                    <label><input type="radio" name="q4" value="b"> B) Accommodating</label><br>
+                    <label><input type="radio" name="q4" value="c"> C) Compromising</label><br>
+                    <label><input type="radio" name="q4" value="d"> D) Collaborating</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q4', 'd', 'Correct! Collaborating involves high assertiveness and high cooperation to find win-win solutions.')">Submit Answer</button>
+                    <div id="q4-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 5: Team Dynamics</h4>
+                    <p>What is the primary danger of groupthink in project teams?</p>
+                    <label><input type="radio" name="q5" value="a"> A) Too much conflict</label><br>
+                    <label><input type="radio" name="q5" value="b"> B) Poor decision-making due to lack of critical thinking</label><br>
+                    <label><input type="radio" name="q5" value="c"> C) Excessive individual competition</label><br>
+                    <label><input type="radio" name="q5" value="d"> D) Communication breakdown</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q5', 'b', 'Correct! Groupthink occurs when teams prioritize harmony over critical thinking, leading to poor decisions.')">Submit Answer</button>
+                    <div id="q5-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 6: Project Roles</h4>
+                    <p>Which role is primarily responsible for providing funding and removing organizational barriers?</p>
+                    <label><input type="radio" name="q6" value="a"> A) Project Manager</label><br>
+                    <label><input type="radio" name="q6" value="b"> B) Technical Lead</label><br>
+                    <label><input type="radio" name="q6" value="c"> C) Project Sponsor</label><br>
+                    <label><input type="radio" name="q6" value="d"> D) Business Analyst</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q6', 'c', 'Correct! The Project Sponsor provides funding, strategic direction, and removes organizational barriers.')">Submit Answer</button>
+                    <div id="q6-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 7: Team Building</h4>
+                    <p>According to Google's Project Aristotle, what was the most important factor for team effectiveness?</p>
+                    <label><input type="radio" name="q7" value="a"> A) Individual talent</label><br>
+                    <label><input type="radio" name="q7" value="b"> B) Team composition</label><br>
+                    <label><input type="radio" name="q7" value="c"> C) Psychological safety</label><br>
+                    <label><input type="radio" name="q7" value="d"> D) Clear goals</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q7', 'c', 'Correct! Google found psychological safety was the #1 factor in team effectiveness.')">Submit Answer</button>
+                    <div id="q7-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 8: Emotional Intelligence</h4>
+                    <p>Which component of emotional intelligence involves understanding and managing your own emotions?</p>
+                    <label><input type="radio" name="q8" value="a"> A) Empathy</label><br>
+                    <label><input type="radio" name="q8" value="b"> B) Social skills</label><br>
+                    <label><input type="radio" name="q8" value="c"> C) Self-regulation</label><br>
+                    <label><input type="radio" name="q8" value="d"> D) Motivation</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q8', 'c', 'Correct! Self-regulation involves managing your emotional responses and behaviors.')">Submit Answer</button>
+                    <div id="q8-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 9: Conflict Types</h4>
+                    <p>Which type of conflict is most likely to be productive for team performance?</p>
+                    <label><input type="radio" name="q9" value="a"> A) Relationship conflict</label><br>
+                    <label><input type="radio" name="q9" value="b"> B) Task conflict</label><br>
+                    <label><input type="radio" name="q9" value="c"> C) Process conflict</label><br>
+                    <label><input type="radio" name="q9" value="d"> D) Personal conflict</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q9', 'b', 'Correct! Task conflicts about goals and procedures can be productive when managed well.')">Submit Answer</button>
+                    <div id="q9-feedback" class="answer-feedback"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 10: Leadership Competencies</h4>
+                    <p>In the Project Phoenix case study, what was a key factor in overcoming cultural diversity challenges?</p>
+                    <label><input type="radio" name="q10" value="a"> A) Hiring only local team members</label><br>
+                    <label><input type="radio" name="q10" value="b"> B) Cultural intelligence training and local liaisons</label><br>
+                    <label><input type="radio" name="q10" value="c"> C) Avoiding cross-cultural communication</label><br>
+                    <label><input type="radio" name="q10" value="d"> D) Using only English in all communications</label><br>
+                    <button class="quiz-button" onclick="checkAnswer('q10', 'b', 'Correct! Cultural intelligence training and local cultural liaisons helped bridge cultural differences.')">Submit Answer</button>
+                    <div id="q10-feedback" class="answer-feedback"></div>
+                </div>
+            </div>
+
+            <div class="key-point" style="margin-top: 30px;">
+                <h3>📚 Study Tips for Finals</h3>
+                <ul class="checklist">
+                    <li>Understand the difference between management and leadership</li>
+                    <li>Memorize Tuckman's five stages of team development</li>
+                    <li>Know when to use different conflict resolution approaches</li>
+                    <li>Understand RACI matrix and how to assign roles</li>
+                    <li>Be able to identify team dynamic issues and solutions</li>
+                    <li>Practice applying leadership styles to different scenarios</li>
+                    <li>Review emotional intelligence components and applications</li>
+                    <li>Study real-world examples and case studies</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="reference-box">
+            <h3>📖 References & Further Reading</h3>
+            
+            <h4>Primary Reference:</h4>
+            <ul>
+                <li>Project Management Institute. (2021). <em>A Guide to the Project Management Body of Knowledge (PMBOK Guide)</em> (Seventh Edition). PMI.</li>
+            </ul>
+            
+            <h4>Additional Academic Sources:</h4>
+            <ul>
+                <li>Tuckman, B. W., & Jensen, M. A. C. (1977). Stages of small-group development revisited. <em>Group & Organization Studies, 2</em>(4), 419-427.</li>
+                <li>Thomas, K. W., & Kilmann, R. H. (2007). <em>Thomas-Kilmann Conflict Mode Instrument</em>. CPP, Inc.</li>
+                <li>Belbin, R. M. (2010). <em>Team Roles at Work</em> (2nd ed.). Routledge.</li>
+                <li>Katzenbach, J. R., & Smith, D. K. (2015). <em>The Wisdom of Teams: Creating the High-Performance Organization</em>. Harvard Business Review Press.</li>
+                <li>Northouse, P. G. (2021). <em>Leadership: Theory and Practice</em> (8th ed.). SAGE Publications.</li>
+            </ul>
+            
+            <h4>Leadership and Emotional Intelligence:</h4>
+            <ul>
+                <li>Goleman, D. (2006). <em>Emotional Intelligence: Why It Matters More Than IQ</em>. Bantam Books.</li>
+                <li>Hersey, P., Blanchard, K. H., & Johnson, D. E. (2012). <em>Management of Organizational Behavior</em> (10th ed.). Pearson.</li>
+                <li>Bass, B. M., & Riggio, R. E. (2006). <em>Transformational Leadership</em> (2nd ed.). Lawrence Erlbaum Associates.</li>
+                <li>Kouzes, J. M., & Posner, B. Z. (2017). <em>The Leadership Challenge: How to Make Extraordinary Things Happen in Organizations</em> (6th ed.). Jossey-Bass.</li>
+            </ul>
+            
+            <h4>Team Dynamics and Conflict Resolution:</h4>
+            <ul>
+                <li>Lencioni, P. (2002). <em>The Five Dysfunctions of a Team: A Leadership Fable</em>. Jossey-Bass.</li>
+                <li>Edmondson, A. (2018). <em>The Fearless Organization: Creating Psychological Safety for Learning, Innovation, and Growth</em>. Wiley.</li>
+                <li>Fisher, R., Ury, W., & Patton, B. (2011). <em>Getting to Yes: Negotiating Agreement Without Giving In</em> (3rd ed.). Penguin Books.</li>
+                <li>Hackman, J. R. (2011). <em>Collaborative Intelligence: Using Teams to Solve Hard Problems</em>. Berrett-Koehler Publishers.</li>
+            </ul>
+            
+            <h4>Research Articles:</h4>
+            <ul>
+                <li>Duhigg, C. (2016). What Google learned from its quest to build the perfect team. <em>The New York Times Magazine</em>.</li>
+                <li>Kozlowski, S. W. J., & Ilgen, D. R. (2006). Enhancing the effectiveness of work groups and teams. <em>Psychological Science in the Public Interest, 7</em>(3), 77-124.</li>
+                <li>Salas, E., Sims, D. E., & Burke, C. S. (2005). Is there a "Big Five" in teamwork? <em>Small Group Research, 36</em>(5), 555-599.</li>
+            </ul>
+            
+            <h4>Online Resources:</h4>
+            <ul>
+                <li>Harvard Business Review - Team Management Collection: <em>hbr.org/topic/teams</em></li>
+                <li>Project Management Institute Learning Library: <em>pmi.org/learning</em></li>
+                <li>MIT Sloan Management Review - Leadership Articles: <em>sloanreview.mit.edu</em></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            const sections = document.querySelectorAll('.content-section');
+            const buttons = document.querySelectorAll('.tab-button');
+            
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleContent(element) {
+            const hiddenContent = element.querySelector('.hidden-content');
+            const arrow = element.querySelector('span');
+            
+            if (hiddenContent.style.display === 'block') {
+                hiddenContent.style.display = 'none';
+                arrow.textContent = '▼';
+                element.classList.remove('expanded');
+            } else {
+                hiddenContent.style.display = 'block';
+                arrow.textContent = '▲';
+                element.classList.add('expanded');
+            }
+        }
+
+        function checkAnswer(questionId, correctAnswer, feedback) {
+            const selectedAnswer = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedbackDiv = document.getElementById(`${questionId}-feedback`);
+            
+            if (!selectedAnswer) {
+                feedbackDiv.className = 'answer-feedback incorrect';
+                feedbackDiv.textContent = 'Please select an answer first!';
+                return;
+            }
+            
+            if (selectedAnswer.value === correctAnswer) {
+                feedbackDiv.className = 'answer-feedback correct';
+                feedbackDiv.textContent = '✓ ' + feedback;
+            } else {
+                feedbackDiv.className = 'answer-feedback incorrect';
+                feedbackDiv.textContent = '✗ Incorrect. ' + feedback;
+            }
+        }
+
+        function showLeadershipFeedback(style) {
+            const feedbackDiv = document.getElementById(`${style}-feedback`);
+            let feedback = '';
+            
+            switch(style) {
+                case 'directive':
+                    feedback = '🎯 Good choice for a crisis! Directive leadership provides clear direction when the team is struggling and time is critical. However, consider combining this with emotional support to maintain morale.';
+                    feedbackDiv.className = 'answer-feedback correct';
+                    break;
+                case 'coaching':
+                    feedback = '🤔 Coaching is valuable for long-term development, but in this crisis situation, you may not have time for extensive coaching. Consider using directive leadership first, then coaching once the crisis is stabilized.';
+                    feedbackDiv.className = 'answer-feedback incorrect';
+                    break;
+                case 'supporting':
+                    feedback = '💭 Supporting leadership is great for maintaining morale, but the team may need more direction given the crisis and loss of the lead developer. Consider combining support with more directive guidance.';
+                    feedbackDiv.className = 'answer-feedback incorrect';
+                    break;
+                case 'delegating':
+                    feedback = '⚠️ Delegating might be risky here - the team has lost their lead developer and morale is low. They likely need more hands-on leadership to navigate this crisis successfully.';
+                    feedbackDiv.className = 'answer-feedback incorrect';
+                    break;
+            }
+            
+            feedbackDiv.textContent = feedback;
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9935752ad1470a04',t:'MTc2MTI2Njc5Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
